@@ -53,9 +53,9 @@ export function HomePage() {
             <div>
               <div style={{
                 display: "inline-block", padding: "10px 20px", borderRadius: "100px",
-                background: colors.brandPrimaryPale, color: colors.brandPrimary,
+                background: colors.warningLight, color: colors.warning,
                 fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 700,
-                marginBottom: "28px", border: `1px solid ${colors.brandPrimaryLight}`,
+                marginBottom: "28px", border: `1px solid ${colors.warning}`,
               }}>
                 🚀 Coming Soon — Join the Waitlist
               </div>

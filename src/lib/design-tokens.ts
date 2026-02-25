@@ -1,62 +1,53 @@
 /**
- * Official brand palette (Round 2).
- * Primary blue = dominant brand. Green = CTA buttons only. Warm white = page bg. No heavy gradients.
+ * ImmiHub Brand Color Palette — Official (Feb 2026)
+ * Source: Extracted from official ImmiHub logo (#4F9ED6)
+ * ImmiHub Blue = anchor color. Warm Green = CTAs only. Warm White = page bg. Charcoal = headings/footer.
  */
 export const colors = {
-  // Primary blue — dominant brand (links, accent text, logo, section highlights)
+  // Brand Primary (from logo)
+  brandPrimary: "#4F9ED6",        // ImmiHub Blue — logo, primary buttons, links, headings, active nav
+  brandPrimaryDark: "#2B7AB8",   // Deep Blue — button hover, emphasized headings, dark accents
+  brandPrimaryLight: "#7BB8E2",  // Sky Blue — secondary buttons, highlights, light accents
+  brandPrimaryPale: "#E8F2FA",   // Ice Blue — section backgrounds, card fills, hover backgrounds
+
+  // Action / CTA (green for CTAs only)
+  accentGreen: "#34B87C",        // Warm Green — Join Waitlist, Get Early Access
+  accentGreenLight: "#D4F0E3",   // CTA success state, light green bg
+
+  // Text (typography hierarchy)
+  textDark: "#1A2332",           // Charcoal — main headings, footer background, dark text
+  textBody: "#4A5568",           // Slate — body text, descriptions, paragraphs
+  textMuted: "#8896A6",         // Gray — captions, placeholders, secondary text
+
+  // Backgrounds & borders
+  bgWhite: "#FAFBFD",            // Warm White — page background (NOT pure white)
+  bgAlt: "#F2F5F8",             // Cloud — alternate sections, card surfaces
+  border: "#DFE4EA",             // Mist — card borders, dividers, input borders
+
+  // Status (document expiry badges, alerts, website consistency)
+  warning: "#E5A318",           // Amber — expiring soon, Coming Soon tags, warnings
+  warningLight: "#FEF5E0",      // Cream — warning backgrounds
+  danger: "#D94F4F",            // Coral Red — expired, critical alerts, errors
+  dangerLight: "#FDE8E8",       // Blush — error backgrounds
+
+  // Legacy aliases (same values — for existing code)
   blue: "#4F9ED6",
-  blueLight: "#7AB8E8",
-
-  // Semantic aliases (used by HomePage, Nav, Footer, ui)
-  brandPrimary: "#4F9ED6",
-  brandPrimaryLight: "#7AB8E8",
-  brandPrimaryPale: "#E8F4FC",
-
-  // Green — CTA buttons only (Get Early Access, Join Waitlist)
+  blueLight: "#7BB8E2",
+  bluePale: "#E8F2FA",
+  blueMist: "#DFE4EA",
   green: "#34B87C",
-  greenLight: "#E8F8EF",
-  accentGreen: "#34B87C",
-
-  // Warm white — page and section backgrounds (not pure white)
+  greenLight: "#D4F0E3",
   warmWhite: "#FAFBFD",
-  bgWhite: "#FAFBFD",
-  bgAlt: "#F5F6F8",
-
-  // Dark — headings, footer
-  navy: "#1C1917",
-  navyLight: "#44403C",
-  textDark: "#1C1917",
-
-  // Light section tints (no heavy gradients)
-  bluePale: "#FAFBFD",
-  blueMist: "#F0F7FC",
-
-  // Text
-  textBody: "#374151",
-  textMuted: "#6B7280",
-
-  // Borders
-  border: "#E5E7EB",
-
-  // Secondary accent / labels (subtle)
-  teal: "#0D9488",
-  tealDark: "#0F766E",
-
+  navy: "#1A2332",
   white: "#FFFFFF",
-  offWhite: "#FAFBFD",
-
   gray50: "#FAFBFD",
-  gray100: "#F5F6F8",
-  gray200: "#E5E7EB",
-  gray300: "#D1D5DB",
-  gray400: "#9CA3AF",
-  gray500: "#6B7280",
-  gray600: "#4B5563",
-  gray700: "#374151",
-  gray800: "#1F2937",
-  gray900: "#111827",
-
-  amber: "#F59E0B",
-  amberLight: "#FEF3C7",
-  red: "#EF4444",
+  gray100: "#F2F5F8",
+  gray200: "#DFE4EA",
+  gray400: "#8896A6",
+  gray500: "#4A5568",
+  gray600: "#4A5568",
+  gray800: "#1A2332",
+  amber: "#E5A318",
+  amberLight: "#FEF5E0",
+  red: "#D94F4F",
 };

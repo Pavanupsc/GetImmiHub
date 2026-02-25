@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { track } from "@vercel/analytics";
 import { colors } from "@/lib/design-tokens";
 import { ChevronIcon, MailIcon, CheckCircleIcon } from "./icons";
 
@@ -32,7 +33,11 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email) { setSubmitted(true); setEmail(""); }
+    if (email) {
+      track("waitlist_signup", { variant });
+      setSubmitted(true);
+      setEmail("");
+    }
   };
 
   if (submitted) {
