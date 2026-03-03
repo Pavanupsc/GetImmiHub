@@ -75,7 +75,7 @@ export function HomePage() {
                 color: colors.textBody, lineHeight: 1.75, marginBottom: "40px",
                 maxWidth: "520px",
               }}>
-                ImmiHub securely stores your H-1B documents, automatically extracts expiry dates, and sends you reminders before deadlines hit. Free for all immigrants.
+                One secure place to store your H-1B documents, track every expiry date, and get reminders months before deadlines arrive. So you can stop worrying and start living.
               </p>
               <div style={{
                 background: colors.white,
@@ -122,18 +122,18 @@ export function HomePage() {
           <AnimatedSection>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 700, color: colors.brandPrimary, textTransform: "uppercase", letterSpacing: "2px", marginBottom: "16px" }}>The Problem</p>
             <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 800, color: colors.textDark, marginBottom: "24px", lineHeight: 1.2 }}>
-              780,000+ H-1B Holders. <span style={{ color: colors.brandPrimary }}>Zero Tools Built for Them.</span>
+              780,000+ H-1B Holders. <span style={{ color: colors.brandPrimary }}>No One Looking Out for Their Deadlines.</span>
             </h2>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "18px", color: colors.textBody, maxWidth: "640px", lineHeight: 1.75, marginBottom: "80px" }}>
-              One missed deadline can mean losing your job, your status, and your life in the US. Yet most H-1B holders manage critical dates with spreadsheets and scattered files.
+              A single missed date can put your job, your status, and your entire life in the US at risk. Yet there's no tool built specifically to help you stay on top of it all.
             </p>
           </AnimatedSection>
 
           {[
-            { image: IMAGES.problem[0], title: "Passport Expires at the Airport", desc: "Caught at the boarding gate with an expired passport. Trip cancelled, money lost.", imageLeft: true },
-            { image: IMAGES.problem[1], title: "Missed I-797 Renewal", desc: "Forgot the renewal deadline buried in an old email. Now scrambling for emergency filing.", imageLeft: false },
-            { image: IMAGES.problem[2], title: "Documents Everywhere", desc: "Scattered across email, phone photos, filing cabinets, and old laptops. Nothing organized.", imageLeft: true },
-            { image: IMAGES.problem[3], title: "Tracking in Spreadsheets", desc: "Manually entering dates into Google Sheets and hoping calendar reminders work.", imageLeft: false },
+            { image: IMAGES.problem[0], title: "An Expired Passport You Didn't See Coming", desc: "You're at the boarding gate, bags checked, ready to go — and the agent tells you your passport expired last month. Trip cancelled, money gone, and a stressful renewal ahead.", imageLeft: true },
+            { image: IMAGES.problem[1], title: "A Renewal Deadline Lost in Your Inbox", desc: "Your I-797 approval notice arrived a year ago. The renewal date was buried somewhere in that email. By the time you realize it, you're filing on an emergency basis and hoping for the best.", imageLeft: false },
+            { image: IMAGES.problem[2], title: "Critical Documents Scattered Everywhere", desc: "Some are in your email, some in phone photos, some in a folder at home you haven't opened in months. When you need something urgently, you can never find it fast enough.", imageLeft: true },
+            { image: IMAGES.problem[3], title: "Spreadsheets and Calendar Reminders That Fail You", desc: "You've tried tracking dates in Google Sheets and setting phone reminders. But life gets busy, entries go stale, and the one date you forgot to add is the one that matters most.", imageLeft: false },
           ].map((item, i) => (
             <AnimatedSection key={i} delay={i * 0.08}>
               <div style={{
@@ -169,9 +169,9 @@ export function HomePage() {
                 Three Steps to <span style={{ color: colors.brandPrimary }}>Peace of Mind</span>
               </h2>
               {[
-                { step: "01", title: "Upload", desc: "Snap a photo or upload your documents — Passport, I-94, I-797, Visa Stamp, or EAD." },
-                { step: "02", title: "Auto-Extract", desc: "Our OCR reads your expiry dates automatically. You review and confirm — always in control." },
-                { step: "03", title: "Relax", desc: "Get push and email reminders at 180 and 90 days before every deadline. Never miss a date." },
+                { step: "01", title: "Upload Your Documents", desc: "Snap a photo or upload a file — Passport, I-94, I-797, Visa Stamp, or EAD. It takes less than a minute to get everything in one secure place." },
+                { step: "02", title: "We Read the Dates for You", desc: "Our OCR technology scans your documents and pulls out expiry dates automatically. You review and confirm everything before it's saved — you're always in control." },
+                { step: "03", title: "Relax and Live Your Life", desc: "ImmiHub watches your deadlines and sends you push notifications and email reminders at 180 days and 90 days before each one. No more mental math, no more surprises." },
               ].map((item, i) => (
                 <AnimatedSection key={i} delay={i * 0.1}>
                   <div style={{ marginBottom: "48px" }}>
@@ -194,16 +194,16 @@ export function HomePage() {
             <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 800, color: colors.textDark, marginBottom: "16px", lineHeight: 1.2 }}>
               Everything You Need, <span style={{ color: colors.brandPrimary }}>Nothing You Don't</span>
             </h2>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: colors.textBody, lineHeight: 1.7, marginBottom: "64px", maxWidth: "560px" }}>One secure place for your documents, deadlines, and reminders.</p>
+            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: colors.textBody, lineHeight: 1.7, marginBottom: "64px", maxWidth: "560px" }}>Built from the ground up for H-1B holders. One secure home for your documents, your deadlines, and your peace of mind.</p>
           </AnimatedSection>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "36px" }}>
             {[
-              { image: IMAGES.features[0], title: "Secure Document Vault", desc: "Your immigration documents stored safely on Microsoft Azure with encryption at rest and in transit." },
-              { image: IMAGES.features[1], title: "Smart Expiry Tracking", desc: "Automatic deadline monitoring for every document type. Know exactly when things expire." },
-              { image: IMAGES.features[2], title: "OCR Date Extraction", desc: "Snap a photo — our AI reads expiry dates from your documents automatically. You always confirm." },
-              { image: IMAGES.features[3], title: "Push + Email Reminders", desc: "Get notified 180 days and 90 days before every deadline. Enough time to take action." },
-              { image: IMAGES.features[4], title: "Built for H-1B", desc: "Designed specifically for H-1B visa holders. Passport, I-94, I-797, Visa Stamp, and EAD tracking." },
-              { image: IMAGES.features[5], title: "Guided Onboarding", desc: "Our Immi Bot walks you through setup step by step. No confusing forms — just a simple conversation." },
+              { image: IMAGES.features[0], title: "Secure Document Vault", desc: "All your immigration documents in one encrypted vault, hosted on Microsoft Azure. Access them anytime, from any device." },
+              { image: IMAGES.features[1], title: "Smart Expiry Tracking", desc: "Every document type monitored automatically. See exactly what's expiring and when — at a glance, on your dashboard." },
+              { image: IMAGES.features[2], title: "OCR Date Extraction", desc: "Take a photo of any document and our AI reads the expiry dates for you. You review and confirm before anything is saved." },
+              { image: IMAGES.features[3], title: "Push + Email Reminders", desc: "Get notified at 180 days and 90 days before every deadline. Enough lead time to renew, file, or consult your attorney." },
+              { image: IMAGES.features[4], title: "Purpose-Built for H-1B", desc: "Not a generic file manager. ImmiHub understands Passport, I-94, I-797, Visa Stamp, and EAD — and what each deadline means for you." },
+              { image: IMAGES.features[5], title: "Guided Onboarding", desc: "Our Immi Bot walks you through setup with a simple conversation. No confusing forms, no guesswork — just answer a few questions and you're ready." },
             ].map((item, i) => (
               <AnimatedSection key={i}>
                 <div style={{
@@ -230,15 +230,15 @@ export function HomePage() {
           <AnimatedSection>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 700, color: colors.brandPrimary, textTransform: "uppercase", letterSpacing: "2px", marginBottom: "12px" }}>Roadmap</p>
             <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 4vw, 40px)", fontWeight: 800, color: colors.textDark, marginBottom: "20px", lineHeight: 1.2 }}>What's Coming Next</h2>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: colors.textBody, lineHeight: 1.8, marginBottom: "56px" }}>We're just getting started. Here's where ImmiHub is heading.</p>
+            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: colors.textBody, lineHeight: 1.8, marginBottom: "56px" }}>The document vault is just the beginning. Here's where ImmiHub is headed — built around what H-1B holders actually need.</p>
           </AnimatedSection>
           <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
             {[
-              { title: "AI-Powered Visa Assistant", desc: "Ask questions about your immigration situation and get personalized guidance." },
-              { title: "Compliance Engine", desc: "Track your visa status, count days in the US, and assess travel risks." },
-              { title: "Multi-Visa Support", desc: "F-1, Green Card, O-1, L-1 — every visa type gets its own toolkit." },
-              { title: "Family Vault", desc: "Manage documents for your spouse and dependents in one place." },
-              { title: "Attorney & Employer Portals", desc: "Seamless collaboration with your immigration lawyer and HR team." },
+              { title: "AI-Powered Visa Assistant", desc: "Ask questions about your immigration situation in plain English and get clear, personalized guidance." },
+              { title: "Compliance Engine", desc: "Track your visa status, monitor days spent in the US, and understand your travel risks before you book a flight." },
+              { title: "Multi-Visa Support", desc: "F-1, Green Card, O-1, L-1 — every visa type gets its own tailored toolkit and deadline tracking." },
+              { title: "Family Vault", desc: "Manage documents and deadlines for your spouse and dependents alongside your own, all in one place." },
+              { title: "Attorney & Employer Portals", desc: "Share documents securely with your immigration lawyer or HR team. No more emailing sensitive files back and forth." },
             ].map((item, i) => (
               <AnimatedSection key={i} delay={i * 0.05}>
                 <div style={{ display: "flex", alignItems: "flex-start", gap: "20px", textAlign: "left" }}>
@@ -258,13 +258,13 @@ export function HomePage() {
       <section style={{ padding: "180px clamp(24px, 5vw, 48px)", background: colors.bgAlt }}>
         <div style={{ maxWidth: "640px", margin: "0 auto" }}>
           <AnimatedSection>
-            <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 3.5vw, 36px)", fontWeight: 700, color: colors.textDark, marginBottom: "48px", lineHeight: 1.2 }}>What people are saying</h2>
+            <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 3.5vw, 36px)", fontWeight: 700, color: colors.textDark, marginBottom: "48px", lineHeight: 1.2 }}>Stories We Hear Every Day</h2>
           </AnimatedSection>
           <div style={{ display: "flex", flexDirection: "column", gap: "48px" }}>
             {[
-              { quote: "I almost missed my I-797 renewal — the date was buried in an old email. Something like this would've saved me a lot of stress.", name: "Priya S." },
-              { quote: "Every time I travel I'm digging through my phone and email to check passport, visa stamp, I-94... Having it in one place would be huge.", name: "Rahul M." },
-              { quote: "My spouse's EAD renewal snuck up on us and she couldn't work for months. Reminders would've made a real difference.", name: "Amit K." },
+              { quote: "My I-797 renewal date was sitting in a year-old email I never thought to check. I found out two weeks before it expired. Something like ImmiHub would have caught that months in advance.", name: "Priya S., Software Engineer" },
+              { quote: "Every time I travel, I'm scrambling to find my passport, visa stamp, and I-94 across three different apps and folders. Having everything in one secure place — that's all I've ever wanted.", name: "Rahul M., Data Analyst" },
+              { quote: "My wife's EAD renewal crept up on us and she couldn't work for three months while we waited for a new card. A simple reminder at 180 days would have changed everything.", name: "Amit K., Product Manager" },
             ].map((item, i) => (
               <AnimatedSection key={i}>
                 <div style={{ textAlign: "left" }}>
@@ -282,19 +282,19 @@ export function HomePage() {
         <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
           <AnimatedSection>
             <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 3.5vw, 36px)", fontWeight: 700, color: colors.textDark, marginBottom: "12px", lineHeight: 1.3 }}>
-              Your data is safe
+              Your Documents Deserve Serious Protection
             </h2>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: colors.textBody, marginBottom: "48px", lineHeight: 1.6 }}>
-              We use industry-standard security so you can focus on what matters.
+              We know how sensitive immigration documents are. That's why security isn't an afterthought — it's the foundation.
             </p>
           </AnimatedSection>
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "24px 40px" }}>
             {[
-              { icon: <CloudIcon />, text: "Microsoft Azure Cloud" },
-              { icon: <LockIcon />, text: "Encrypted at rest & in transit" },
+              { icon: <CloudIcon />, text: "Hosted on Microsoft Azure" },
+              { icon: <LockIcon />, text: "Encrypted at rest and in transit" },
               { icon: <ShieldIcon />, text: "No biometric data collected" },
-              { icon: <GlobeIcon />, text: "US-based data storage" },
-              { icon: <TrashIcon />, text: "Delete your data anytime" },
+              { icon: <GlobeIcon />, text: "Data stored in the United States" },
+              { icon: <TrashIcon />, text: "Delete all your data anytime" },
             ].map((item, i) => (
               <AnimatedSection key={i}>
                 <div style={{
@@ -315,10 +315,10 @@ export function HomePage() {
         <div style={{ maxWidth: "600px", margin: "0 auto" }}>
           <AnimatedSection>
             <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 800, color: colors.white, marginBottom: "24px", lineHeight: 1.2 }}>
-              Be the First to Know When ImmiHub Launches
+              Stop Worrying About Deadlines. Start Living Your Life.
             </h2>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: "rgba(255,255,255,0.65)", marginBottom: "40px", lineHeight: 1.75 }}>
-              Free for all H-1B holders. No spam, just launch updates.
+              Join thousands of H-1B holders who want a better way. Free forever for individuals — no credit card, no catch.
             </p>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <WaitlistForm variant="footer" />
