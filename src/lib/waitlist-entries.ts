@@ -1,5 +1,5 @@
 /** Same base URL as POST in api/waitlist — list uses GET on this URL. */
-const DEFAULT_ENTRIES_URL = "https://trendyhomevibe.com/wp-json/waitlist/v1/entries";
+const DEFAULT_ENTRIES_URL = "https://wfl.s5-tastewp.com/wp-json/waitlist/v1/entries";
 
 export function getWaitlistEntriesUrl(): string {
   return process.env.WAITLIST_API_URL || DEFAULT_ENTRIES_URL;
