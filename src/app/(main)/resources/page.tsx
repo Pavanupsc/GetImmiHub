@@ -1,8 +1,41 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  createContext,
+  useContext,
+  useSyncExternalStore,
+} from "react";
 import { AnimatedSection, WaitlistForm } from "@/components/ui";
 import { colors } from "@/lib/design-tokens";
+
+const NARROW_BREAKPOINT_PX = 900;
+
+const NarrowLayoutContext = createContext(false);
+
+function useNarrowLayout() {
+  return useContext(NarrowLayoutContext);
+}
+
+function subscribeNarrow(breakpoint: number, onChange: () => void) {
+  const mq = window.matchMedia(`(max-width: ${breakpoint}px)`);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+function getNarrowSnapshot(breakpoint: number) {
+  return window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
+}
+
+function useMatchNarrow(breakpoint = NARROW_BREAKPOINT_PX) {
+  return useSyncExternalStore(
+    (onChange) => subscribeNarrow(breakpoint, onChange),
+    () => getNarrowSnapshot(breakpoint),
+    () => false
+  );
+}
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -491,9 +524,10 @@ function DocumentCard({
   why: string;
   action: string;
 }) {
+  const narrow = useNarrowLayout();
   return (
     <div style={{
-      padding: "24px",
+      padding: narrow ? "18px 16px" : "24px",
       borderRadius: "16px",
       background: colors.white,
       border: `1px solid ${colors.gray100}`,
@@ -504,7 +538,7 @@ function DocumentCard({
       <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px", flexWrap: "wrap" }}>
         <h3 style={{
           fontFamily: "'Satoshi', sans-serif",
-          fontSize: "17px", fontWeight: 700, color: colors.navy, margin: 0,
+          fontSize: narrow ? "16px" : "17px", fontWeight: 700, color: colors.navy, margin: 0,
         }}>{name}</h3>
         <span style={{
           padding: "3px 10px", borderRadius: "6px", fontSize: "11px", fontWeight: 700,
@@ -514,7 +548,7 @@ function DocumentCard({
         }}>{tag}</span>
       </div>
       <p style={{
-        fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px",
+        fontFamily: "'Source Sans 3', sans-serif", fontSize: narrow ? "14px" : "15px",
         color: colors.gray600, lineHeight: 1.7, marginBottom: "12px",
       }}>{why}</p>
       <div style={{
@@ -534,6 +568,7 @@ function DocumentCard({
 function ExpiryTable({ rows }: {
   rows: { doc: string; controls: string; typical: string; renewedBy: string; severity: "critical" | "high" | "medium" }[];
 }) {
+  const narrow = useNarrowLayout();
   const severityColor = {
     critical: "#dc2626",
     high: "#d97706",
@@ -541,9 +576,57 @@ function ExpiryTable({ rows }: {
   };
   const severityLabel = { critical: "Critical", high: "Important", medium: "Situational" };
 
+  const rowFields: { label: string; key: keyof (typeof rows)[number] }[] = [
+    { label: "Controls", key: "controls" },
+    { label: "Typical duration", key: "typical" },
+    { label: "Renewed by", key: "renewedBy" },
+  ];
+
+  if (narrow) {
+    return (
+      <div style={{ marginTop: "8px", display: "flex", flexDirection: "column", gap: "12px" }}>
+        {rows.map((row, i) => (
+          <div
+            key={i}
+            style={{
+              padding: "16px",
+              borderRadius: "14px",
+              background: colors.white,
+              border: `1px solid ${colors.gray100}`,
+              boxShadow: "0 1px 6px rgba(0,0,0,0.04)",
+            }}
+          >
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+              <h4 style={{
+                fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 700,
+                color: colors.navy, margin: 0, lineHeight: 1.35, flex: "1 1 12rem",
+              }}>{row.doc}</h4>
+              <span style={{
+                padding: "3px 8px", borderRadius: "6px", fontSize: "11px", fontWeight: 700,
+                background: `${severityColor[row.severity]}18`,
+                color: severityColor[row.severity],
+              }}>
+                {severityLabel[row.severity]}
+              </span>
+            </div>
+            {rowFields.map(({ label, key }) => (
+              <p key={key} style={{
+                fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px",
+                color: colors.gray600, lineHeight: 1.55, margin: "0 0 10px",
+              }}>
+                <span style={{ display: "block", fontSize: "11px", fontWeight: 700, color: colors.gray400, textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "2px" }}>{label}</span>
+                {row[key]}
+              </p>
+            ))}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
-    <div style={{ overflowX: "auto", marginTop: "8px" }}>
-      <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'Source Sans 3', sans-serif" }}>
+    <div style={{ overflowX: "auto", marginTop: "8px", WebkitOverflowScrolling: "touch" }}>
+      <table style={{ width: "100%", minWidth: "720px", borderCollapse: "collapse", fontFamily: "'Source Sans 3', sans-serif" }}>
         <thead>
           <tr style={{ background: colors.bluePale }}>
             {["Document", "Controls", "Typical Duration", "Renewed By", "Priority"].map(h => (
@@ -580,8 +663,9 @@ function ExpiryTable({ rows }: {
 }
 
 function TimelineList({ items }: { items: { when: string; action: string }[] }) {
+  const narrow = useNarrowLayout();
   return (
-    <div style={{ position: "relative", paddingLeft: "24px" }}>
+    <div style={{ position: "relative", paddingLeft: narrow ? "20px" : "24px" }}>
       <div style={{
         position: "absolute", left: "8px", top: "4px", bottom: "4px",
         width: "2px", background: colors.blueMist,
@@ -611,6 +695,7 @@ function TimelineList({ items }: { items: { when: string; action: string }[] }) 
 function SituationTable({ rows }: {
   rows: { situation: string; urgency: string; action: string }[];
 }) {
+  const narrow = useNarrowLayout();
   const urgencyColor: Record<string, string> = {
     "Critical": "#dc2626",
     "Urgent": "#d97706",
@@ -620,9 +705,51 @@ function SituationTable({ rows }: {
     "Review needed": "#d97706",
   };
 
+  if (narrow) {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        {rows.map((row, i) => (
+          <div
+            key={i}
+            style={{
+              padding: "16px",
+              borderRadius: "14px",
+              background: colors.white,
+              border: `1px solid ${colors.gray100}`,
+              boxShadow: "0 1px 6px rgba(0,0,0,0.04)",
+            }}
+          >
+            <p style={{
+              fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px", fontWeight: 700,
+              color: colors.gray400, textTransform: "uppercase", letterSpacing: "0.6px", margin: "0 0 6px",
+            }}>Your situation</p>
+            <p style={{
+              fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", fontWeight: 600,
+              color: colors.gray800, lineHeight: 1.45, margin: "0 0 12px",
+            }}>{row.situation}</p>
+            <span style={{
+              display: "inline-block", padding: "4px 10px", borderRadius: "6px", fontSize: "11px", fontWeight: 700,
+              background: `${urgencyColor[row.urgency] ?? colors.gray500}18`,
+              color: urgencyColor[row.urgency] ?? colors.gray500,
+              marginBottom: "12px",
+            }}>{row.urgency}</span>
+            <p style={{
+              fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px", fontWeight: 700,
+              color: colors.gray400, textTransform: "uppercase", letterSpacing: "0.6px", margin: "0 0 6px",
+            }}>Action</p>
+            <p style={{
+              fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px",
+              color: colors.gray600, lineHeight: 1.6, margin: 0,
+            }}>{row.action}</p>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
-    <div style={{ overflowX: "auto" }}>
-      <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'Source Sans 3', sans-serif" }}>
+    <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+      <table style={{ width: "100%", minWidth: "560px", borderCollapse: "collapse", fontFamily: "'Source Sans 3', sans-serif" }}>
         <thead>
           <tr style={{ background: colors.bluePale }}>
             {["Your Situation", "Urgency", "Action"].map(h => (
@@ -657,9 +784,10 @@ function SituationTable({ rows }: {
 
 function Callout({ type, children }: { type: "warning" | "danger"; children: React.ReactNode }) {
   const isWarning = type === "warning";
+  const narrow = useNarrowLayout();
   return (
     <div style={{
-      padding: "16px 20px",
+      padding: narrow ? "14px 14px" : "16px 20px",
       borderRadius: "12px",
       background: isWarning ? "#fffbeb" : "#fef2f2",
       border: `1px solid ${isWarning ? "#fcd34d" : "#fca5a5"}`,
@@ -682,13 +810,76 @@ function TableOfContents({
   guide,
   activeSection,
   onSectionClick,
+  variant = "sidebar",
 }: {
   guide: Guide;
   activeSection: string;
   onSectionClick: (id: string) => void;
+  variant?: "sidebar" | "mobileRail";
 }) {
+  if (variant === "mobileRail") {
+    return (
+      <nav
+        aria-label="On this page"
+        style={{
+          position: "sticky",
+          top: "72px",
+          zIndex: 20,
+          marginLeft: "-16px",
+          marginRight: "-16px",
+          marginBottom: "8px",
+          padding: "12px 16px 14px",
+          background: colors.warmWhite,
+          borderBottom: `1px solid ${colors.gray100}`,
+          boxShadow: "0 6px 16px rgba(26,35,50,0.06)",
+        }}
+      >
+        <p style={{
+          fontFamily: "'Source Sans 3', sans-serif", fontSize: "10px",
+          fontWeight: 700, color: colors.gray500, textTransform: "uppercase",
+          letterSpacing: "1.2px", margin: "0 0 10px",
+        }}>On this page</p>
+        <div style={{
+          display: "flex",
+          gap: "8px",
+          overflowX: "auto",
+          paddingBottom: "4px",
+          marginBottom: "-4px",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "thin",
+        }}>
+          {guide.sections.map((section) => (
+            <button
+              key={section.id}
+              type="button"
+              onClick={() => onSectionClick(section.id)}
+              style={{
+                flex: "0 0 auto",
+                maxWidth: "min(280px, 85vw)",
+                textAlign: "left",
+                padding: "10px 14px",
+                borderRadius: "10px",
+                border: `1px solid ${activeSection === section.id ? colors.blue : colors.gray200}`,
+                background: activeSection === section.id ? colors.bluePale : colors.white,
+                color: activeSection === section.id ? colors.blue : colors.gray600,
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "13px",
+                fontWeight: activeSection === section.id ? 700 : 500,
+                cursor: "pointer",
+                lineHeight: 1.35,
+                whiteSpace: "normal",
+              }}
+            >
+              {section.heading}
+            </button>
+          ))}
+        </div>
+      </nav>
+    );
+  }
+
   return (
-    <nav style={{
+    <nav aria-label="On this page" style={{
       position: "sticky", top: "100px",
       padding: "24px",
       borderRadius: "16px",
@@ -705,6 +896,7 @@ function TableOfContents({
         {guide.sections.map((section) => (
           <button
             key={section.id}
+            type="button"
             onClick={() => onSectionClick(section.id)}
             style={{
               display: "block", width: "100%", textAlign: "left",
@@ -728,11 +920,14 @@ function TableOfContents({
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 
 export default function ResourcesPage() {
+  const isNarrow = useMatchNarrow();
   const [activeGuide, setActiveGuide] = useState(0);
   const [activeSection, setActiveSection] = useState(guides[0].sections[0].id);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const guide = guides[activeGuide];
+  const scrollOffset = isNarrow ? 88 : 110;
+  const sectionScrollMargin = isNarrow ? "96px" : "120px";
 
   // Scroll-spy
   useEffect(() => {
@@ -763,32 +958,36 @@ export default function ResourcesPage() {
   const scrollToSection = (id: string) => {
     const el = sectionRefs.current[id];
     if (el) {
-      const offset = 110;
-      const y = el.getBoundingClientRect().top + window.scrollY - offset;
+      const y = el.getBoundingClientRect().top + window.scrollY - scrollOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
   return (
-    <div style={{ paddingTop: "80px" }}>
+    <NarrowLayoutContext.Provider value={isNarrow}>
+    <div style={{ paddingTop: isNarrow ? "64px" : "80px" }}>
 
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <section style={{ padding: "80px 24px 60px", background: colors.bluePale }}>
+      <section style={{
+        padding: isNarrow ? "40px 16px 36px" : "80px 24px 60px",
+        background: colors.bluePale,
+      }}>
         <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
           <AnimatedSection>
             <p style={{
-              fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 700,
+              fontFamily: "'Source Sans 3', sans-serif",
+              fontSize: isNarrow ? "12px" : "13px", fontWeight: 700,
               color: colors.blue, textTransform: "uppercase", letterSpacing: "2px", marginBottom: "12px",
             }}>H-1B Resources</p>
             <h1 style={{
               fontFamily: "'Satoshi', sans-serif",
-              fontSize: "clamp(30px, 5vw, 46px)", fontWeight: 800,
+              fontSize: "clamp(26px, 6vw, 46px)", fontWeight: 800,
               color: colors.navy, lineHeight: 1.15, marginBottom: "16px",
             }}>
               Your H-1B <span style={{ color: colors.blue }}>Knowledge Base</span>
             </h1>
             <p style={{
-              fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px",
+              fontFamily: "'Source Sans 3', sans-serif", fontSize: isNarrow ? "15px" : "17px",
               color: colors.gray500, lineHeight: 1.7, maxWidth: "560px", margin: "0 auto 40px",
             }}>
               Practical, accurate guides to help you understand your H-1B documents,
@@ -796,16 +995,34 @@ export default function ResourcesPage() {
             </p>
 
             {/* Guide selector tabs */}
-            <div style={{ display: "flex", gap: "8px", justifyContent: "center", flexWrap: "wrap" }}>
+            <div style={{
+              display: "flex",
+              gap: "8px",
+              justifyContent: "center",
+              flexWrap: isNarrow ? "nowrap" : "wrap",
+              flexDirection: isNarrow ? "column" : "row",
+              width: "100%",
+              maxWidth: isNarrow ? "100%" : undefined,
+              margin: "0 auto",
+            }}>
               {guides.map((g, i) => (
-                <button key={i} onClick={() => setActiveGuide(i)} style={{
-                  padding: "10px 22px", borderRadius: "12px",
-                  border: `2px solid ${activeGuide === i ? colors.blue : colors.gray200}`,
-                  background: activeGuide === i ? colors.blue : colors.white,
-                  color: activeGuide === i ? colors.white : colors.gray600,
-                  fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 600,
-                  cursor: "pointer", transition: "all 0.2s",
-                }}>
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setActiveGuide(i)}
+                  style={{
+                    width: isNarrow ? "100%" : "auto",
+                    padding: isNarrow ? "12px 18px" : "10px 22px",
+                    borderRadius: "12px",
+                    border: `2px solid ${activeGuide === i ? colors.blue : colors.gray200}`,
+                    background: activeGuide === i ? colors.blue : colors.white,
+                    color: activeGuide === i ? colors.white : colors.gray600,
+                    fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 600,
+                    cursor: "pointer", transition: "all 0.2s",
+                    textAlign: "center",
+                    minHeight: isNarrow ? 48 : undefined,
+                  }}
+                >
                   {g.title}
                 </button>
               ))}
@@ -815,31 +1032,50 @@ export default function ResourcesPage() {
       </section>
 
       {/* ── Article Layout ────────────────────────────────────────── */}
-      <section style={{ padding: "60px 24px 100px", background: colors.warmWhite }}>
+      <section style={{
+        padding: isNarrow ? "32px 16px 72px" : "60px 24px 100px",
+        background: colors.warmWhite,
+      }}>
         <div style={{
           maxWidth: "1100px", margin: "0 auto",
           display: "grid",
-          gridTemplateColumns: "240px 1fr",
-          gap: "48px",
+          gridTemplateColumns: isNarrow ? "1fr" : "240px 1fr",
+          gap: isNarrow ? 0 : "48px",
           alignItems: "start",
         }}>
 
-          {/* Left: ToC */}
-          <div style={{ display: "block" }}>
-            <TableOfContents
-              guide={guide}
-              activeSection={activeSection}
-              onSectionClick={scrollToSection}
-            />
-          </div>
+          {/* Left: ToC (desktop) */}
+          {!isNarrow && (
+            <div style={{ display: "block" }}>
+              <TableOfContents
+                guide={guide}
+                activeSection={activeSection}
+                onSectionClick={scrollToSection}
+                variant="sidebar"
+              />
+            </div>
+          )}
 
           {/* Right: Article */}
-          <article>
+          <article style={{ minWidth: 0 }}>
+            {isNarrow && (
+              <TableOfContents
+                guide={guide}
+                activeSection={activeSection}
+                onSectionClick={scrollToSection}
+                variant="mobileRail"
+              />
+            )}
             {/* Guide meta */}
-            <div style={{ marginBottom: "40px", paddingBottom: "28px", borderBottom: `1px solid ${colors.gray100}` }}>
+            <div style={{
+              marginBottom: isNarrow ? "28px" : "40px",
+              paddingBottom: isNarrow ? "20px" : "28px",
+              borderBottom: `1px solid ${colors.gray100}`,
+            }}>
               <h2 style={{
                 fontFamily: "'Satoshi', sans-serif",
-                fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 800,
+                fontSize: isNarrow ? "clamp(22px, 5.5vw, 30px)" : "clamp(24px, 4vw, 36px)",
+                fontWeight: 800,
                 color: colors.navy, marginBottom: "10px", lineHeight: 1.2,
               }}>{guide.title}</h2>
               <p style={{
@@ -861,11 +1097,11 @@ export default function ResourcesPage() {
                 key={section.id}
                 id={section.id}
                 ref={(el) => { sectionRefs.current[section.id] = el; }}
-                style={{ marginBottom: "52px", scrollMarginTop: "120px" }}
+                style={{ marginBottom: isNarrow ? "40px" : "52px", scrollMarginTop: sectionScrollMargin }}
               >
                 <h2 style={{
                   fontFamily: "'Satoshi', sans-serif",
-                  fontSize: "22px", fontWeight: 800, color: colors.navy,
+                  fontSize: isNarrow ? "19px" : "22px", fontWeight: 800, color: colors.navy,
                   marginBottom: "20px", lineHeight: 1.3,
                 }}>{section.heading}</h2>
                 <div style={{
@@ -879,7 +1115,7 @@ export default function ResourcesPage() {
 
             {/* ── CTA ─────────────────────────────────────────────── */}
             <div style={{
-              padding: "36px",
+              padding: isNarrow ? "24px 18px" : "36px",
               borderRadius: "20px",
               background: `linear-gradient(135deg, ${colors.bluePale} 0%, ${colors.white} 100%)`,
               border: `1px solid ${colors.blueMist}`,
@@ -888,7 +1124,7 @@ export default function ResourcesPage() {
             }}>
               <p style={{
                 fontFamily: "'Satoshi', sans-serif",
-                fontSize: "22px", fontWeight: 800, color: colors.navy, marginBottom: "8px",
+                fontSize: isNarrow ? "18px" : "22px", fontWeight: 800, color: colors.navy, marginBottom: "8px",
               }}>
                 Want to track all these dates automatically?
               </p>
@@ -904,16 +1140,27 @@ export default function ResourcesPage() {
 
             {/* Guide navigation */}
             <div style={{
-              display: "flex", justifyContent: "space-between", marginTop: "40px",
+              display: "flex",
+              flexDirection: isNarrow ? "column" : "row",
+              justifyContent: "space-between",
+              marginTop: "40px",
               paddingTop: "24px", borderTop: `1px solid ${colors.gray100}`, gap: "12px",
             }}>
               {activeGuide > 0 && (
-                <button onClick={() => setActiveGuide(activeGuide - 1)} style={{
-                  display: "flex", flexDirection: "column", gap: "4px",
-                  padding: "16px 20px", borderRadius: "12px",
-                  border: `1px solid ${colors.gray200}`, background: colors.white,
-                  cursor: "pointer", textAlign: "left", flex: 1, maxWidth: "48%",
-                }}>
+                <button
+                  type="button"
+                  onClick={() => setActiveGuide(activeGuide - 1)}
+                  style={{
+                    display: "flex", flexDirection: "column", gap: "4px",
+                    padding: "16px 20px", borderRadius: "12px",
+                    border: `1px solid ${colors.gray200}`, background: colors.white,
+                    cursor: "pointer", textAlign: "left",
+                    flex: isNarrow ? "none" : 1,
+                    maxWidth: isNarrow ? "100%" : "48%",
+                    width: isNarrow ? "100%" : undefined,
+                    minHeight: isNarrow ? 48 : undefined,
+                  }}
+                >
                   <span style={{
                     fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px",
                     fontWeight: 700, color: colors.gray400, textTransform: "uppercase", letterSpacing: "1px",
@@ -925,13 +1172,22 @@ export default function ResourcesPage() {
                 </button>
               )}
               {activeGuide < guides.length - 1 && (
-                <button onClick={() => setActiveGuide(activeGuide + 1)} style={{
-                  display: "flex", flexDirection: "column", gap: "4px",
-                  padding: "16px 20px", borderRadius: "12px",
-                  border: `1px solid ${colors.gray200}`, background: colors.white,
-                  cursor: "pointer", textAlign: "right", flex: 1, maxWidth: "48%",
-                  marginLeft: "auto",
-                }}>
+                <button
+                  type="button"
+                  onClick={() => setActiveGuide(activeGuide + 1)}
+                  style={{
+                    display: "flex", flexDirection: "column", gap: "4px",
+                    padding: "16px 20px", borderRadius: "12px",
+                    border: `1px solid ${colors.gray200}`, background: colors.white,
+                    cursor: "pointer",
+                    textAlign: isNarrow ? "left" : "right",
+                    flex: isNarrow ? "none" : 1,
+                    maxWidth: isNarrow ? "100%" : "48%",
+                    width: isNarrow ? "100%" : undefined,
+                    marginLeft: isNarrow ? 0 : "auto",
+                    minHeight: isNarrow ? 48 : undefined,
+                  }}
+                >
                   <span style={{
                     fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px",
                     fontWeight: 700, color: colors.gray400, textTransform: "uppercase", letterSpacing: "1px",
@@ -947,5 +1203,6 @@ export default function ResourcesPage() {
         </div>
       </section>
     </div>
+    </NarrowLayoutContext.Provider>
   );
 }

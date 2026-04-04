@@ -4,16 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { track } from "@vercel/analytics";
 import { colors } from "@/lib/design-tokens";
 import { ChevronIcon, CheckCircleIcon, CloseIcon, MailIcon } from "./icons";
-
-const VISA_TYPES = ["H-1B", "F-1/OPT", "Green Card", "O-1/EB-1", "L-1", "Other"] as const;
-
-const INTEREST_OPTIONS = [
-  "Document Vault",
-  "Expiry Reminders",
-  "AI Visa Assistant",
-  "Compliance Tracking",
-  "Family Document Management",
-] as const;
+import { WAITLIST_INTEREST_OPTIONS as INTEREST_OPTIONS, WAITLIST_VISA_TYPES as VISA_TYPES } from "@/lib/waitlist-options";
 
 /** Simple wrapper — no scroll-triggered animation. Kept for API compatibility. */
 export function AnimatedSection({ children, className = "" }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -44,6 +35,8 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
   const [visaType, setVisaType] = useState<(typeof VISA_TYPES)[number] | "">("");
   const [interests, setInterests] = useState<Record<string, boolean>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const isHero = variant === "hero";
   const buttonPadding = isHero ? "18px 36px" : "14px 28px";
@@ -66,6 +59,7 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
   const closeModal = useCallback(() => {
     setModalOpen(false);
     resetModalFields();
+    setSubmitError(null);
   }, []);
 
   useEffect(() => {
@@ -86,18 +80,51 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
     setInterests((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const handleModalSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleModalSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!email.trim()) return;
+
+    setSubmitError(null);
+    setSubmitting(true);
     const selectedInterests = INTEREST_OPTIONS.filter((o) => interests[o]);
-    track("waitlist_signup", {
-      variant,
-      visa_type: visaType,
-      interests: selectedInterests.join(", ") || undefined,
-      interest_count: selectedInterests.length,
-    });
-    setSubmitted(true);
-    resetAll();
-    setModalOpen(false);
+
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim(),
+          firstName: firstName.trim(),
+          visaType,
+          interests: selectedInterests,
+        }),
+      });
+
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+
+      if (!res.ok) {
+        setSubmitError(
+          typeof data.error === "string" && data.error
+            ? data.error
+            : "Something went wrong. Please try again."
+        );
+        return;
+      }
+
+      track("waitlist_signup", {
+        variant,
+        visa_type: visaType,
+        interests: selectedInterests.join(", ") || undefined,
+        interest_count: selectedInterests.length,
+      });
+      setSubmitted(true);
+      resetAll();
+      setModalOpen(false);
+    } catch {
+      setSubmitError("Network error. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputStyle: React.CSSProperties = {
@@ -384,10 +411,29 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
                 </div>
               </fieldset>
 
+              {submitError && (
+                <div
+                  role="alert"
+                  style={{
+                    marginBottom: "16px",
+                    padding: "12px 14px",
+                    borderRadius: "10px",
+                    background: colors.dangerLight,
+                    color: colors.danger,
+                    fontSize: "14px",
+                    fontFamily: "'Source Sans 3', sans-serif",
+                    lineHeight: 1.45,
+                  }}
+                >
+                  {submitError}
+                </div>
+              )}
+
               <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "flex-end" }}>
                 <button
                   type="button"
                   onClick={closeModal}
+                  disabled={submitting}
                   style={{
                     padding: "14px 22px",
                     borderRadius: "10px",
@@ -397,13 +443,15 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
                     fontWeight: 600,
                     fontSize: "15px",
                     fontFamily: "'Source Sans 3', sans-serif",
-                    cursor: "pointer",
+                    cursor: submitting ? "not-allowed" : "pointer",
+                    opacity: submitting ? 0.7 : 1,
                   }}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
+                  disabled={submitting}
                   style={{
                     padding: "14px 24px",
                     borderRadius: "10px",
@@ -413,11 +461,12 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
                     fontWeight: 700,
                     fontSize: "15px",
                     fontFamily: "'Source Sans 3', sans-serif",
-                    cursor: "pointer",
+                    cursor: submitting ? "not-allowed" : "pointer",
                     boxShadow: "0 4px 14px rgba(52,184,124,0.25)",
+                    opacity: submitting ? 0.85 : 1,
                   }}
                 >
-                  Submit
+                  {submitting ? "Submitting…" : "Submit"}
                 </button>
               </div>
             </form>
