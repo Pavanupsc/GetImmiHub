@@ -1,6 +1,6 @@
 "use client";
 
-import { colors } from "@/lib/design-tokens";
+import { colors, layout } from "@/lib/design-tokens";
 
 // WEB-11: Updated for Beta 1.0 — removed F-1/SEVIS references, updated to AWS infra,
 // clarified OCR handling, added CCPA, updated document types, updated copyright year.
@@ -56,7 +56,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <div style={{ paddingTop: "80px" }}>
-      <section style={{ padding: "100px 24px 48px", background: colors.warmWhite }}>
+      <section style={{ padding: `100px ${layout.pagePaddingX} 48px`, background: colors.warmWhite }}>
         <div style={{ maxWidth: "700px", margin: "0 auto" }}>
           <h1
             style={{
@@ -81,7 +81,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <section style={{ padding: "48px 24px 100px", background: colors.warmWhite }}>
+      <section style={{ padding: `48px ${layout.pagePaddingX} 100px`, background: colors.warmWhite }}>
         <div style={{ maxWidth: "700px", margin: "0 auto" }}>
           {sections.map((s, i) => (
             <div key={i} style={{ marginBottom: "32px" }}>

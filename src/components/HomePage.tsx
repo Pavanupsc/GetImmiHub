@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { AnimatedSection, HeroFade, WaitlistForm } from "@/components/ui";
-import { colors } from "@/lib/design-tokens";
+import { colors, layout } from "@/lib/design-tokens";
 import {
   ShieldIcon,
   LockIcon,
@@ -39,11 +39,11 @@ const IMAGES = {
 export function HomePage() {
   return (
     <div>
-      {/* Hero — bigger, more inviting; warm personal image; prominent waitlist; clean minimal bg */}
+      {/* Hero banner */}
       <section style={{
         minHeight: "100vh", display: "flex", alignItems: "center",
         background: colors.bgWhite,
-        padding: "140px clamp(24px, 5vw, 64px) 160px", position: "relative", overflow: "hidden",
+        padding: `140px ${layout.pagePaddingX} 160px`, position: "relative", overflow: "hidden",
       }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto", width: "100%", position: "relative" }}>
           <HeroFade>
@@ -52,61 +52,72 @@ export function HomePage() {
           }} className="hero-grid">
             <div>
               <div style={{
-                display: "inline-block", padding: "10px 20px", borderRadius: "100px",
-                background: colors.warningLight, color: colors.warning,
-                fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 700,
-                marginBottom: "28px", border: `1px solid ${colors.warning}`,
+                display: "inline-block",
+                padding: "6px 14px",
+                borderRadius: "9999px",
+                background: "transparent",
+                color: colors.brandPrimary,
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "11px",
+                fontWeight: 600,
+                marginBottom: "18px",
+                border: `1px solid ${colors.brandPrimaryLight}`,
               }}>
-                🚀 Coming Soon — Join the Waitlist
+                Coming Soon – Join the Waitlist
               </div>
-              <h1 style={{
-                fontFamily: "'Satoshi', sans-serif",
-                fontSize: "clamp(48px, 6.5vw, 80px)", fontWeight: 800,
-                color: colors.textDark, lineHeight: 1.05, marginBottom: "28px",
-                letterSpacing: "-1px",
-              }}>
-                Never Miss an Immigration{" "}
-                <span style={{ color: colors.brandPrimary }}>
+              <h1 style={{ margin: 0, fontFamily: "'Satoshi', sans-serif", letterSpacing: "-0.02em", marginBottom: "18px" }}>
+                <span style={{
+                  display: "block",
+                  fontSize: "clamp(40px, 4.8vw, 54px)",
+                  fontWeight: 800,
+                  color: colors.textDark,
+                  lineHeight: 1.1,
+                }}>
+                  Never miss an
+                </span>
+                <span style={{
+                  display: "block",
+                  fontSize: "clamp(40px, 4.8vw, 54px)",
+                  fontWeight: 800,
+                  color: colors.textDark,
+                  lineHeight: 1.1,
+                }}>
+                  immigration
+                </span>
+                <span style={{
+                  display: "block",
+                  fontSize: "clamp(50px, 6.2vw, 78px)",
+                  fontWeight: 900,
+                  color: colors.brandPrimary,
+                  lineHeight: 1.06,
+                  marginTop: "6px",
+                }}>
                   Deadline Again
                 </span>
               </h1>
               <p style={{
-                fontFamily: "'Source Sans 3', sans-serif", fontSize: "clamp(18px, 2vw, 21px)",
-                color: colors.textBody, lineHeight: 1.75, marginBottom: "40px",
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "13px",
+                color: colors.textMuted,
+                lineHeight: 1.6,
+                marginBottom: "20px",
                 maxWidth: "520px",
               }}>
                 One secure place to store your H-1B documents, track every expiry date, and get reminders months before deadlines arrive. So you can stop worrying and start living.
               </p>
-              <div style={{
-                background: colors.white,
-                padding: "36px 44px",
-                borderRadius: "24px",
-                boxShadow: "0 8px 32px rgba(26,35,50,0.06), 0 0 0 1px rgba(26,35,50,0.06)",
-                maxWidth: "560px",
-              }}>
-                <WaitlistForm variant="hero" />
-              </div>
-              <p style={{
-                fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px",
-                color: colors.textMuted, marginTop: "24px",
-              }}>
-                ✓ Free forever for individuals &nbsp;&nbsp; ✓ No spam, just launch updates
-              </p>
+              <WaitlistForm variant="banner" />
             </div>
 
             <div>
-              <div style={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <div style={{
-                  position: "relative", width: "100%", maxWidth: "600px", aspectRatio: "4/5",
-                  borderRadius: "28px", overflow: "hidden", boxShadow: "0 32px 64px rgba(26,35,50,0.08), 0 0 0 1px rgba(26,35,50,0.06)",
-                }}>
+              <div style={{ position: "relative", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+                <div style={{ position: "relative", width: "100%", maxWidth: "520px" }}>
                   <Image
-                    src={IMAGES.hero}
-                    alt="Diverse professional with smartphone — warm, personal. Stay on top of your immigration documents."
-                    fill
-                    sizes="(max-width: 768px) 100vw, 600px"
-                    style={{ objectFit: "cover" }}
+                    src="/Images/banner-image-r.png"
+                    alt="ImmiHub app preview on phones"
+                    width={900}
+                    height={900}
                     priority
+                    style={{ width: "100%", height: "auto", objectFit: "contain" }}
                   />
                 </div>
               </div>
@@ -116,8 +127,45 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* Social preview image section (below banner) */}
+      <section style={{ background: colors.bgWhite, padding: `0 ${layout.pagePaddingX} 96px` }}>
+        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+          <AnimatedSection>
+            <div
+              style={{
+                position: "relative",
+                borderRadius: "28px",
+                background: "#F4F6F9",
+                boxShadow: "0 18px 40px rgba(26,35,50,0.10)",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "radial-gradient(900px 280px at 50% 0%, rgba(79,158,214,0.10), transparent 60%), linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(244,246,249,1) 70%)",
+                }}
+                aria-hidden
+              />
+              <div style={{ position: "relative", padding: "44px 56px 52px" }}>
+                <Image
+                  src="/Images/social-media-image.png"
+                  alt="ImmiHub product preview"
+                  width={1600}
+                  height={980}
+                  style={{ width: "100%", height: "auto", display: "block" }}
+                  priority
+                />
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* The Problem — alternating image left / right; bg-alt for rhythm */}
-      <section style={{ padding: "180px clamp(24px, 5vw, 48px)", background: colors.bgAlt }}>
+      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgAlt }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <AnimatedSection>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 700, color: colors.brandPrimary, textTransform: "uppercase", letterSpacing: "2px", marginBottom: "16px" }}>The Problem</p>
@@ -155,7 +203,7 @@ export function HomePage() {
       </section>
 
       {/* How It Works — image left, simple list right; warm white */}
-      <section style={{ padding: "180px clamp(24px, 5vw, 48px)", background: colors.bgWhite }}>
+      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgWhite }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "center" }} className="how-row">
             <AnimatedSection>
@@ -187,7 +235,7 @@ export function HomePage() {
       </section>
 
       {/* Features — left-aligned intro, then grid; bg-alt for rhythm */}
-      <section id="features" style={{ padding: "180px clamp(24px, 5vw, 48px)", background: colors.bgAlt }}>
+      <section id="features" style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgAlt }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <AnimatedSection>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 700, color: colors.brandPrimary, textTransform: "uppercase", letterSpacing: "2px", marginBottom: "12px" }}>Features</p>
@@ -225,7 +273,7 @@ export function HomePage() {
       </section>
 
       {/* Roadmap — left-aligned, simple list; warm white */}
-      <section style={{ padding: "180px clamp(24px, 5vw, 48px)", background: colors.bgWhite }}>
+      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgWhite }}>
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
           <AnimatedSection>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 700, color: colors.brandPrimary, textTransform: "uppercase", letterSpacing: "2px", marginBottom: "12px" }}>Roadmap</p>
@@ -255,7 +303,7 @@ export function HomePage() {
       </section>
 
       {/* Testimonials — casual quotes, no stars; bg-alt */}
-      <section style={{ padding: "180px clamp(24px, 5vw, 48px)", background: colors.bgAlt }}>
+      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgAlt }}>
         <div style={{ maxWidth: "640px", margin: "0 auto" }}>
           <AnimatedSection>
             <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 3.5vw, 36px)", fontWeight: 700, color: colors.textDark, marginBottom: "48px", lineHeight: 1.2 }}>Stories We Hear Every Day</h2>
@@ -278,7 +326,7 @@ export function HomePage() {
       </section>
 
       {/* Security — light, reassuring trust badges; warm white */}
-      <section style={{ padding: "180px clamp(24px, 5vw, 48px)", background: colors.bgWhite }}>
+      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgWhite }}>
         <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
           <AnimatedSection>
             <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 3.5vw, 36px)", fontWeight: 700, color: colors.textDark, marginBottom: "12px", lineHeight: 1.3 }}>
@@ -311,7 +359,7 @@ export function HomePage() {
       </section>
 
       {/* CTA — charcoal footer band (#1A2332); green CTA in form */}
-      <section style={{ padding: "180px clamp(24px, 5vw, 48px)", background: colors.textDark, textAlign: "center" }}>
+      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.textDark, textAlign: "center" }}>
         <div style={{ maxWidth: "600px", margin: "0 auto" }}>
           <AnimatedSection>
             <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 800, color: colors.white, marginBottom: "24px", lineHeight: 1.2 }}>

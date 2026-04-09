@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { colors } from "@/lib/design-tokens";
+import { colors, layout } from "@/lib/design-tokens";
 
 const links = [
   { label: "Home", href: "/" },
@@ -16,9 +16,9 @@ const links = [
 export function Footer() {
   return (
     <footer style={{
-      background: colors.navy, color: colors.white, padding: "60px 24px 30px",
+      background: colors.navy, color: colors.white, padding: `60px ${layout.pagePaddingX} 30px`,
     }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
         <div style={{
           display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "40px", marginBottom: "40px",

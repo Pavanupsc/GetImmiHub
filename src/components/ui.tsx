@@ -28,7 +28,7 @@ export function HeroFade({ children, className = "" }: { children: React.ReactNo
   );
 }
 
-export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer" }) {
+export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer" | "banner" }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -39,9 +39,10 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const isHero = variant === "hero";
-  const buttonPadding = isHero ? "18px 36px" : "14px 28px";
-  const buttonRadius = isHero ? "12px" : "10px";
-  const fontSize = isHero ? "17px" : "15px";
+  const isBanner = variant === "banner";
+  const buttonPadding = isHero ? "18px 36px" : isBanner ? "10px 18px" : "14px 28px";
+  const buttonRadius = isHero ? "12px" : isBanner ? "9999px" : "10px";
+  const fontSize = isHero ? "17px" : isBanner ? "13px" : "15px";
 
   const resetModalFields = () => {
     setFirstName("");
@@ -162,8 +163,12 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
     );
   }
 
-  const inputPadding = isHero ? "18px 20px 18px 52px" : "14px 16px 14px 44px";
-  const inputRadius = isHero ? "12px" : "10px";
+  const inputPadding = isHero
+    ? "18px 20px 18px 52px"
+    : isBanner
+      ? "12px 14px 12px 16px"
+      : "14px 16px 14px 44px";
+  const inputRadius = isHero ? "12px" : isBanner ? "9999px" : "10px";
 
   const openModalFromInline = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -176,14 +181,19 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
         onSubmit={openModalFromInline}
         style={{
           display: "flex",
-          gap: isHero ? "12px" : "8px",
+          gap: isHero ? "12px" : isBanner ? "10px" : "8px",
           flexDirection: "row",
-          flexWrap: "wrap",
-          maxWidth: isHero ? "100%" : "480px",
+          flexWrap: isBanner ? "nowrap" : "wrap",
+          maxWidth: isHero ? "100%" : isBanner ? "560px" : "480px",
           alignItems: "stretch",
+          background: isBanner ? "#F3F5F7" : "transparent",
+          border: isBanner ? "1px solid #E6E9EF" : "none",
+          borderRadius: isBanner ? "9999px" : undefined,
+          padding: isBanner ? "6px" : undefined,
+          boxShadow: isBanner ? "0 12px 28px rgba(26,35,50,0.08)" : "none",
         }}
       >
-        <div style={{ position: "relative", flex: "1 1 280px", minWidth: "200px" }}>
+        <div style={{ position: "relative", flex: isBanner ? "1 1 auto" : "1 1 280px", minWidth: isBanner ? 0 : "200px" }}>
           <input
             type="email"
             name="email"
@@ -196,28 +206,36 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
               width: "100%",
               padding: inputPadding,
               borderRadius: inputRadius,
-              border: `2px solid ${isHero ? colors.border : "rgba(255,255,255,0.3)"}`,
-              background: isHero ? colors.white : "rgba(255,255,255,0.1)",
-              color: isHero ? colors.textDark : colors.white,
+              border: isBanner ? "none" : `2px solid ${isHero ? colors.border : "rgba(255,255,255,0.3)"}`,
+              background: isBanner ? "transparent" : isHero ? colors.white : "rgba(255,255,255,0.1)",
+              color: isHero || isBanner ? colors.textDark : colors.white,
               fontSize,
               fontFamily: "'Source Sans 3', sans-serif",
               outline: "none",
               transition: "border-color 0.2s",
               boxSizing: "border-box",
             }}
-            onFocus={(e) => { (e.target as HTMLElement).style.borderColor = colors.brandPrimary; }}
-            onBlur={(e) => { (e.target as HTMLElement).style.borderColor = isHero ? colors.border : "rgba(255,255,255,0.3)"; }}
+            onFocus={(e) => {
+              if (isBanner) return;
+              (e.target as HTMLElement).style.borderColor = colors.brandPrimary;
+            }}
+            onBlur={(e) => {
+              if (isBanner) return;
+              (e.target as HTMLElement).style.borderColor = isHero ? colors.border : "rgba(255,255,255,0.3)";
+            }}
           />
-          <div style={{
-            position: "absolute",
-            left: isHero ? "18px" : "14px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            color: isHero ? colors.textMuted : "rgba(255,255,255,0.5)",
-            pointerEvents: "none",
-          }}>
-            <MailIcon />
-          </div>
+          {!isBanner && (
+            <div style={{
+              position: "absolute",
+              left: isHero ? "18px" : "14px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              color: isHero ? colors.textMuted : "rgba(255,255,255,0.5)",
+              pointerEvents: "none",
+            }}>
+              <MailIcon />
+            </div>
+          )}
         </div>
         <button
           type="submit"
@@ -225,14 +243,14 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
             padding: buttonPadding,
             borderRadius: buttonRadius,
             border: "none",
-            background: isHero ? colors.accentGreen : colors.white,
-            color: isHero ? colors.white : colors.textDark,
+            background: isHero ? colors.accentGreen : isBanner ? colors.brandPrimary : colors.white,
+            color: isHero || isBanner ? colors.white : colors.textDark,
             fontWeight: 700,
             fontSize,
             fontFamily: "'Source Sans 3', sans-serif",
             cursor: "pointer",
             whiteSpace: "nowrap",
-            boxShadow: isHero ? "0 4px 14px rgba(52,184,124,0.25)" : "none",
+            boxShadow: isHero ? "0 4px 14px rgba(52,184,124,0.25)" : isBanner ? "0 10px 18px rgba(79,158,214,0.28)" : "none",
           }}
         >
           Join the Waitlist

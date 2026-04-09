@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatedSection } from "@/components/ui";
-import { colors } from "@/lib/design-tokens";
+import { colors, layout } from "@/lib/design-tokens";
 
 /* ───────────────────────── stat pill ───────────────────────── */
 function StatPill({ value, label }: { value: React.ReactNode; label: string }) {
@@ -211,7 +211,7 @@ export default function AboutPage() {
 
       {/* ── HERO / MISSION ── */}
       <section style={{
-        padding: "100px 24px 80px",
+        padding: `100px ${layout.pagePaddingX} 80px`,
         background: colors.bluePale,
         position: "relative",
         overflow: "hidden",
@@ -294,7 +294,7 @@ export default function AboutPage() {
 
       {/* ── IMPACT STATS ── */}
       <section style={{
-        padding: "0 24px",
+        padding: `0 ${layout.pagePaddingX}`,
         background: colors.warmWhite,
         position: "relative",
       }}>
@@ -320,7 +320,7 @@ export default function AboutPage() {
 
       {/* ── WHAT WE'RE BUILDING ── */}
       <section style={{
-        padding: "40px 24px 100px",
+        padding: `40px ${layout.pagePaddingX} 100px`,
         background: colors.warmWhite,
       }}>
         <div style={{ maxWidth: "820px", margin: "0 auto" }}>
@@ -391,7 +391,7 @@ export default function AboutPage() {
 
       {/* ── VISION / ROADMAP ── */}
       <section style={{
-        padding: "100px 24px",
+        padding: `100px ${layout.pagePaddingX}`,
         background: colors.bluePale,
       }}>
         <div style={{ maxWidth: "820px", margin: "0 auto" }}>
@@ -446,7 +446,7 @@ export default function AboutPage() {
 
       {/* ── OUR APPROACH ── */}
       <section style={{
-        padding: "100px 24px",
+        padding: `100px ${layout.pagePaddingX}`,
         background: colors.warmWhite,
       }}>
         <div style={{ maxWidth: "820px", margin: "0 auto" }}>
@@ -503,7 +503,7 @@ export default function AboutPage() {
 
       {/* ── NATIONAL INTEREST CLOSING ── */}
       <section style={{
-        padding: "80px 24px",
+        padding: `80px ${layout.pagePaddingX}`,
         background: colors.bluePale,
       }}>
         <div style={{ maxWidth: "680px", margin: "0 auto", textAlign: "center" }}>

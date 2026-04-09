@@ -1,6 +1,6 @@
 "use client";
 
-import { colors } from "@/lib/design-tokens";
+import { colors, layout } from "@/lib/design-tokens";
 
 // WEB-12: Terms of Service — written for Apple App Store & Google Play Store submission.
 // Covers all required sections including Data Handling (new), updated disclaimers,
@@ -72,7 +72,7 @@ const sections = [
 export default function TermsPage() {
   return (
     <div style={{ paddingTop: "80px" }}>
-      <section style={{ padding: "100px 24px 48px", background: colors.warmWhite }}>
+      <section style={{ padding: `100px ${layout.pagePaddingX} 48px`, background: colors.warmWhite }}>
         <div style={{ maxWidth: "700px", margin: "0 auto" }}>
           <h1
             style={{
@@ -97,7 +97,7 @@ export default function TermsPage() {
         </div>
       </section>
 
-      <section style={{ padding: "48px 24px 100px", background: colors.warmWhite }}>
+      <section style={{ padding: `48px ${layout.pagePaddingX} 100px`, background: colors.warmWhite }}>
         <div style={{ maxWidth: "700px", margin: "0 auto" }}>
           {sections.map((s, i) => (
             <div key={i} style={{ marginBottom: "32px" }}>

@@ -51,3 +51,11 @@ export const colors = {
   amberLight: "#FEF5E0",
   red: "#D94F4F",
 };
+
+/**
+ * Shared horizontal gutters for the marketing site (nav, footer, sections).
+ * ~10–12vw on large viewports, capped so content stays readable; ~28px floor on small screens.
+ */
+export const layout = {
+  pagePaddingX: "clamp(28px, 11vw, 140px)",
+} as const;

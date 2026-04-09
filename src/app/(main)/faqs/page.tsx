@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatedSection } from "@/components/ui";
-import { colors } from "@/lib/design-tokens";
+import { colors, layout } from "@/lib/design-tokens";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -188,7 +188,7 @@ export default function FaqsPage() {
     <div style={{ paddingTop: "80px" }}>
 
       {/* ── Hero ──────────────────────────────────────────────────── */}
-      <section style={{ padding: "100px 24px 60px", background: colors.bluePale }}>
+      <section style={{ padding: `100px ${layout.pagePaddingX} 60px`, background: colors.bluePale }}>
         <div style={{ maxWidth: "680px", margin: "0 auto", textAlign: "center" }}>
           <AnimatedSection>
             <p style={{
@@ -217,7 +217,7 @@ export default function FaqsPage() {
       <div style={{
         background: colors.white,
         borderBottom: `1px solid ${colors.gray100}`,
-        padding: "16px 24px",
+        padding: `16px ${layout.pagePaddingX}`,
         position: "sticky", top: "80px", zIndex: 10,
       }}>
         <div style={{
@@ -246,7 +246,7 @@ export default function FaqsPage() {
       </div>
 
       {/* ── FAQ Content ───────────────────────────────────────────── */}
-      <section style={{ padding: "60px 24px 100px", background: colors.warmWhite }}>
+      <section style={{ padding: `60px ${layout.pagePaddingX} 100px`, background: colors.warmWhite }}>
         <div style={{ maxWidth: "700px", margin: "0 auto" }}>
 
           {visibleCategories.map((cat, ci) => (

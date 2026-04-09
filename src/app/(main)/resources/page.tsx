@@ -9,7 +9,7 @@ import {
   useSyncExternalStore,
 } from "react";
 import { AnimatedSection, WaitlistForm } from "@/components/ui";
-import { colors } from "@/lib/design-tokens";
+import { colors, layout } from "@/lib/design-tokens";
 
 const NARROW_BREAKPOINT_PX = 900;
 
@@ -969,7 +969,7 @@ export default function ResourcesPage() {
 
       {/* ── Hero ─────────────────────────────────────────────────── */}
       <section style={{
-        padding: isNarrow ? "40px 16px 36px" : "80px 24px 60px",
+        padding: isNarrow ? `40px ${layout.pagePaddingX} 36px` : `80px ${layout.pagePaddingX} 60px`,
         background: colors.bluePale,
       }}>
         <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
@@ -1033,7 +1033,7 @@ export default function ResourcesPage() {
 
       {/* ── Article Layout ────────────────────────────────────────── */}
       <section style={{
-        padding: isNarrow ? "32px 16px 72px" : "60px 24px 100px",
+        padding: isNarrow ? `32px ${layout.pagePaddingX} 72px` : `60px ${layout.pagePaddingX} 100px`,
         background: colors.warmWhite,
       }}>
         <div style={{
