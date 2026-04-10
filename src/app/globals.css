@@ -60,6 +60,26 @@ body {
 }
 
 /* ImmiHub site: nav/footer responsive */
+@media (max-width: 900px) {
+  .features-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .feature-card-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .feature-card-row > div:first-child {
+    max-width: 100% !important;
+    flex: none !important;
+    width: 100% !important;
+    min-height: 180px !important;
+    aspect-ratio: 16 / 9 !important;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-grid {
     grid-template-columns: 1fr !important;

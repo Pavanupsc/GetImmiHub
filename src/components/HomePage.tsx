@@ -30,13 +30,14 @@ const IMAGES = {
     "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=500&q=80", // passport / document scan
     "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&q=80", // person relaxed / team
   ],
+  // Feature cards — curated Unsplash (documents, calendar, desk work, phone, team, onboarding)
   features: [
-    "https://images.pexels.com/photos/1370294/pexels-photo-1370294.jpeg?w=500&q=80",   // secure document vault (file cabinet / safe storage)
-    "https://images.pexels.com/photos/9810172/pexels-photo-9810172.jpeg?w=500&q=80",   // smart expiry tracking (calendar with pins / deadlines)
-    "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=500&q=80", // passport — OCR (no duplicate)
-    "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=500&q=80",   // notification / device
-    "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&q=80", // diverse professional
-    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&q=80", // diverse group / conversation
+    "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=88&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=88&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1554224154-22dec7ec8818?w=800&q=88&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=88&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=88&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=88&auto=format&fit=crop",
   ],
 } as const;
 
@@ -238,36 +239,116 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Features — left-aligned intro, then grid; bg-alt for rhythm */}
-      <section id="features" style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgAlt }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      {/* Features — centered header, 2×3 grid; horizontal cards (visual left, copy right) */}
+      <section id="features" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.white }}>
+        <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
           <AnimatedSection>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 700, color: colors.brandPrimary, textTransform: "uppercase", letterSpacing: "2px", marginBottom: "12px" }}>Features</p>
-            <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 800, color: colors.textDark, marginBottom: "16px", lineHeight: 1.2 }}>
-              Everything You Need, <span style={{ color: colors.brandPrimary }}>Nothing You Don't</span>
-            </h2>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: colors.textBody, lineHeight: 1.7, marginBottom: "64px", maxWidth: "560px" }}>Built from the ground up for H-1B holders. One secure home for your documents, your deadlines, and your peace of mind.</p>
+            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+              <p style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "12px",
+                fontWeight: 700,
+                color: colors.brandPrimary,
+                textTransform: "uppercase",
+                letterSpacing: "3px",
+                marginBottom: "14px",
+              }}>
+                Features
+              </p>
+              <h2 style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(28px, 3.6vw, 42px)",
+                fontWeight: 800,
+                color: colors.textDark,
+                marginBottom: "16px",
+                lineHeight: 1.15,
+              }}>
+                Everything You Need,{" "}
+                <span style={{ color: colors.brandPrimary }}>Nothing You Don&apos;t</span>
+              </h2>
+              <p style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "16px",
+                color: colors.textBody,
+                lineHeight: 1.7,
+                maxWidth: "560px",
+                margin: "0 auto",
+              }}>
+                Built from the ground up for H-1B holders. One secure home for your documents, your deadlines, and your peace of mind.
+              </p>
+            </div>
           </AnimatedSection>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "36px" }}>
+          <div
+            className="features-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "28px",
+            }}
+          >
             {[
-              { image: IMAGES.features[0], title: "Secure Document Vault", desc: "All your immigration documents in one encrypted vault, hosted on Microsoft Azure. Access them anytime, from any device." },
-              { image: IMAGES.features[1], title: "Smart Expiry Tracking", desc: "Every document type monitored automatically. See exactly what's expiring and when — at a glance, on your dashboard." },
-              { image: IMAGES.features[2], title: "OCR Date Extraction", desc: "Take a photo of any document and our AI reads the expiry dates for you. You review and confirm before anything is saved." },
-              { image: IMAGES.features[3], title: "Push + Email Reminders", desc: "Get notified at 180 days and 90 days before every deadline. Enough lead time to renew, file, or consult your attorney." },
-              { image: IMAGES.features[4], title: "Purpose-Built for H-1B", desc: "Not a generic file manager. ImmiHub understands Passport, I-94, I-797, Visa Stamp, and EAD — and what each deadline means for you." },
-              { image: IMAGES.features[5], title: "Guided Onboarding", desc: "Our Immi Bot walks you through setup with a simple conversation. No confusing forms, no guesswork — just answer a few questions and you're ready." },
+              { title: "Secure Document Vault", desc: "All your immigration documents in one encrypted vault, hosted on Microsoft Azure. Access them anytime, from any device." },
+              { title: "Smart Expiry Tracking", desc: "Every document type monitored automatically. See exactly what's expiring and when — at a glance, on your dashboard." },
+              { title: "OCR Date Extraction", desc: "Take a photo of any document and our AI reads the expiry dates for you. You review and confirm before anything is saved." },
+              { title: "Push + Email Reminders", desc: "Get notified at 180 days and 90 days before every deadline. Enough lead time to renew, file, or consult your attorney." },
+              { title: "Purpose-Built for H-1B", desc: "Not a generic file manager. ImmiHub understands Passport, I-94, I-797, Visa Stamp, and EAD — and what each deadline means for you." },
+              { title: "Guided Onboarding", desc: "Our Immi Bot walks you through setup with a simple conversation. No confusing forms, no guesswork — just answer a few questions and you're ready." },
             ].map((item, i) => (
               <AnimatedSection key={i}>
-                <div style={{
-                  borderRadius: "20px", background: colors.white, border: `1px solid ${colors.border}`,
-                  textAlign: "left", overflow: "hidden",
-                }}>
-                  <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", overflow: "hidden", borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }}>
-                    <Image src={item.image} alt="" fill sizes="(max-width: 600px) 100vw, 300px" style={{ objectFit: "cover" }} />
+                <div
+                  className="feature-card-row"
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "stretch",
+                    gap: "20px",
+                    height: "100%",
+                    background: colors.white,
+                    borderRadius: "18px",
+                    padding: "18px 20px",
+                    boxShadow: "0 6px 24px rgba(26,35,50,0.06), 0 0 0 1px rgba(26,35,50,0.04)",
+                  }}
+                >
+                  <div
+                    style={{
+                      flex: "0 0 42%",
+                      maxWidth: "200px",
+                      minWidth: "120px",
+                      borderRadius: "14px",
+                      background: "#E8EAED",
+                      aspectRatio: "1.05",
+                      overflow: "hidden",
+                      position: "relative",
+                    }}
+                  >
+                    <Image
+                      src={IMAGES.features[i]}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 900px) 40vw, 200px"
+                      style={{ objectFit: "cover" }}
+                    />
                   </div>
-                  <div style={{ padding: "24px 20px" }}>
-                    <h3 style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "16px", fontWeight: 700, color: colors.textDark, marginBottom: "8px" }}>{item.title}</h3>
-                    <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: colors.textBody, lineHeight: 1.6 }}>{item.desc}</p>
+                  <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "left" }}>
+                    <h3 style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "16px",
+                      fontWeight: 700,
+                      color: colors.textDark,
+                      marginBottom: "8px",
+                      lineHeight: 1.3,
+                    }}>
+                      {item.title}
+                    </h3>
+                    <p style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "14px",
+                      color: colors.textBody,
+                      lineHeight: 1.6,
+                      margin: 0,
+                    }}>
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
               </AnimatedSection>
