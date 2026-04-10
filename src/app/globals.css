@@ -64,6 +64,24 @@ body {
   .hero-grid {
     grid-template-columns: 1fr !important;
   }
+  .roadmap-center-line {
+    display: none !important;
+  }
+  .roadmap-node-col {
+    display: none !important;
+  }
+  .roadmap-row {
+    grid-template-columns: 1fr !important;
+    margin-bottom: 20px !important;
+  }
+  .roadmap-row > div:empty {
+    display: none !important;
+  }
+  .roadmap-card {
+    max-width: 100% !important;
+    text-align: left !important;
+    flex-direction: row !important;
+  }
   .desktop-nav {
     display: none !important;
   }

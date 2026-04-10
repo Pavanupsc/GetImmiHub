@@ -9,6 +9,10 @@ import {
   CloudIcon,
   TrashIcon,
   GlobeIcon,
+  BrainIcon,
+  DocIcon,
+  FolderPlusIcon,
+  BuildingIcon,
 } from "@/components/icons";
 
 // Immigration-relevant imagery: Unsplash (passport, travel docs, diverse professionals). Attribution in footer.
@@ -272,32 +276,192 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Roadmap — left-aligned, simple list; warm white */}
-      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgWhite }}>
-        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+      {/* Roadmap — vertical timeline, alternating cards */}
+      <section className="roadmap-section" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.white }}>
+        <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <AnimatedSection>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 700, color: colors.brandPrimary, textTransform: "uppercase", letterSpacing: "2px", marginBottom: "12px" }}>Roadmap</p>
-            <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 4vw, 40px)", fontWeight: 800, color: colors.textDark, marginBottom: "20px", lineHeight: 1.2 }}>What's Coming Next</h2>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: colors.textBody, lineHeight: 1.8, marginBottom: "56px" }}>The document vault is just the beginning. Here's where ImmiHub is headed — built around what H-1B holders actually need.</p>
+            <div style={{ textAlign: "center", marginBottom: "64px" }}>
+              <p style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "12px",
+                fontWeight: 700,
+                color: colors.brandPrimary,
+                textTransform: "uppercase",
+                letterSpacing: "3px",
+                marginBottom: "14px",
+              }}>
+                Roadmap
+              </p>
+              <h2 style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(28px, 3.8vw, 40px)",
+                fontWeight: 800,
+                color: colors.textDark,
+                marginBottom: "16px",
+                lineHeight: 1.2,
+              }}>
+                What&apos;s Coming{" "}
+                <span style={{ color: colors.brandPrimary }}>Next</span>
+              </h2>
+              <p style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "16px",
+                color: colors.textBody,
+                lineHeight: 1.75,
+                maxWidth: "560px",
+                margin: "0 auto",
+              }}>
+                The document vault is just the beginning. Here&apos;s where ImmiHub is headed — built around what H-1B holders actually need.
+              </p>
+            </div>
           </AnimatedSection>
-          <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+
+          <div className="roadmap-timeline" style={{ position: "relative", paddingBottom: "8px" }}>
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                left: "50%",
+                top: "12px",
+                bottom: "12px",
+                width: 0,
+                borderLeft: `2px dashed ${colors.border}`,
+                transform: "translateX(-50%)",
+                zIndex: 0,
+              }}
+              className="roadmap-center-line"
+            />
+
             {[
-              { title: "AI-Powered Visa Assistant", desc: "Ask questions about your immigration situation in plain English and get clear, personalized guidance." },
-              { title: "Compliance Engine", desc: "Track your visa status, monitor days spent in the US, and understand your travel risks before you book a flight." },
-              { title: "Multi-Visa Support", desc: "F-1, Green Card, O-1, L-1 — every visa type gets its own tailored toolkit and deadline tracking." },
-              { title: "Family Vault", desc: "Manage documents and deadlines for your spouse and dependents alongside your own, all in one place." },
-              { title: "Attorney & Employer Portals", desc: "Share documents securely with your immigration lawyer or HR team. No more emailing sensitive files back and forth." },
-            ].map((item, i) => (
-              <AnimatedSection key={i} delay={i * 0.05}>
-                <div style={{ display: "flex", alignItems: "flex-start", gap: "20px", textAlign: "left" }}>
-                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: colors.brandPrimary, flexShrink: 0, marginTop: "10px" }} />
-                  <div>
-                    <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "16px", fontWeight: 700, color: colors.textDark }}>{item.title}</span>
-                    <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", color: colors.textBody, marginLeft: "8px", lineHeight: 1.6 }}>— {item.desc}</span>
+              {
+                side: "left" as const,
+                title: "AI-Powered Visa Assistant",
+                desc: "Ask questions about your immigration situation in plain English and get clear, personalized guidance.",
+                icon: <BrainIcon />,
+              },
+              {
+                side: "right" as const,
+                title: "Compliance Engine",
+                desc: "Track your visa status, monitor days spent in the US, and understand your travel risks before you book a flight.",
+                icon: <ShieldIcon />,
+              },
+              {
+                side: "left" as const,
+                title: "Multi-Visa Support",
+                desc: "F-1, Green Card, O-1, L-1 — every visa type gets its own tailored toolkit and deadline tracking.",
+                icon: <DocIcon />,
+              },
+              {
+                side: "right" as const,
+                title: "Family Vault",
+                desc: "Manage documents and deadlines for your spouse and dependents alongside your own, all in one place.",
+                icon: <FolderPlusIcon />,
+              },
+              {
+                side: "left" as const,
+                title: "Attorney & Employer Portals",
+                desc: "Share documents securely with your immigration lawyer or HR team. No more emailing sensitive files back and forth.",
+                icon: <BuildingIcon />,
+              },
+            ].map((item, i) => {
+              const iconBox = (
+                <div style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: 12,
+                  background: colors.brandPrimaryPale,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: colors.brandPrimary,
+                  flexShrink: 0,
+                }}>
+                  {item.icon}
+                </div>
+              );
+              const cardInner = (
+                <div
+                  className="roadmap-card"
+                  style={{
+                  background: colors.white,
+                  borderRadius: 16,
+                  padding: "22px 24px",
+                  boxShadow: "0 8px 28px rgba(26,35,50,0.08), 0 0 0 1px rgba(26,35,50,0.05)",
+                  maxWidth: "380px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 18,
+                  flexDirection: item.side === "left" ? "row-reverse" : "row",
+                  textAlign: item.side === "left" ? "right" : "left",
+                }}
+                >
+                  {iconBox}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <h3 style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "16px",
+                      fontWeight: 700,
+                      color: colors.brandPrimary,
+                      marginBottom: "8px",
+                      lineHeight: 1.3,
+                    }}>
+                      {item.title}
+                    </h3>
+                    <p style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "14px",
+                      color: colors.textBody,
+                      lineHeight: 1.65,
+                      margin: 0,
+                    }}>
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
-              </AnimatedSection>
-            ))}
+              );
+              const node = (
+                <div style={{
+                  width: 14,
+                  height: 14,
+                  borderRadius: "50%",
+                  border: `2px solid ${colors.brandPrimary}`,
+                  background: colors.white,
+                  flexShrink: 0,
+                  zIndex: 2,
+                  boxShadow: `0 0 0 4px ${colors.white}`,
+                }} aria-hidden />
+              );
+
+              return (
+                <AnimatedSection key={item.title} delay={i * 0.06}>
+                  <div
+                    className="roadmap-row"
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 48px 1fr",
+                      alignItems: "center",
+                      marginBottom: i < 4 ? 40 : 0,
+                      position: "relative",
+                      zIndex: 1,
+                    }}
+                  >
+                    {item.side === "left" ? (
+                      <>
+                        <div style={{ justifySelf: "end", paddingRight: 20 }}>{cardInner}</div>
+                        <div className="roadmap-node-col" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{node}</div>
+                        <div />
+                      </>
+                    ) : (
+                      <>
+                        <div />
+                        <div className="roadmap-node-col" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{node}</div>
+                        <div style={{ justifySelf: "start", paddingLeft: 20 }}>{cardInner}</div>
+                      </>
+                    )}
+                  </div>
+                </AnimatedSection>
+              );
+            })}
           </div>
         </div>
       </section>
