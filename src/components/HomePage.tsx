@@ -35,7 +35,7 @@ export function HomePage() {
   return (
     <div>
       {/* Hero banner */}
-      <section style={{
+      <section className="home-hero" style={{
         minHeight: "100vh", display: "flex", alignItems: "center",
         background: colors.bgWhite,
         padding: `140px ${layout.pagePaddingX} 160px`, position: "relative", overflow: "hidden",
@@ -61,7 +61,7 @@ export function HomePage() {
                 Coming Soon – Join the Waitlist
               </div>
               <h1 style={{ margin: 0, fontFamily: "'Satoshi', sans-serif", letterSpacing: "-0.02em", marginBottom: "18px" }}>
-                <span style={{
+                <span className="hero-title-line" style={{
                   display: "block",
                   fontSize: "clamp(40px, 4.8vw, 54px)",
                   fontWeight: 800,
@@ -70,7 +70,7 @@ export function HomePage() {
                 }}>
                   Never miss an
                 </span>
-                <span style={{
+                <span className="hero-title-line" style={{
                   display: "block",
                   fontSize: "clamp(40px, 4.8vw, 54px)",
                   fontWeight: 800,
@@ -79,7 +79,7 @@ export function HomePage() {
                 }}>
                   immigration
                 </span>
-                <span style={{
+                <span className="hero-accent-line" style={{
                   display: "block",
                   fontSize: "clamp(50px, 6.2vw, 78px)",
                   fontWeight: 900,
@@ -123,10 +123,11 @@ export function HomePage() {
       </section>
 
       {/* Social preview image section (below banner) */}
-      <section style={{ background: colors.bgWhite, padding: `0 ${layout.pagePaddingX} 96px` }}>
+      <section className="home-social-section" style={{ background: colors.bgWhite, padding: `0 ${layout.pagePaddingX} 96px` }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <AnimatedSection>
             <div
+              className="home-social-shell"
               style={{
                 position: "relative",
                 borderRadius: "28px",
@@ -144,7 +145,7 @@ export function HomePage() {
                 }}
                 aria-hidden
               />
-              <div style={{ position: "relative", padding: "44px 56px 52px" }}>
+              <div className="home-social-inner" style={{ position: "relative", padding: "44px 56px 52px" }}>
                 <Image
                   src="/Images/social-media-image.png"
                   alt="ImmiHub product preview"
@@ -160,10 +161,10 @@ export function HomePage() {
       </section>
 
       {/* ===== THE PROBLEM — centered phone with 4 surrounding cards ===== */}
-      <section style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.bgWhite, overflow: "hidden" }}>
+      <section className="home-section-stack" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.bgWhite, overflow: "hidden" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <AnimatedSection>
-            <div style={{ textAlign: "center", marginBottom: "64px" }}>
+            <div className="problem-section-header" style={{ textAlign: "center", marginBottom: "64px" }}>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
                 fontSize: "14px",
@@ -414,10 +415,10 @@ export function HomePage() {
       </section>
 
       {/* How It Works — centered header + left PNG (blurred mock + cards) + right GIF (sharp UI) */}
-      <section style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
+      <section className="home-section-stack" style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
         <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
           <AnimatedSection>
-            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+            <div className="home-section-header-tight" style={{ textAlign: "center", marginBottom: "48px" }}>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
                 fontSize: "12px",
@@ -597,10 +598,10 @@ export function HomePage() {
       </section>
 
       {/* Features — centered header, 2×3 grid; horizontal cards (visual left, copy right) */}
-      <section id="features" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.white }}>
-        <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
+      <section id="features" className="home-section-stack features-section" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.white, overflowX: "hidden" }}>
+        <div style={{ maxWidth: "1120px", margin: "0 auto", width: "100%", minWidth: 0 }}>
           <AnimatedSection>
-            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+            <div className="home-section-header-tight" style={{ textAlign: "center", marginBottom: "48px" }}>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
                 fontSize: "12px",
@@ -660,6 +661,10 @@ export function HomePage() {
                     alignItems: "stretch",
                     gap: "20px",
                     height: "100%",
+                    width: "100%",
+                    minWidth: 0,
+                    maxWidth: "100%",
+                    boxSizing: "border-box",
                     background: colors.white,
                     borderRadius: "18px",
                     padding: "18px 20px",
@@ -667,10 +672,11 @@ export function HomePage() {
                   }}
                 >
                   <div
+                    className="feature-card-image-wrap"
                     style={{
                       flex: "0 0 42%",
                       maxWidth: "200px",
-                      minWidth: "120px",
+                      minWidth: 0,
                       borderRadius: "14px",
                       background: "#E8EAED",
                       aspectRatio: "1.05",
@@ -682,7 +688,7 @@ export function HomePage() {
                       src={IMAGES.features[i]}
                       alt={item.title}
                       fill
-                      sizes="(max-width: 900px) 40vw, 200px"
+                      sizes="(max-width: 900px) calc(100vw - 80px), 200px"
                       style={{ objectFit: "cover" }}
                     />
                   </div>
@@ -715,10 +721,10 @@ export function HomePage() {
       </section>
 
       {/* Roadmap — vertical timeline, alternating cards */}
-      <section className="roadmap-section" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.white }}>
+      <section className="roadmap-section home-section-stack" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.white }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <AnimatedSection>
-            <div style={{ textAlign: "center", marginBottom: "64px" }}>
+            <div className="home-section-header-tight-lg" style={{ textAlign: "center", marginBottom: "64px" }}>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
                 fontSize: "12px",
@@ -905,10 +911,10 @@ export function HomePage() {
       </section>
 
       {/* What people say — three testimonial cards */}
-      <section style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
+      <section className="home-section-stack" style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
         <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
           <AnimatedSection>
-            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+            <div className="home-section-header-tight" style={{ textAlign: "center", marginBottom: "48px" }}>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
                 fontSize: "12px",
@@ -959,7 +965,7 @@ export function HomePage() {
               },
             ].map((item, i) => (
               <AnimatedSection key={item.name} delay={i * 0.06}>
-                <div style={{
+                <div className="home-testimonial-card" style={{
                   background: colors.white,
                   borderRadius: "18px",
                   padding: "24px 22px 26px",
@@ -1020,11 +1026,11 @@ export function HomePage() {
       </section>
 
       {/* Data secured — centered headline + left-aligned trust list */}
-      <section style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
-        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+      <section className="data-secured-section" style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
+        <div style={{ maxWidth: "720px", margin: "0 auto", width: "100%", minWidth: 0 }}>
           <AnimatedSection>
-            <div style={{ textAlign: "center", marginBottom: "44px" }}>
-              <p style={{
+            <div className="data-secured-head" style={{ textAlign: "center", marginBottom: "44px" }}>
+              <p className="data-secured-label" style={{
                 fontFamily: "'Source Sans 3', sans-serif",
                 fontSize: "12px",
                 fontWeight: 700,
@@ -1037,7 +1043,7 @@ export function HomePage() {
               </p>
               <h2 style={{
                 fontFamily: "'Satoshi', sans-serif",
-                fontSize: "clamp(28px, 3.6vw, 40px)",
+                fontSize: "clamp(24px, 5.2vw, 40px)",
                 fontWeight: 800,
                 lineHeight: 1.15,
                 margin: "0 0 16px 0",
@@ -1051,17 +1057,18 @@ export function HomePage() {
               </h2>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
-                fontSize: "16px",
+                fontSize: "clamp(15px, 3.8vw, 16px)",
                 color: colors.textBody,
                 lineHeight: 1.65,
                 maxWidth: "520px",
                 margin: "0 auto",
+                padding: "0 4px",
               }}>
                 We know how sensitive immigration documents are. That&apos;s why security isn&apos;t an afterthought — it&apos;s the foundation.
               </p>
             </div>
           </AnimatedSection>
-          <div style={{ maxWidth: "420px", margin: "0 auto" }}>
+          <div className="data-secured-list" style={{ maxWidth: "420px", margin: "0 auto", width: "100%", minWidth: 0 }}>
             {[
               { icon: <AzureMarkIcon />, text: "Hosted on Microsoft Azure" },
               { icon: <LockIcon />, text: "Encrypted at rest and in transit" },
@@ -1070,13 +1077,13 @@ export function HomePage() {
               { icon: <TrashIcon />, text: "Delete all your data anytime" },
             ].map((item, i) => (
               <AnimatedSection key={item.text} delay={i * 0.05}>
-                <div style={{
+                <div className="data-secured-row" style={{
                   display: "flex",
-                  alignItems: "center",
+                  alignItems: "flex-start",
                   gap: "14px",
                   marginBottom: i < 4 ? "18px" : 0,
                 }}>
-                  <div style={{ color: colors.textMuted, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", width: 28 }}>
+                  <div style={{ color: colors.textMuted, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", width: 28, marginTop: "2px" }}>
                     {item.icon}
                   </div>
                   <span style={{
@@ -1085,6 +1092,8 @@ export function HomePage() {
                     fontWeight: 500,
                     color: colors.textDark,
                     lineHeight: 1.45,
+                    minWidth: 0,
+                    flex: 1,
                   }}>
                     {item.text}
                   </span>
@@ -1096,7 +1105,7 @@ export function HomePage() {
       </section>
 
       {/* CTA — charcoal footer band (#1A2332); green CTA in form */}
-      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.textDark, textAlign: "center" }}>
+      <section className="home-cta-band" style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.textDark, textAlign: "center" }}>
         <div style={{ maxWidth: "600px", margin: "0 auto" }}>
           <AnimatedSection>
             <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 800, color: colors.white, marginBottom: "24px", lineHeight: 1.2 }}>
