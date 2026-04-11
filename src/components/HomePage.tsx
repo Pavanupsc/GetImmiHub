@@ -123,34 +123,34 @@ export function HomePage() {
       </section>
 
       <div
-  className="home-social-shell"
-  style={{
-    position: "relative",
-    borderRadius: "28px",
-    overflow: "hidden",
-  }}
->
-  <div
-    className="home-social-inner"
-    style={{ padding: "44px 56px 52px" }}
-  >
-    <div style={{ overflow: "hidden", borderRadius: "16px", height: "400px" }}>
-  <Image
-    src="/Images/social-media-image.png"
-    alt="ImmiHub product preview"
-    width={1600}
-    height={980}
-    style={{
+      className="home-social-shell"
+      style={{
+      position: "relative",
+      borderRadius: "28px",
+      overflow: "hidden",
+      }}
+      >
+      <div
+      className="home-social-inner"
+      style={{ padding: "44px 56px 52px" }}
+      >
+      <div style={{ overflow: "hidden", borderRadius: "16px", height: "400px" }}>
+      <Image
+      src="/Images/social-media-image.png"
+      alt="ImmiHub product preview"
+      width={1600}
+      height={980}
+      style={{
       width: "100%",
       height: "auto",
       display: "block",
       filter: "drop-shadow(0 0 50px #1353801F)",
-    }}
-    priority
-  />
-</div>
-  </div>
-</div>
+      }}
+      priority
+      />
+      </div>
+      </div>
+      </div>
 
       {/* ===== THE PROBLEM — centered phone with 4 surrounding cards ===== */}
       <section className="home-section-stack" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.bgWhite, overflow: "hidden" }}>
@@ -405,7 +405,7 @@ export function HomePage() {
           </div>
         </div>
       </section>
-      
+
       {/* How It Works — centered header + left PNG (blurred mock + cards) + right GIF (sharp UI) */}
       <section className="home-section-stack" style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
         <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
