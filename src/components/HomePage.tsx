@@ -122,8 +122,8 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Product preview — clip to top 50% of image (aspect-ratio box + overflow:hidden) */}
-      <section className="home-social-section" style={{  padding: `0 ${layout.pagePaddingX} 96px` }}>
+      {/* Product preview — top half of dashboard (50% image height); % height needs a defined box, so we use aspect-ratio clip */}
+      <section className="home-social-section" style={{ background: colors.bgWhite}}>
         <div style={{ maxWidth: "1280px", margin: "0 auto", width: "100%", minWidth: 0 }}>
           <AnimatedSection>
             <div
@@ -131,18 +131,17 @@ export function HomePage() {
               style={{
                 position: "relative",
                 borderRadius: "28px",
-                background: "#F4F6F9",
                 overflow: "hidden",
               }}
             >
-              <div className="home-social-inner" style={{ padding: "44px 56px 52px" }}>
+              <div className="home-social-inner">
                 <div
+                  className="social-preview-crop"
                   style={{
                     overflow: "hidden",
                     borderRadius: "16px",
                     width: "100%",
-                    maxWidth: "100%",
-                    aspectRatio: "1600 / 490",
+                    aspectRatio: "1600 / 520",
                   }}
                 >
                   <Image
@@ -150,7 +149,7 @@ export function HomePage() {
                     alt="ImmiHub product preview"
                     width={1600}
                     height={980}
-                    sizes="(max-width: 768px) calc(100vw - 48px), 1200px"
+                    sizes="(max-width: 768px) calc(100vw - 80px), 1200px"
                     style={{
                       width: "100%",
                       height: "auto",
@@ -170,7 +169,7 @@ export function HomePage() {
       <section className="home-section-stack" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.bgWhite, overflow: "hidden" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <AnimatedSection>
-            <div className="problem-section-header" style={{ textAlign: "center", marginBottom: "64px"}}>
+            <div className="problem-section-header" style={{ textAlign: "center", marginBottom: "64px" }}>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
                 fontSize: "14px",
@@ -216,7 +215,7 @@ export function HomePage() {
             </div>
           </AnimatedSection>
 
-          <div className="problem-phone-layout" style={{ position: "relative" ,backgroundImage: "url('/Images/the-problem-background.png')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat"  }}>
+          <div className="problem-phone-layout" style={{ position: "relative", backgroundImage: "url('/Images/the-problem-background.png')" , backgroundRepeat:'no-repeat',}}>
             <div className="problem-phone" style={{
               position: "absolute",
               left: "50%",
