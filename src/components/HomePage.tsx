@@ -122,9 +122,9 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Social preview image section (below banner) */}
-      <section className="home-social-section" style={{ background: colors.bgWhite, padding: `0 ${layout.pagePaddingX} 96px` }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+      {/* Product preview — clip to top 50% of image (aspect-ratio box + overflow:hidden) */}
+      <section className="home-social-section" style={{  padding: `0 ${layout.pagePaddingX} 96px` }}>
+        <div style={{ maxWidth: "1280px", margin: "0 auto", width: "100%", minWidth: 0 }}>
           <AnimatedSection>
             <div
               className="home-social-shell"
@@ -132,28 +132,34 @@ export function HomePage() {
                 position: "relative",
                 borderRadius: "28px",
                 background: "#F4F6F9",
-                boxShadow: "0 18px 40px rgba(26,35,50,0.10)",
                 overflow: "hidden",
               }}
             >
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "radial-gradient(900px 280px at 50% 0%, rgba(79,158,214,0.10), transparent 60%), linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(244,246,249,1) 70%)",
-                }}
-                aria-hidden
-              />
-              <div className="home-social-inner" style={{ position: "relative", padding: "44px 56px 52px" }}>
-                <Image
-                  src="/Images/social-media-image.png"
-                  alt="ImmiHub product preview"
-                  width={1600}
-                  height={980}
-                  style={{ width: "100%", height: "auto", display: "block" }}
-                  priority
-                />
+              <div className="home-social-inner" style={{ padding: "44px 56px 52px" }}>
+                <div
+                  style={{
+                    overflow: "hidden",
+                    borderRadius: "16px",
+                    width: "100%",
+                    maxWidth: "100%",
+                    aspectRatio: "1600 / 490",
+                  }}
+                >
+                  <Image
+                    src="/Images/social-media-image.png"
+                    alt="ImmiHub product preview"
+                    width={1600}
+                    height={980}
+                    sizes="(max-width: 768px) calc(100vw - 48px), 1200px"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      display: "block",
+                      filter: "drop-shadow(0 0 50px #1353801F)",
+                    }}
+                    priority
+                  />
+                </div>
               </div>
             </div>
           </AnimatedSection>
@@ -164,7 +170,7 @@ export function HomePage() {
       <section className="home-section-stack" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.bgWhite, overflow: "hidden" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <AnimatedSection>
-            <div className="problem-section-header" style={{ textAlign: "center", marginBottom: "64px" }}>
+            <div className="problem-section-header" style={{ textAlign: "center", marginBottom: "64px"}}>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
                 fontSize: "14px",
@@ -210,7 +216,7 @@ export function HomePage() {
             </div>
           </AnimatedSection>
 
-          <div className="problem-phone-layout" style={{ position: "relative" }}>
+          <div className="problem-phone-layout" style={{ position: "relative" ,backgroundImage: "url('/Images/the-problem-background.png')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat"  }}>
             <div className="problem-phone" style={{
               position: "absolute",
               left: "50%",
