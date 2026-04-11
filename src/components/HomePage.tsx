@@ -122,35 +122,45 @@ export function HomePage() {
         </div>
       </section>
 
-      <div
-      className="home-social-shell"
-      style={{
-      position: "relative",
-      borderRadius: "28px",
-      overflow: "hidden",
-      }}
+      <section
+        className="home-social-section"
+        style={{
+          padding: `48px ${layout.pagePaddingX} 120px`,
+          background: colors.bgWhite,
+        }}
       >
-      <div
-      className="home-social-inner"
-      style={{ padding: "44px 56px 52px" }}
-      >
-      <div style={{ overflow: "hidden", borderRadius: "16px", height: "400px" }}>
-      <Image
-      src="/Images/social-media-image.png"
-      alt="ImmiHub product preview"
-      width={1600}
-      height={980}
-      style={{
-      width: "100%",
-      height: "auto",
-      display: "block",
-      filter: "drop-shadow(0 0 50px #1353801F)",
-      }}
-      priority
-      />
-      </div>
-      </div>
-      </div>
+        <div style={{ maxWidth: "1280px", margin: "0 auto", width: "100%", position: "relative" }}>
+          <div style={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <div
+              className="home-social-shell"
+              style={{
+                position: "relative",
+                width: "100%",
+                maxWidth: "1040px",
+                borderRadius: "28px",
+                overflow: "hidden",
+              }}
+            >
+              <div className="home-social-inner" style={{ position: "relative" }}>
+                <Image
+                  src="/Images/social-media-image.png"
+                  alt="ImmiHub dashboard preview"
+                  width={1600}
+                  height={980}
+                  priority
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "contain",
+                    display: "block",
+                    filter: "drop-shadow(0 0 50px #1353801F)",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ===== THE PROBLEM — centered phone with 4 surrounding cards ===== */}
       <section className="home-section-stack" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.bgWhite, overflow: "hidden" }}>
