@@ -6,9 +6,10 @@ import { colors, layout } from "@/lib/design-tokens";
 import {
   ShieldIcon,
   LockIcon,
-  CloudIcon,
   TrashIcon,
-  GlobeIcon,
+  AzureMarkIcon,
+  FingerprintIcon,
+  DatabaseIcon,
   BrainIcon,
   DocIcon,
   FolderPlusIcon,
@@ -19,17 +20,6 @@ import {
 const IMAGES = {
   // Hero: warm, personal (WhatsApp-style) — person with smartphone
   hero: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=900&q=85",
-  problem: [
-    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80", // passport / airport
-    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80", // professionals collaborating
-    "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=600&q=80", // documents (scattered)
-    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80",   // calendar / tracking
-  ],
-  howItWorks: [
-    "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&q=80", // person smartphone / upload
-    "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=500&q=80", // passport / document scan
-    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&q=80", // person relaxed / team
-  ],
   // Feature cards — curated Unsplash (documents, calendar, desk work, phone, team, onboarding)
   features: [
     "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=88&auto=format&fit=crop",
@@ -169,72 +159,439 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* The Problem — alternating image left / right; bg-alt for rhythm */}
-      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgAlt }}>
+      {/* ===== THE PROBLEM — centered phone with 4 surrounding cards ===== */}
+      <section style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.bgWhite, overflow: "hidden" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <AnimatedSection>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 700, color: colors.brandPrimary, textTransform: "uppercase", letterSpacing: "2px", marginBottom: "16px" }}>The Problem</p>
-            <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 800, color: colors.textDark, marginBottom: "24px", lineHeight: 1.2 }}>
-              780,000+ H-1B Holders. <span style={{ color: colors.brandPrimary }}>No One Looking Out for Their Deadlines.</span>
-            </h2>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "18px", color: colors.textBody, maxWidth: "640px", lineHeight: 1.75, marginBottom: "80px" }}>
-              A single missed date can put your job, your status, and your entire life in the US at risk. Yet there's no tool built specifically to help you stay on top of it all.
-            </p>
+            <div style={{ textAlign: "center", marginBottom: "64px" }}>
+              <p style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "14px",
+                fontWeight: 700,
+                color: colors.brandPrimary,
+                textTransform: "uppercase",
+                letterSpacing: "2px",
+                marginBottom: "16px",
+              }}>
+                The Problem
+              </p>
+              <h2 style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(32px, 4vw, 44px)",
+                fontWeight: 800,
+                color: colors.textDark,
+                marginBottom: "8px",
+                lineHeight: 1.2,
+              }}>
+                780,000+ H-1B Holders.
+              </h2>
+              <h2 style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(32px, 4vw, 44px)",
+                fontWeight: 800,
+                color: colors.textDark,
+                marginBottom: "20px",
+                lineHeight: 1.2,
+                fontStyle: "italic",
+              }}>
+                No One Looking Out for Their Deadlines.
+              </h2>
+              <p style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "16px",
+                color: colors.textBody,
+                lineHeight: 1.7,
+                maxWidth: "560px",
+                margin: "0 auto",
+              }}>
+                A single missed date can put your job, your status, and your entire life in the US at risk. Yet there&apos;s no tool built specifically to help you stay on top of it all.
+              </p>
+            </div>
           </AnimatedSection>
 
-          {[
-            { image: IMAGES.problem[0], title: "An Expired Passport You Didn't See Coming", desc: "You're at the boarding gate, bags checked, ready to go — and the agent tells you your passport expired last month. Trip cancelled, money gone, and a stressful renewal ahead.", imageLeft: true },
-            { image: IMAGES.problem[1], title: "A Renewal Deadline Lost in Your Inbox", desc: "Your I-797 approval notice arrived a year ago. The renewal date was buried somewhere in that email. By the time you realize it, you're filing on an emergency basis and hoping for the best.", imageLeft: false },
-            { image: IMAGES.problem[2], title: "Critical Documents Scattered Everywhere", desc: "Some are in your email, some in phone photos, some in a folder at home you haven't opened in months. When you need something urgently, you can never find it fast enough.", imageLeft: true },
-            { image: IMAGES.problem[3], title: "Spreadsheets and Calendar Reminders That Fail You", desc: "You've tried tracking dates in Google Sheets and setting phone reminders. But life gets busy, entries go stale, and the one date you forgot to add is the one that matters most.", imageLeft: false },
-          ].map((item, i) => (
-            <AnimatedSection key={i} delay={i * 0.08}>
-              <div style={{
-                display: "grid", gridTemplateColumns: "1fr 1fr", gap: "64px", alignItems: "center", marginBottom: i < 3 ? "140px" : 0,
-              }} className="problem-row">
-                <div style={{ order: item.imageLeft ? 1 : 2 }} className="problem-image">
-                  <div style={{ position: "relative", width: "100%", aspectRatio: "4/3", borderRadius: "24px", overflow: "hidden" }}>
-                    <Image src={item.image} alt="" fill sizes="(max-width: 900px) 100vw, 500px" style={{ objectFit: "cover" }} />
-                  </div>
+          <div className="problem-phone-layout" style={{ position: "relative" }}>
+            <div className="problem-phone" style={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "280px",
+              zIndex: 2,
+              pointerEvents: "none",
+            }}>
+              <Image
+                src="/Images/immihub-mobile.png"
+                alt="ImmiHub app dashboard on mobile"
+                width={560}
+                height={1120}
+                style={{ width: "100%", height: "auto" }}
+                priority
+              />
+            </div>
+
+            <div className="problem-cards-row" style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "360px",
+              marginBottom: "40px",
+              position: "relative",
+              zIndex: 1,
+            }}>
+              <AnimatedSection>
+                <div className="problem-card problem-card-top-left" style={{
+                  background: colors.bgWhite,
+                  borderRadius: "16px",
+                  padding: "28px 28px 32px",
+                  boxShadow: "0 4px 20px rgba(26,35,50,0.08), 0 0 0 1px rgba(26,35,50,0.04)",
+                  position: "relative",
+                }}>
+                  <h3 style={{
+                    fontFamily: "'Satoshi', sans-serif",
+                    fontSize: "18px",
+                    fontWeight: 700,
+                    color: colors.textDark,
+                    marginBottom: "12px",
+                    lineHeight: 1.3,
+                  }}>
+                    A Renewal Deadline Lost in Your Inbox
+                  </h3>
+                  <p style={{
+                    fontFamily: "'Source Sans 3', sans-serif",
+                    fontSize: "14px",
+                    color: colors.textBody,
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}>
+                    Your I-797 approval notice arrived a year ago. The renewal date was buried somewhere in that email. By the time you realize it, you&apos;re filing on an emergency basis and hoping for the best.
+                  </p>
+                  <div className="card-arrow card-arrow-right" style={{
+                    position: "absolute",
+                    right: "-16px",
+                    bottom: "32px",
+                    width: 0,
+                    height: 0,
+                    borderTop: "10px solid transparent",
+                    borderBottom: "10px solid transparent",
+                    borderLeft: `16px solid ${colors.bgWhite}`,
+                    filter: "drop-shadow(2px 0 2px rgba(26,35,50,0.06))",
+                  }} aria-hidden />
                 </div>
-                <div style={{ order: item.imageLeft ? 2 : 1 }} className="problem-text">
-                  <h3 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(22px, 2.5vw, 28px)", fontWeight: 700, color: colors.textDark, marginBottom: "16px", lineHeight: 1.3 }}>{item.title}</h3>
-                  <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: colors.textBody, lineHeight: 1.75 }}>{item.desc}</p>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.08}>
+                <div className="problem-card problem-card-top-right" style={{
+                  background: colors.bgWhite,
+                  borderRadius: "16px",
+                  padding: "28px 28px 32px",
+                  boxShadow: "0 4px 20px rgba(26,35,50,0.08), 0 0 0 1px rgba(26,35,50,0.04)",
+                  position: "relative",
+                }}>
+                  <h3 style={{
+                    fontFamily: "'Satoshi', sans-serif",
+                    fontSize: "18px",
+                    fontWeight: 700,
+                    color: colors.textDark,
+                    marginBottom: "12px",
+                    lineHeight: 1.3,
+                  }}>
+                    An Expired Passport You Didn&apos;t See Coming
+                  </h3>
+                  <p style={{
+                    fontFamily: "'Source Sans 3', sans-serif",
+                    fontSize: "14px",
+                    color: colors.textBody,
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}>
+                    You&apos;re at the boarding gate, bags checked, ready to go — and the agent tells you your passport expired last month. Trip cancelled, money gone, and a stressful renewal ahead.
+                  </p>
+                  <div className="card-arrow card-arrow-left" style={{
+                    position: "absolute",
+                    left: "-16px",
+                    bottom: "32px",
+                    width: 0,
+                    height: 0,
+                    borderTop: "10px solid transparent",
+                    borderBottom: "10px solid transparent",
+                    borderRight: `16px solid ${colors.bgWhite}`,
+                    filter: "drop-shadow(-2px 0 2px rgba(26,35,50,0.06))",
+                  }} aria-hidden />
                 </div>
-              </div>
-            </AnimatedSection>
-          ))}
+              </AnimatedSection>
+            </div>
+
+            <div className="problem-cards-row" style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "360px",
+              position: "relative",
+              zIndex: 1,
+            }}>
+              <AnimatedSection delay={0.12}>
+                <div className="problem-card problem-card-bottom-left" style={{
+                  background: colors.bgWhite,
+                  borderRadius: "16px",
+                  padding: "28px 28px 32px",
+                  boxShadow: "0 4px 20px rgba(26,35,50,0.08), 0 0 0 1px rgba(26,35,50,0.04)",
+                  position: "relative",
+                }}>
+                  <h3 style={{
+                    fontFamily: "'Satoshi', sans-serif",
+                    fontSize: "18px",
+                    fontWeight: 700,
+                    color: colors.textDark,
+                    marginBottom: "12px",
+                    lineHeight: 1.3,
+                  }}>
+                    Critical Documents Scattered Everywhere
+                  </h3>
+                  <p style={{
+                    fontFamily: "'Source Sans 3', sans-serif",
+                    fontSize: "14px",
+                    color: colors.textBody,
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}>
+                    Some are in your email, some in phone photos, some in a folder at home you haven&apos;t opened in months. When you need something urgently, you can never find it fast enough.
+                  </p>
+                  <div className="card-arrow card-arrow-right" style={{
+                    position: "absolute",
+                    right: "-16px",
+                    top: "32px",
+                    width: 0,
+                    height: 0,
+                    borderTop: "10px solid transparent",
+                    borderBottom: "10px solid transparent",
+                    borderLeft: `16px solid ${colors.bgWhite}`,
+                    filter: "drop-shadow(2px 0 2px rgba(26,35,50,0.06))",
+                  }} aria-hidden />
+                </div>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.16}>
+                <div className="problem-card problem-card-bottom-right" style={{
+                  background: colors.bgWhite,
+                  borderRadius: "16px",
+                  padding: "28px 28px 32px",
+                  boxShadow: "0 4px 20px rgba(26,35,50,0.08), 0 0 0 1px rgba(26,35,50,0.04)",
+                  position: "relative",
+                }}>
+                  <h3 style={{
+                    fontFamily: "'Satoshi', sans-serif",
+                    fontSize: "18px",
+                    fontWeight: 700,
+                    color: colors.textDark,
+                    marginBottom: "12px",
+                    lineHeight: 1.3,
+                  }}>
+                    Spreadsheets and Calendar Reminders That Fail You
+                  </h3>
+                  <p style={{
+                    fontFamily: "'Source Sans 3', sans-serif",
+                    fontSize: "14px",
+                    color: colors.textBody,
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}>
+                    You&apos;ve tried tracking dates in Google Sheets and setting phone reminders. But life gets busy, entries go stale, and the one date you forgot to add is the one that matters most.
+                  </p>
+                  <div className="card-arrow card-arrow-left" style={{
+                    position: "absolute",
+                    left: "-16px",
+                    top: "32px",
+                    width: 0,
+                    height: 0,
+                    borderTop: "10px solid transparent",
+                    borderBottom: "10px solid transparent",
+                    borderRight: `16px solid ${colors.bgWhite}`,
+                    filter: "drop-shadow(-2px 0 2px rgba(26,35,50,0.06))",
+                  }} aria-hidden />
+                </div>
+              </AnimatedSection>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* How It Works — image left, simple list right; warm white */}
-      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgWhite }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "center" }} className="how-row">
+      {/* How It Works — centered header + left PNG (blurred mock + cards) + right GIF (sharp UI) */}
+      <section style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
+        <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
+          <AnimatedSection>
+            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+              <p style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "12px",
+                fontWeight: 700,
+                color: colors.brandPrimary,
+                textTransform: "uppercase",
+                letterSpacing: "3px",
+                marginBottom: "14px",
+              }}>
+                How It Works
+              </p>
+              <h2 style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(30px, 4vw, 44px)",
+                fontWeight: 800,
+                color: colors.textDark,
+                marginBottom: "20px",
+                lineHeight: 1.15,
+              }}>
+                Three Steps to{" "}
+                <span style={{ color: colors.brandPrimary }}>Peace of Mind</span>
+              </h2>
+              <p style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "16px",
+                color: colors.textBody,
+                lineHeight: 1.7,
+                maxWidth: "640px",
+                margin: "0 auto",
+              }}>
+                A missed date can put your job, your status, and your entire life in the US at risk. Yet there&apos;s no tool built specifically to help you stay on top of it all.
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <div
+            className="how-it-works-row"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 0.85fr)",
+              gap: "clamp(24px, 4vw, 48px)",
+              alignItems: "center",
+            }}
+          >
             <AnimatedSection>
-              <div style={{ position: "relative", width: "100%", aspectRatio: "4/5", maxWidth: "480px", borderRadius: "28px", overflow: "hidden" }}>
-                <Image src={IMAGES.howItWorks[0]} alt="Upload documents from your phone" fill sizes="(max-width: 900px) 100vw, 480px" style={{ objectFit: "cover" }} />
+              <div style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                minWidth: 0,
+              }}
+              >
+                <div
+                  className="how-it-left-visual"
+                  style={{
+                    position: "relative",
+                    width: "min(100%, 560px)",
+                    maxWidth: "100%",
+                  }}
+                >
+                  <Image
+                    src="/Images/how-it-works-left-image.png"
+                    alt="ImmiHub onboarding: suggested H-1B documents and upload prompts"
+                    width={900}
+                    height={1020}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      display: "block",
+                    }}
+                    priority
+                  />
+                  {/* Callout boxes — white + blue border (design overlay on blurred phone) */}
+                  <div
+                    className="how-it-callout how-it-callout-top"
+                    style={{
+                      position: "absolute",
+                      top: "10%",
+                      left: "4%",
+                      right: "auto",
+                      maxWidth: "354px",
+                      width: "min(354px, calc(100% - 20px))",
+                      zIndex: 2,
+                      background: colors.white,
+                      border: `1px solid ${colors.brandPrimary}`,
+                      borderRadius: "12px",
+                      padding: "14px 16px",
+                      boxShadow: "0 8px 28px rgba(26,35,50,0.1)",
+                    }}
+                  >
+                    <p style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "13px",
+                      fontWeight: 700,
+                      color: colors.textDark,
+                      lineHeight: 1.4,
+                      margin: "0 0 8px 0",
+                    }}>
+                      Let&apos;s start with the most important documents for your H-1B Visa.
+                    </p>
+                    <p style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "12px",
+                      fontWeight: 400,
+                      color: colors.textBody,
+                      lineHeight: 1.55,
+                      margin: 0,
+                    }}>
+                      You can upload your passport, I-94, I-797 (Approval Notice), Visa stamp (if available), Employment letter (optional).
+                    </p>
+                  </div>
+                  <div
+                    className="how-it-callout how-it-callout-bottom"
+                    style={{
+                      position: "absolute",
+                      top: "52%",
+                      left: "18%",
+                      right: "auto",
+                      maxWidth: "354px",
+                      width: "min(354px, calc(100% - 24px))",
+                      zIndex: 2,
+                      background: colors.white,
+                      border: `1px solid ${colors.brandPrimary}`,
+                      borderRadius: "12px",
+                      padding: "14px 16px",
+                      boxShadow: "0 8px 28px rgba(26,35,50,0.1)",
+                    }}
+                  >
+                    <p style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "13px",
+                      fontWeight: 700,
+                      color: colors.textDark,
+                      lineHeight: 1.4,
+                      margin: "0 0 8px 0",
+                    }}>
+                      Upload any immigration document to get started ——
+                    </p>
+                    <p style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "12px",
+                      fontWeight: 400,
+                      color: colors.textBody,
+                      lineHeight: 1.55,
+                      margin: 0,
+                    }}>
+                      (We will extract expiry dates and remind you before deadlines.)
+                    </p>
+                  </div>
+                </div>
               </div>
             </AnimatedSection>
-            <div>
-              <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 700, color: colors.brandPrimary, textTransform: "uppercase", letterSpacing: "2px", marginBottom: "12px" }}>How It Works</p>
-              <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 800, color: colors.textDark, marginBottom: "48px", lineHeight: 1.2 }}>
-                Three Steps to <span style={{ color: colors.brandPrimary }}>Peace of Mind</span>
-              </h2>
-              {[
-                { step: "01", title: "Upload Your Documents", desc: "Snap a photo or upload a file — Passport, I-94, I-797, Visa Stamp, or EAD. It takes less than a minute to get everything in one secure place." },
-                { step: "02", title: "We Read the Dates for You", desc: "Our OCR technology scans your documents and pulls out expiry dates automatically. You review and confirm everything before it's saved — you're always in control." },
-                { step: "03", title: "Relax and Live Your Life", desc: "ImmiHub watches your deadlines and sends you push notifications and email reminders at 180 days and 90 days before each one. No more mental math, no more surprises." },
-              ].map((item, i) => (
-                <AnimatedSection key={i} delay={i * 0.1}>
-                  <div style={{ marginBottom: "48px" }}>
-                    <span style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "14px", fontWeight: 800, color: colors.brandPrimary, letterSpacing: "1px" }}>{item.step}</span>
-                    <h3 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "22px", fontWeight: 700, color: colors.textDark, marginTop: "8px", marginBottom: "12px" }}>{item.title}</h3>
-                    <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "16px", color: colors.textBody, lineHeight: 1.75 }}>{item.desc}</p>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
+            <AnimatedSection delay={0.08}>
+              <div style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                minWidth: 0,
+              }}
+              >
+                <Image
+                  src="/Images/how-it-works-right-image.gif"
+                  alt="ImmiHub H-1B document vault chat: Passport, I-94, I-797, Visa Stamp, and more"
+                  width={420}
+                  height={900}
+                  unoptimized
+                  style={{
+                    width: "min(100%, 300px)",
+                    height: "auto",
+                    display: "block",
+                    borderRadius: "28px",
+                    boxShadow: "0 24px 48px rgba(26,35,50,0.12), 0 0 0 1px rgba(26,35,50,0.06)",
+                  }}
+                />
+              </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
@@ -547,22 +904,114 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials — casual quotes, no stars; bg-alt */}
-      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgAlt }}>
-        <div style={{ maxWidth: "640px", margin: "0 auto" }}>
+      {/* What people say — three testimonial cards */}
+      <section style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
+        <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
           <AnimatedSection>
-            <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 3.5vw, 36px)", fontWeight: 700, color: colors.textDark, marginBottom: "48px", lineHeight: 1.2 }}>Stories We Hear Every Day</h2>
+            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+              <p style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "12px",
+                fontWeight: 700,
+                color: colors.brandPrimary,
+                textTransform: "uppercase",
+                letterSpacing: "3px",
+                marginBottom: "14px",
+              }}>
+                What People Say
+              </p>
+              <h2 style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(28px, 3.5vw, 40px)",
+                fontWeight: 800,
+                lineHeight: 1.2,
+                margin: 0,
+              }}>
+                <span style={{ color: colors.brandPrimary }}>Stories</span>
+                {" "}
+                <span style={{ color: colors.textDark }}>We Hear Every Day</span>
+              </h2>
+            </div>
           </AnimatedSection>
-          <div style={{ display: "flex", flexDirection: "column", gap: "48px" }}>
+          <div
+            className="testimonials-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "28px",
+            }}
+          >
             {[
-              { quote: "My I-797 renewal date was sitting in a year-old email I never thought to check. I found out two weeks before it expired. Something like ImmiHub would have caught that months in advance.", name: "Priya S., Software Engineer" },
-              { quote: "Every time I travel, I'm scrambling to find my passport, visa stamp, and I-94 across three different apps and folders. Having everything in one secure place — that's all I've ever wanted.", name: "Rahul M., Data Analyst" },
-              { quote: "My wife's EAD renewal crept up on us and she couldn't work for three months while we waited for a new card. A simple reminder at 180 days would have changed everything.", name: "Amit K., Product Manager" },
+              {
+                name: "Priya S",
+                role: "Software Engineer",
+                quote: "My I-797 renewal date was sitting in a year-old email I never thought to check. I found out two weeks before it expired. Something like ImmiHub would have caught that months in advance.",
+              },
+              {
+                name: "Rahul M",
+                role: "Data Analyst",
+                quote: "Every time I travel, I&apos;m scrambling to find my passport, visa stamp, and I-94 across three different apps and folders. Having everything in one secure place — that&apos;s all I&apos;ve ever wanted.",
+              },
+              {
+                name: "Amit K",
+                role: "Product Manager",
+                quote: "My wife&apos;s EAD renewal crept up on us and she couldn&apos;t work for three months while we waited for a new card. A simple reminder at 180 days would have changed everything.",
+              },
             ].map((item, i) => (
-              <AnimatedSection key={i}>
-                <div style={{ textAlign: "left" }}>
-                  <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: colors.textBody, lineHeight: 1.75, marginBottom: "12px" }}>"{item.quote}"</p>
-                  <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: colors.textMuted }}>— {item.name}</p>
+              <AnimatedSection key={item.name} delay={i * 0.06}>
+                <div style={{
+                  background: colors.white,
+                  borderRadius: "18px",
+                  padding: "24px 22px 26px",
+                  boxShadow: "0 8px 32px rgba(26,35,50,0.08), 0 0 0 1px rgba(26,35,50,0.05)",
+                  textAlign: "left",
+                  height: "100%",
+                }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: "14px", marginBottom: "16px" }}>
+                    <div
+                      aria-hidden
+                      style={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: "12px",
+                        background: colors.bgAlt,
+                        flexShrink: 0,
+                        border: `1px solid ${colors.border}`,
+                      }}
+                    />
+                    <div style={{ minWidth: 0 }}>
+                      <p style={{
+                        fontFamily: "'Satoshi', sans-serif",
+                        fontSize: "16px",
+                        fontWeight: 700,
+                        color: colors.textDark,
+                        margin: "0 0 4px 0",
+                        lineHeight: 1.25,
+                      }}>
+                        {item.name}
+                      </p>
+                      <p style={{
+                        fontFamily: "'Source Sans 3', sans-serif",
+                        fontSize: "13px",
+                        fontWeight: 400,
+                        fontStyle: "italic",
+                        color: colors.textMuted,
+                        margin: 0,
+                        lineHeight: 1.35,
+                      }}>
+                        {item.role}
+                      </p>
+                    </div>
+                  </div>
+                  <p style={{
+                    fontFamily: "'Source Sans 3', sans-serif",
+                    fontSize: "14px",
+                    color: colors.textBody,
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}>
+                    &ldquo;{item.quote}&rdquo;
+                  </p>
                 </div>
               </AnimatedSection>
             ))}
@@ -570,32 +1019,75 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Security — light, reassuring trust badges; warm white */}
-      <section style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.bgWhite }}>
-        <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
+      {/* Data secured — centered headline + left-aligned trust list */}
+      <section style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
+        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
           <AnimatedSection>
-            <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 3.5vw, 36px)", fontWeight: 700, color: colors.textDark, marginBottom: "12px", lineHeight: 1.3 }}>
-              Your Documents Deserve Serious Protection
-            </h2>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: colors.textBody, marginBottom: "48px", lineHeight: 1.6 }}>
-              We know how sensitive immigration documents are. That's why security isn't an afterthought — it's the foundation.
-            </p>
+            <div style={{ textAlign: "center", marginBottom: "44px" }}>
+              <p style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "12px",
+                fontWeight: 700,
+                color: colors.brandPrimary,
+                textTransform: "uppercase",
+                letterSpacing: "3px",
+                marginBottom: "14px",
+              }}>
+                Data Secured
+              </p>
+              <h2 style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(28px, 3.6vw, 40px)",
+                fontWeight: 800,
+                lineHeight: 1.15,
+                margin: "0 0 16px 0",
+              }}>
+                <span style={{ color: colors.textDark, display: "block" }}>
+                  Your Documents Deserve
+                </span>
+                <span style={{ color: colors.brandPrimary, display: "block" }}>
+                  Serious Protection
+                </span>
+              </h2>
+              <p style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "16px",
+                color: colors.textBody,
+                lineHeight: 1.65,
+                maxWidth: "520px",
+                margin: "0 auto",
+              }}>
+                We know how sensitive immigration documents are. That&apos;s why security isn&apos;t an afterthought — it&apos;s the foundation.
+              </p>
+            </div>
           </AnimatedSection>
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "24px 40px" }}>
+          <div style={{ maxWidth: "420px", margin: "0 auto" }}>
             {[
-              { icon: <CloudIcon />, text: "Hosted on Microsoft Azure" },
+              { icon: <AzureMarkIcon />, text: "Hosted on Microsoft Azure" },
               { icon: <LockIcon />, text: "Encrypted at rest and in transit" },
-              { icon: <ShieldIcon />, text: "No biometric data collected" },
-              { icon: <GlobeIcon />, text: "Data stored in the United States" },
+              { icon: <FingerprintIcon />, text: "No biometric data collected" },
+              { icon: <DatabaseIcon />, text: "Data stored in the United States" },
               { icon: <TrashIcon />, text: "Delete all your data anytime" },
             ].map((item, i) => (
-              <AnimatedSection key={i}>
+              <AnimatedSection key={item.text} delay={i * 0.05}>
                 <div style={{
-                  display: "flex", alignItems: "center", gap: "10px",
-                  color: colors.textBody, minWidth: "140px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "14px",
+                  marginBottom: i < 4 ? "18px" : 0,
                 }}>
-                  <div style={{ color: colors.brandPrimary, flexShrink: 0 }}>{item.icon}</div>
-                  <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", fontWeight: 500, color: colors.textBody, textAlign: "left" }}>{item.text}</span>
+                  <div style={{ color: colors.textMuted, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", width: 28 }}>
+                    {item.icon}
+                  </div>
+                  <span style={{
+                    fontFamily: "'Source Sans 3', sans-serif",
+                    fontSize: "15px",
+                    fontWeight: 500,
+                    color: colors.textDark,
+                    lineHeight: 1.45,
+                  }}>
+                    {item.text}
+                  </span>
                 </div>
               </AnimatedSection>
             ))}

@@ -24,9 +24,6 @@ export default function MainLayout({
         @media (max-width: 768px) {
           .hero-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
         }
-        @media (max-width: 900px) {
-          .how-row { grid-template-columns: 1fr !important; gap: 48px !important; }
-        }
       `}</style>
       <Navigation />
       {children}

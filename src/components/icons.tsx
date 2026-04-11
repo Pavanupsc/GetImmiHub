@@ -61,6 +61,33 @@ export const TrashIcon = () => (
   </svg>
 );
 
+/** Stylized “A” mark — Data secured / Azure hosting row */
+export const AzureMarkIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 18 10 6h4l6 12" />
+    <path d="M8.5 14h7" />
+  </svg>
+);
+
+export const FingerprintIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 10a4 4 0 0 1 4 4v2" />
+    <path d="M12 5a6 6 0 0 1 6 6" />
+    <path d="M12 2a9 9 0 0 1 9 9" />
+    <path d="M12 10a4 4 0 0 0-4 4v2" />
+    <path d="M12 5a6 6 0 0 0-6 6" />
+    <path d="M12 2a9 9 0 0 0-9 9" />
+  </svg>
+);
+
+export const DatabaseIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <ellipse cx="12" cy="5" rx="9" ry="3" />
+    <path d="M3 5v6c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+    <path d="M3 11v6c0 1.66 4 3 9 3s9-1.34 9-3V11" />
+  </svg>
+);
+
 export const GlobeIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
