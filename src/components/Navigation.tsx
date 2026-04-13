@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { colors, layout } from "@/lib/design-tokens";
+import { WaitlistForm } from "@/components/ui";
 import { MenuIcon, CloseIcon } from "./icons";
 
 const navItems: { label: string; href: string; section?: string }[] = [
@@ -30,7 +31,7 @@ const linkBase = {
 
 const ghostCta = {
   padding: "10px 22px",
-  borderRadius: "9999px",
+  borderRadius: "14px",
   border: `1px solid ${colors.brandPrimary}`,
   background: "transparent",
   color: colors.brandPrimary,
@@ -112,7 +113,7 @@ export function Navigation() {
     >
       <div
         style={{
-          maxWidth: "1280px",
+          maxWidth: layout.pageMaxWidth,
           margin: "0 auto",
           padding: `0 ${layout.pagePaddingX}`,
           position: "relative",
@@ -169,22 +170,7 @@ export function Navigation() {
         </div>
 
         <div className="desktop-nav" style={{ marginLeft: "auto", position: "relative", zIndex: 2 }}>
-          <Link
-            href="/"
-            style={ghostCta}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = colors.brandPrimaryPale;
-              e.currentTarget.style.borderColor = colors.brandPrimaryDark;
-              e.currentTarget.style.color = colors.brandPrimaryDark;
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.borderColor = colors.brandPrimary;
-              e.currentTarget.style.color = colors.brandPrimary;
-            }}
-          >
-            Get Early Access
-          </Link>
+          <WaitlistForm variant="button" buttonLabel="Get Early Access" />
         </div>
 
         <button
@@ -244,17 +230,9 @@ export function Navigation() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/"
-            onClick={() => setMobileOpen(false)}
-            style={{
-              ...ghostCta,
-              textAlign: "center",
-              marginTop: "4px",
-            }}
-          >
-            Get Early Access
-          </Link>
+          <div style={{ marginTop: "4px" }} onClick={() => setMobileOpen(false)}>
+            <WaitlistForm variant="button" buttonLabel="Get Early Access" />
+          </div>
         </div>
       )}
     </nav>

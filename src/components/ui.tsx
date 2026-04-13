@@ -28,7 +28,13 @@ export function HeroFade({ children, className = "" }: { children: React.ReactNo
   );
 }
 
-export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer" | "banner" }) {
+export function WaitlistForm({
+  variant = "hero",
+  buttonLabel,
+}: {
+  variant?: "hero" | "footer" | "banner" | "cta" | "button";
+  buttonLabel?: string;
+}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -40,9 +46,14 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
 
   const isHero = variant === "hero";
   const isBanner = variant === "banner";
-  const buttonPadding = isHero ? "18px 36px" : isBanner ? "10px 18px" : "14px 28px";
-  const buttonRadius = isHero ? "12px" : isBanner ? "9999px" : "10px";
-  const fontSize = isHero ? "17px" : isBanner ? "13px" : "15px";
+  const isFooter = variant === "footer";
+  const isCta = variant === "cta";
+  const isButtonOnly = variant === "button";
+  const isPillShell = isBanner || isCta;
+  const shouldRequireInlineEmail = isHero;
+  const buttonPadding = isHero ? "18px 36px" : isPillShell ? (isCta ? "12px 24px" : "10px 18px") : "14px 28px";
+  const buttonRadius = isHero ? "12px" : isPillShell ? "9999px" : "10px";
+  const fontSize = isHero ? "17px" : isPillShell ? (isCta ? "15px" : "13px") : "15px";
 
   const resetModalFields = () => {
     setFirstName("");
@@ -165,35 +176,71 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
 
   const inputPadding = isHero
     ? "18px 20px 18px 52px"
-    : isBanner
-      ? "12px 14px 12px 16px"
+    : isPillShell
+      ? isCta
+        ? "12px 14px 12px 44px"
+        : "12px 14px 12px 16px"
       : "14px 16px 14px 44px";
-  const inputRadius = isHero ? "12px" : isBanner ? "9999px" : "10px";
+  const inputRadius = isHero ? "12px" : isPillShell ? "9999px" : "10px";
 
-  const openModalFromInline = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const openModalFromInline = (e?: React.SyntheticEvent) => {
+    e?.preventDefault();
     setModalOpen(true);
   };
 
   return (
     <>
+      {isButtonOnly ? (
+        <button
+          type="button"
+          onClick={() => setModalOpen(true)}
+          className="waitlist-open-btn"
+          style={{
+            padding: "10px 22px",
+            borderRadius: "9999px",
+            border: `1.5px solid ${colors.brandPrimary}`,
+            background: "transparent",
+            color: colors.brandPrimary,
+            fontWeight: 700,
+            fontSize: "14px",
+            fontFamily: "'Source Sans 3', sans-serif",
+            cursor: "pointer",
+            transition: "background 0.2s, border-color 0.2s, color 0.2s",
+            whiteSpace: "nowrap",
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.background = colors.brandPrimaryPale;
+            e.currentTarget.style.borderColor = colors.brandPrimaryDark;
+            e.currentTarget.style.color = colors.brandPrimaryDark;
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.borderColor = colors.brandPrimary;
+            e.currentTarget.style.color = colors.brandPrimary;
+          }}
+        >
+          {buttonLabel || "Join the Waitlist"}
+        </button>
+      ) : (
       <form
+        className={isCta ? "waitlist-form-cta" : undefined}
+        noValidate={!shouldRequireInlineEmail}
         onSubmit={openModalFromInline}
         style={{
           display: "flex",
-          gap: isHero ? "12px" : isBanner ? "10px" : "8px",
+          gap: isHero ? "12px" : isPillShell ? "10px" : "8px",
           flexDirection: "row",
-          flexWrap: isBanner ? "nowrap" : "wrap",
-          maxWidth: isHero ? "100%" : isBanner ? "560px" : "480px",
+          flexWrap: isPillShell ? "nowrap" : "wrap",
+          maxWidth: isHero ? "100%" : isPillShell ? (isCta ? "min(100%, 640px)" : "560px") : "480px",
           alignItems: "stretch",
-          background: isBanner ? "#F3F5F7" : "transparent",
-          border: isBanner ? "1px solid #E6E9EF" : "none",
-          borderRadius: isBanner ? "9999px" : undefined,
-          padding: isBanner ? "6px" : undefined,
-          boxShadow: isBanner ? "0 12px 28px rgba(26,35,50,0.08)" : "none",
+          background: isPillShell ? "#F3F5F7" : "transparent",
+          border: isPillShell ? "1px solid #E6E9EF" : "none",
+          borderRadius: isPillShell ? "9999px" : undefined,
+          padding: isPillShell ? "6px" : undefined,
+          boxShadow: isPillShell ? (isCta ? "0 10px 36px rgba(26,35,50,0.1)" : "0 12px 28px rgba(26,35,50,0.08)") : "none",
         }}
       >
-        <div style={{ position: "relative", flex: isBanner ? "1 1 auto" : "1 1 280px", minWidth: isBanner ? 0 : "200px" }}>
+        <div style={{ position: "relative", flex: isPillShell ? "1 1 auto" : "1 1 280px", minWidth: isPillShell ? 0 : "200px" }}>
           <input
             type="email"
             name="email"
@@ -201,14 +248,14 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
+            required={shouldRequireInlineEmail}
             style={{
               width: "100%",
               padding: inputPadding,
               borderRadius: inputRadius,
-              border: isBanner ? "none" : `2px solid ${isHero ? colors.border : "rgba(255,255,255,0.3)"}`,
-              background: isBanner ? "transparent" : isHero ? colors.white : "rgba(255,255,255,0.1)",
-              color: isHero || isBanner ? colors.textDark : colors.white,
+              border: isPillShell ? "none" : `2px solid ${isHero ? colors.border : "rgba(255,255,255,0.3)"}`,
+              background: isPillShell ? "transparent" : isHero ? colors.white : "rgba(255,255,255,0.1)",
+              color: isHero || isPillShell ? colors.textDark : colors.white,
               fontSize,
               fontFamily: "'Source Sans 3', sans-serif",
               outline: "none",
@@ -216,21 +263,21 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
               boxSizing: "border-box",
             }}
             onFocus={(e) => {
-              if (isBanner) return;
+              if (isPillShell) return;
               (e.target as HTMLElement).style.borderColor = colors.brandPrimary;
             }}
             onBlur={(e) => {
-              if (isBanner) return;
+              if (isPillShell) return;
               (e.target as HTMLElement).style.borderColor = isHero ? colors.border : "rgba(255,255,255,0.3)";
             }}
           />
-          {!isBanner && (
+          {(isHero || isFooter || isCta) && (
             <div style={{
               position: "absolute",
               left: isHero ? "18px" : "14px",
               top: "50%",
               transform: "translateY(-50%)",
-              color: isHero ? colors.textMuted : "rgba(255,255,255,0.5)",
+              color: isHero || isCta ? colors.textMuted : "rgba(255,255,255,0.5)",
               pointerEvents: "none",
             }}>
               <MailIcon />
@@ -238,24 +285,26 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
           )}
         </div>
         <button
-          type="submit"
+          type={shouldRequireInlineEmail ? "submit" : "button"}
+          onClick={shouldRequireInlineEmail ? undefined : openModalFromInline}
           style={{
             padding: buttonPadding,
             borderRadius: buttonRadius,
             border: "none",
-            background: isHero ? colors.accentGreen : isBanner ? colors.brandPrimary : colors.white,
-            color: isHero || isBanner ? colors.white : colors.textDark,
+            background: isHero ? colors.accentGreen : isPillShell ? colors.brandPrimary : colors.white,
+            color: isHero || isPillShell ? colors.white : colors.textDark,
             fontWeight: 700,
             fontSize,
             fontFamily: "'Source Sans 3', sans-serif",
             cursor: "pointer",
             whiteSpace: "nowrap",
-            boxShadow: isHero ? "0 4px 14px rgba(52,184,124,0.25)" : isBanner ? "0 10px 18px rgba(79,158,214,0.28)" : "none",
+            boxShadow: isHero ? "0 4px 14px rgba(52,184,124,0.25)" : isPillShell ? "0 10px 18px rgba(79,158,214,0.28)" : "none",
           }}
         >
           Join the Waitlist
         </button>
       </form>
+      )}
 
       {modalOpen && (
         <div
@@ -335,17 +384,22 @@ export function WaitlistForm({ variant = "hero" }: { variant?: "hero" | "footer"
 
             <form onSubmit={handleModalSubmit}>
               <div style={{ marginBottom: "16px" }}>
-                <span style={labelStyle}>Email address</span>
-                <div
-                  style={{
-                    ...inputStyle,
-                    background: colors.bgAlt,
-                    color: colors.textBody,
-                    borderColor: colors.border,
-                  }}
-                >
-                  {email || "—"}
-                </div>
+                <label htmlFor="waitlist-email" style={labelStyle}>
+                  Email address <span style={{ color: colors.danger }}>*</span>
+                </label>
+                <input
+                  id="waitlist-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  style={inputStyle}
+                  onFocus={(e) => { e.target.style.borderColor = colors.brandPrimary; }}
+                  onBlur={(e) => { e.target.style.borderColor = colors.border; }}
+                />
               </div>
 
               <div style={{ marginBottom: "16px" }}>

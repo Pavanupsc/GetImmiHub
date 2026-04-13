@@ -80,6 +80,20 @@ export const FingerprintIcon = () => (
   </svg>
 );
 
+/** Fingerprint with strike — “no biometrics” trust row */
+export const FingerprintProhibitedIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 10a4 4 0 0 1 4 4v2" />
+    <path d="M12 5a6 6 0 0 1 6 6" />
+    <path d="M12 2a9 9 0 0 1 9 9" />
+    <path d="M12 10a4 4 0 0 0-4 4v2" />
+    <path d="M12 5a6 6 0 0 0-6 6" />
+    <path d="M12 2a9 9 0 0 0-9 9" />
+    <line x1="4" y1="4" x2="20" y2="20" strokeWidth="2.25" />
+  </svg>
+);
+
 export const DatabaseIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <ellipse cx="12" cy="5" rx="9" ry="3" />

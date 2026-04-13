@@ -58,4 +58,6 @@ export const colors = {
  */
 export const layout = {
   pagePaddingX: "clamp(28px, 11vw, 140px)",
+  /** Matches Navigation inner shell — use with `padding: 0 pagePaddingX` for aligned gutters */
+  pageMaxWidth: "1280px",
 } as const;

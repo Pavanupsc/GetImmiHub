@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import { AnimatedSection, HeroFade, WaitlistForm } from "@/components/ui";
 import { colors, layout } from "@/lib/design-tokens";
@@ -8,7 +9,7 @@ import {
   LockIcon,
   TrashIcon,
   AzureMarkIcon,
-  FingerprintIcon,
+  FingerprintProhibitedIcon,
   DatabaseIcon,
   BrainIcon,
   DocIcon,
@@ -31,6 +32,71 @@ const IMAGES = {
   ],
 } as const;
 
+/** Horizontal alignment with `Navigation` — vertical padding stays on `<section>` */
+const PAGE_INNER: CSSProperties = {
+  maxWidth: layout.pageMaxWidth,
+  margin: "0 auto",
+  width: "100%",
+  padding: `0 ${layout.pagePaddingX}`,
+};
+
+const DATA_SECURED_TRUST_ITEMS = [
+  { icon: <AzureMarkIcon />, text: "Hosted on Microsoft Azure" },
+  { icon: <LockIcon />, text: "Encrypted at rest and in transit" },
+  { icon: <FingerprintProhibitedIcon />, text: "No biometric data collected" },
+  { icon: <DatabaseIcon />, text: "Data stored in the United States" },
+  { icon: <TrashIcon />, text: "Delete all your data anytime" },
+] as const;
+
+type DataSecuredTrustItem = { icon: ReactNode; text: string };
+
+function DataSecuredTrustCell({ item, delay }: { item: DataSecuredTrustItem; delay: number }) {
+  return (
+    <AnimatedSection delay={delay}>
+      <div
+        className="data-secured-cell"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "12px",
+          textAlign: "left",
+          minWidth: 0,
+        }}
+      >
+        <span
+          className="data-secured-icon"
+          style={{
+            color: colors.brandPrimary,
+            flexShrink: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 28,
+            height: 28,
+          }}
+          aria-hidden
+        >
+          {item.icon}
+        </span>
+        <span
+          className="data-secured-cell-text"
+          style={{
+            fontFamily: "'Source Sans 3', sans-serif",
+            fontSize: "15px",
+            fontWeight: 500,
+            color: colors.textDark,
+            lineHeight: 1.45,
+            minWidth: 0,
+          }}
+        >
+          {item.text}
+        </span>
+      </div>
+    </AnimatedSection>
+  );
+}
+
 export function HomePage() {
   return (
     <div>
@@ -38,9 +104,9 @@ export function HomePage() {
       <section className="home-hero" style={{
         minHeight: "100vh", display: "flex", alignItems: "center",
         background: colors.bgWhite,
-        padding: `140px ${layout.pagePaddingX} 160px`, position: "relative", overflow: "hidden",
+        padding: "140px 0 160px", position: "relative", overflow: "hidden",
       }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto", width: "100%", position: "relative" }}>
+        <div style={{ ...PAGE_INNER, position: "relative" }}>
           <HeroFade>
           <div style={{
             display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(48px, 8vw, 120px)", alignItems: "center",
@@ -122,48 +188,43 @@ export function HomePage() {
         </div>
       </section>
 
-      <section
-        className="home-social-section"
-        style={{
-          padding: `48px ${layout.pagePaddingX} 120px`,
-          background: colors.bgWhite,
-        }}
-      >
-        <div style={{ maxWidth: "1280px", margin: "0 auto", width: "100%", position: "relative" }}>
-          <div style={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <div
-              className="home-social-shell"
-              style={{
-                position: "relative",
-                width: "100%",
-                maxWidth: "1040px",
-                borderRadius: "28px",
-                overflow: "hidden",
-              }}
-            >
-              <div className="home-social-inner" style={{ position: "relative" }}>
-                <Image
-                  src="/Images/social-media-image.png"
-                  alt="ImmiHub dashboard preview"
-                  width={1600}
-                  height={980}
-                  priority
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    objectFit: "contain",
-                    display: "block",
-                    filter: "drop-shadow(0 0 50px #1353801F)",
-                  }}
-                />
-              </div>
-            </div>
-          </div>
+      <div className="home-social-section" style={{ padding: 0 }}>
+        <div style={PAGE_INNER}>
+      <div
+  className="home-social-shell"
+  style={{
+    position: "relative",
+    borderRadius: "28px",
+    overflow: "hidden",
+  }}
+>
+  <div
+    className="home-social-inner"
+    style={{ padding: "44px 0 52px" }}
+  >
+    <div style={{ overflow: "hidden", borderRadius: "16px", height: "50%" }}>
+  <Image
+    src="/Images/social-media-image.png"
+    alt="ImmiHub product preview"
+    width={1600}
+    height={980}
+    style={{
+      width: "100%",
+      height: "auto",
+      display: "block",
+      filter: "drop-shadow(0 0 50px #1353801F)",
+    }}
+    priority
+  />
+</div>
+  </div>
+</div>
         </div>
-      </section>
+      </div>
 
       {/* ===== THE PROBLEM — centered phone with 4 surrounding cards ===== */}
-      <section className="home-section-stack" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.bgWhite, overflow: "hidden" }}>
+      <section className="home-section-stack" style={{ padding: "120px 0 140px", background: colors.bgWhite, overflow: "hidden" }}>
+        <div style={PAGE_INNER}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <AnimatedSection>
             <div className="problem-section-header" style={{ textAlign: "center", marginBottom: "64px" }}>
@@ -212,7 +273,7 @@ export function HomePage() {
             </div>
           </AnimatedSection>
 
-          <div className="problem-phone-layout" style={{ position: "relative", backgroundImage: "url('/Images/the-problem-background.png')" , backgroundRepeat:'no-repeat',}}>
+          <div className="problem-phone-layout" style={{ position: "relative" }}>
             <div className="problem-phone" style={{
               position: "absolute",
               left: "50%",
@@ -414,13 +475,15 @@ export function HomePage() {
             </div>
           </div>
         </div>
+        </div>
       </section>
 
-      {/* How It Works — centered header + left PNG (blurred mock + cards) + right GIF (sharp UI) */}
-      <section className="home-section-stack" style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
+      {/* How It Works — mobile asset + staggered step cards */}
+      <section className="home-section-stack" style={{ padding: "100px 0 120px", background: colors.bgWhite }}>
+        <div style={PAGE_INNER}>
         <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
           <AnimatedSection>
-            <div className="home-section-header-tight" style={{ textAlign: "center", marginBottom: "48px" }}>
+            <div className="home-section-header-tight" style={{ textAlign: "center", marginBottom: "clamp(40px, 6vw, 56px)" }}>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
                 fontSize: "12px",
@@ -451,7 +514,7 @@ export function HomePage() {
                 maxWidth: "640px",
                 margin: "0 auto",
               }}>
-                A missed date can put your job, your status, and your entire life in the US at risk. Yet there&apos;s no tool built specifically to help you stay on top of it all.
+                A single missed date can put your job, your status, and your entire life in the US at risk. Yet there&apos;s no tool built specifically to help you stay on top of it all.
               </p>
             </div>
           </AnimatedSection>
@@ -460,147 +523,104 @@ export function HomePage() {
             className="how-it-works-row"
             style={{
               display: "grid",
-              gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 0.85fr)",
-              gap: "clamp(24px, 4vw, 48px)",
+              gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 1fr)",
+              gap: "clamp(28px, 5vw, 56px)",
               alignItems: "center",
             }}
           >
             <AnimatedSection>
-              <div style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                minWidth: 0,
-              }}
-              >
-                <div
-                  className="how-it-left-visual"
-                  style={{
-                    position: "relative",
-                    width: "min(100%, 560px)",
-                    maxWidth: "100%",
-                  }}
-                >
+              <div style={{ display: "flex", justifyContent: "center", minWidth: 0 }}>
+                <div style={{ position: "relative", width: "min(100%, 540px)", maxWidth: "100%" }}>
                   <Image
-                    src="/Images/how-it-works-left-image.png"
-                    alt="ImmiHub onboarding: suggested H-1B documents and upload prompts"
+                    src="/Images/how-it-works-mobile.png"
+                    alt="ImmiHub on mobile: H-1B document vault with Passport, I-94, I-797, Visa Stamp, and more"
                     width={900}
                     height={1020}
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      display: "block",
-                    }}
+                    style={{ width: "100%", height: "auto", display: "block" }}
                     priority
                   />
-                  {/* Callout boxes — white + blue border (design overlay on blurred phone) */}
-                  <div
-                    className="how-it-callout how-it-callout-top"
-                    style={{
-                      position: "absolute",
-                      top: "10%",
-                      left: "4%",
-                      right: "auto",
-                      maxWidth: "354px",
-                      width: "min(354px, calc(100% - 20px))",
-                      zIndex: 2,
-                      background: colors.white,
-                      border: `1px solid ${colors.brandPrimary}`,
-                      borderRadius: "12px",
-                      padding: "14px 16px",
-                      boxShadow: "0 8px 28px rgba(26,35,50,0.1)",
-                    }}
-                  >
-                    <p style={{
-                      fontFamily: "'Source Sans 3', sans-serif",
-                      fontSize: "13px",
-                      fontWeight: 700,
-                      color: colors.textDark,
-                      lineHeight: 1.4,
-                      margin: "0 0 8px 0",
-                    }}>
-                      Let&apos;s start with the most important documents for your H-1B Visa.
-                    </p>
-                    <p style={{
-                      fontFamily: "'Source Sans 3', sans-serif",
-                      fontSize: "12px",
-                      fontWeight: 400,
-                      color: colors.textBody,
-                      lineHeight: 1.55,
-                      margin: 0,
-                    }}>
-                      You can upload your passport, I-94, I-797 (Approval Notice), Visa stamp (if available), Employment letter (optional).
-                    </p>
-                  </div>
-                  <div
-                    className="how-it-callout how-it-callout-bottom"
-                    style={{
-                      position: "absolute",
-                      top: "52%",
-                      left: "18%",
-                      right: "auto",
-                      maxWidth: "354px",
-                      width: "min(354px, calc(100% - 24px))",
-                      zIndex: 2,
-                      background: colors.white,
-                      border: `1px solid ${colors.brandPrimary}`,
-                      borderRadius: "12px",
-                      padding: "14px 16px",
-                      boxShadow: "0 8px 28px rgba(26,35,50,0.1)",
-                    }}
-                  >
-                    <p style={{
-                      fontFamily: "'Source Sans 3', sans-serif",
-                      fontSize: "13px",
-                      fontWeight: 700,
-                      color: colors.textDark,
-                      lineHeight: 1.4,
-                      margin: "0 0 8px 0",
-                    }}>
-                      Upload any immigration document to get started ——
-                    </p>
-                    <p style={{
-                      fontFamily: "'Source Sans 3', sans-serif",
-                      fontSize: "12px",
-                      fontWeight: 400,
-                      color: colors.textBody,
-                      lineHeight: 1.55,
-                      margin: 0,
-                    }}>
-                      (We will extract expiry dates and remind you before deadlines.)
-                    </p>
-                  </div>
                 </div>
               </div>
             </AnimatedSection>
             <AnimatedSection delay={0.08}>
-              <div style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                minWidth: 0,
-              }}
+              <div
+                className="how-it-steps-stack"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "20px",
+                  minWidth: 0,
+                }}
               >
-                <Image
-                  src="/Images/how-it-works-right-image.gif"
-                  alt="ImmiHub H-1B document vault chat: Passport, I-94, I-797, Visa Stamp, and more"
-                  width={420}
-                  height={900}
-                  unoptimized
-                  style={{
-                    width: "min(100%, 300px)",
-                    height: "auto",
-                    display: "block",
-                    borderRadius: "28px",
-                    boxShadow: "0 24px 48px rgba(26,35,50,0.12), 0 0 0 1px rgba(26,35,50,0.06)",
-                  }}
-                />
+                {[
+                  {
+                    n: "01",
+                    title: "Upload your documents",
+                    body: "Snap a photo or upload a file — Passport, I-94, I-797, Visa Stamp, or EAD. It takes less than a minute to get everything in one secure place.",
+                  },
+                  {
+                    n: "02",
+                    title: "We read the dates for you",
+                    body: "Our OCR technology scans your documents and pulls out expiry dates automatically. You review and confirm everything before it&apos;s saved — you&apos;re always in control.",
+                  },
+                  {
+                    n: "03",
+                    title: "Relax and live your life",
+                    body: "ImmiHub watches your deadlines and sends you push notifications and email reminders at 180 days and 90 days before each one. No more mental math, no more surprises.",
+                  },
+                ].map((step, i) => (
+                  <div
+                    key={step.n}
+                    className="how-it-step-card"
+                    style={{
+                      marginLeft: i === 0 ? 0 : i === 1 ? 22 : 44,
+                      background: colors.white,
+                      borderRadius: "16px",
+                      padding: "22px 24px",
+                      boxShadow: "0 8px 32px rgba(26,35,50,0.08), 0 0 0 1px rgba(26,35,50,0.05)",
+                    }}
+                  >
+                    <p style={{
+                      fontFamily: "'Satoshi', sans-serif",
+                      fontSize: "clamp(28px, 3.2vw, 36px)",
+                      fontWeight: 800,
+                      color: colors.brandPrimary,
+                      lineHeight: 1,
+                      margin: "0 0 12px 0",
+                    }}>
+                      {step.n}
+                    </p>
+                    <h3 style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "17px",
+                      fontWeight: 700,
+                      color: colors.textDark,
+                      lineHeight: 1.35,
+                      margin: "0 0 10px 0",
+                    }}>
+                      {step.title}
+                    </h3>
+                    <p style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "14px",
+                      color: colors.textBody,
+                      lineHeight: 1.65,
+                      margin: 0,
+                    }}>
+                      {step.body}
+                    </p>
+                  </div>
+                ))}
               </div>
             </AnimatedSection>
           </div>
         </div>
+        </div>
       </section>
 
       {/* Features — centered header, 2×3 grid; horizontal cards (visual left, copy right) */}
-      <section id="features" className="home-section-stack features-section" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.white, overflowX: "hidden" }}>
+      <section id="features" className="home-section-stack features-section" style={{ padding: "120px 0 140px", background: colors.white, overflowX: "hidden" }}>
+        <div style={PAGE_INNER}>
         <div style={{ maxWidth: "1120px", margin: "0 auto", width: "100%", minWidth: 0 }}>
           <AnimatedSection>
             <div className="home-section-header-tight" style={{ textAlign: "center", marginBottom: "48px" }}>
@@ -720,10 +740,12 @@ export function HomePage() {
             ))}
           </div>
         </div>
+        </div>
       </section>
 
       {/* Roadmap — vertical timeline, alternating cards */}
-      <section className="roadmap-section home-section-stack" style={{ padding: `120px ${layout.pagePaddingX} 140px`, background: colors.white }}>
+      <section className="roadmap-section home-section-stack" style={{ padding: "120px 0 140px", background: colors.white }}>
+        <div style={PAGE_INNER}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <AnimatedSection>
             <div className="home-section-header-tight-lg" style={{ textAlign: "center", marginBottom: "64px" }}>
@@ -910,10 +932,12 @@ export function HomePage() {
             })}
           </div>
         </div>
+        </div>
       </section>
 
       {/* What people say — three testimonial cards */}
-      <section className="home-section-stack" style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
+      <section className="home-section-stack" style={{ padding: "100px 0 120px", background: colors.white }}>
+        <div style={PAGE_INNER}>
         <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
           <AnimatedSection>
             <div className="home-section-header-tight" style={{ textAlign: "center", marginBottom: "48px" }}>
@@ -1025,18 +1049,20 @@ export function HomePage() {
             ))}
           </div>
         </div>
+        </div>
       </section>
 
-      {/* Data secured — centered headline + left-aligned trust list */}
-      <section className="data-secured-section" style={{ padding: `100px ${layout.pagePaddingX} 120px`, background: colors.white }}>
-        <div style={{ maxWidth: "720px", margin: "0 auto", width: "100%", minWidth: 0 }}>
+      {/* Data secured — centered headline + 3×2 trust grid (icons in brand blue) */}
+      <section className="data-secured-section" style={{ padding: "100px 0 120px", background: colors.white }}>
+        <div style={PAGE_INNER}>
+        <div style={{ maxWidth: "960px", margin: "0 auto", width: "100%", minWidth: 0 }}>
           <AnimatedSection>
-            <div className="data-secured-head" style={{ textAlign: "center", marginBottom: "44px" }}>
+            <div className="data-secured-head" style={{ textAlign: "center", marginBottom: "48px" }}>
               <p className="data-secured-label" style={{
                 fontFamily: "'Source Sans 3', sans-serif",
                 fontSize: "12px",
                 fontWeight: 700,
-                color: colors.brandPrimary,
+                color: colors.brandPrimaryLight,
                 textTransform: "uppercase",
                 letterSpacing: "3px",
                 marginBottom: "14px",
@@ -1045,10 +1071,10 @@ export function HomePage() {
               </p>
               <h2 style={{
                 fontFamily: "'Satoshi', sans-serif",
-                fontSize: "clamp(24px, 5.2vw, 40px)",
+                fontSize: "clamp(28px, 3.8vw, 42px)",
                 fontWeight: 800,
                 lineHeight: 1.15,
-                margin: "0 0 16px 0",
+                margin: "0 0 18px 0",
               }}>
                 <span style={{ color: colors.textDark, display: "block" }}>
                   Your Documents Deserve
@@ -1059,67 +1085,60 @@ export function HomePage() {
               </h2>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
-                fontSize: "clamp(15px, 3.8vw, 16px)",
+                fontSize: "16px",
                 color: colors.textBody,
-                lineHeight: 1.65,
-                maxWidth: "520px",
+                lineHeight: 1.7,
+                maxWidth: "560px",
                 margin: "0 auto",
-                padding: "0 4px",
               }}>
                 We know how sensitive immigration documents are. That&apos;s why security isn&apos;t an afterthought — it&apos;s the foundation.
               </p>
             </div>
           </AnimatedSection>
-          <div className="data-secured-list" style={{ maxWidth: "420px", margin: "0 auto", width: "100%", minWidth: 0 }}>
-            {[
-              { icon: <AzureMarkIcon />, text: "Hosted on Microsoft Azure" },
-              { icon: <LockIcon />, text: "Encrypted at rest and in transit" },
-              { icon: <FingerprintIcon />, text: "No biometric data collected" },
-              { icon: <DatabaseIcon />, text: "Data stored in the United States" },
-              { icon: <TrashIcon />, text: "Delete all your data anytime" },
-            ].map((item, i) => (
-              <AnimatedSection key={item.text} delay={i * 0.05}>
-                <div className="data-secured-row" style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "14px",
-                  marginBottom: i < 4 ? "18px" : 0,
-                }}>
-                  <div style={{ color: colors.textMuted, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", width: 28, marginTop: "2px" }}>
-                    {item.icon}
-                  </div>
-                  <span style={{
-                    fontFamily: "'Source Sans 3', sans-serif",
-                    fontSize: "15px",
-                    fontWeight: 500,
-                    color: colors.textDark,
-                    lineHeight: 1.45,
-                    minWidth: 0,
-                    flex: 1,
-                  }}>
-                    {item.text}
-                  </span>
-                </div>
-              </AnimatedSection>
+          <div className="data-secured-grid">
+            {DATA_SECURED_TRUST_ITEMS.slice(0, 3).map((item, i) => (
+              <DataSecuredTrustCell key={item.text} item={item} delay={i * 0.05} />
             ))}
+            <div className="data-secured-grid-bottom">
+              {DATA_SECURED_TRUST_ITEMS.slice(3).map((item, j) => (
+                <DataSecuredTrustCell key={item.text} item={item} delay={0.15 + j * 0.05} />
+              ))}
+            </div>
           </div>
+        </div>
         </div>
       </section>
 
-      {/* CTA — charcoal footer band (#1A2332); green CTA in form */}
-      <section className="home-cta-band" style={{ padding: `180px ${layout.pagePaddingX}`, background: colors.textDark, textAlign: "center" }}>
-        <div style={{ maxWidth: "600px", margin: "0 auto" }}>
+      {/* CTA — light section: split headline + pill waitlist (matches marketing mock) */}
+      <section className="home-cta-band" style={{ padding: "clamp(80px, 11vw, 140px) 0", background: colors.white, textAlign: "center" }}>
+        <div style={PAGE_INNER}>
+        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
           <AnimatedSection>
-            <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 800, color: colors.white, marginBottom: "24px", lineHeight: 1.2 }}>
-              Stop Worrying About Deadlines. Start Living Your Life.
+            <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(30px, 4vw, 44px)", fontWeight: 800, marginBottom: "20px", lineHeight: 1.2 }}>
+              <span style={{ display: "block", color: colors.textDark }}>
+                Stop Worrying About Deadlines.
+              </span>
+              <span style={{ display: "block", color: colors.brandPrimary, marginTop: "4px" }}>
+                Start Living Your Life.
+              </span>
             </h2>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px", color: "rgba(255,255,255,0.65)", marginBottom: "40px", lineHeight: 1.75 }}>
+            <p style={{
+              fontFamily: "'Source Sans 3', sans-serif",
+              fontSize: "17px",
+              color: colors.textBody,
+              marginBottom: "36px",
+              lineHeight: 1.75,
+              maxWidth: "560px",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}>
               Join thousands of H-1B holders who want a better way. Free forever for individuals — no credit card, no catch.
             </p>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <WaitlistForm variant="footer" />
+              <WaitlistForm variant="cta" />
             </div>
           </AnimatedSection>
+        </div>
         </div>
       </section>
     </div>
