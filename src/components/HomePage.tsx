@@ -256,9 +256,8 @@ export function HomePage() {
                 color: colors.textDark,
                 marginBottom: "20px",
                 lineHeight: 1.2,
-                fontStyle: "italic",
               }}>
-                No One Looking Out for Their Deadlines.
+                <span style={{ color: colors.brandPrimary }}>No One Looking Out for Their Deadlines.</span>
               </h2>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
