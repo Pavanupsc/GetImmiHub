@@ -63,8 +63,8 @@ export function Footer() {
           <div>
             <Link href="/" style={{ display: "inline-block", marginBottom: "20px", textDecoration: "none" }}>
               <Image
-                src="/Images/Immihub-logo.png"
-                alt="ImmiHub"
+                src="/Images/immihub-footer.png"
+                alt="ImmiHub-footer-logo"
                 width={140}
                 height={40}
                 style={{ height: "auto", width: "min(160px, 100%)", maxHeight: "40px", objectFit: "contain" }}
