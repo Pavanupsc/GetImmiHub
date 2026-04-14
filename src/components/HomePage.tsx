@@ -173,7 +173,7 @@ export function HomePage() {
               <div style={{ position: "relative", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
                 <div style={{ position: "relative", width: "100%", maxWidth: "520px" }}>
                   <Image
-                    src="/Images/banner-image-r.png"
+                    src="/Images/banner-image-rt.png"
                     alt="ImmiHub app preview on phones"
                     width={900}
                     height={900}
@@ -531,9 +531,9 @@ export function HomePage() {
               <div style={{ display: "flex", justifyContent: "center", minWidth: 0 }}>
                 <div style={{ position: "relative", width: "min(100%, 540px)", maxWidth: "100%" }}>
                   <Image
-                    src="/Images/how-it-works-mobile.png"
+                    src="/Images/how-it-works-mobile-icons.png"
                     alt="ImmiHub on mobile: H-1B document vault with Passport, I-94, I-797, Visa Stamp, and more"
-                    width={900}
+                    width={1500}
                     height={1020}
                     style={{ width: "100%", height: "auto", display: "block" }}
                     priority
