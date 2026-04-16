@@ -31,9 +31,13 @@ export function HeroFade({ children, className = "" }: { children: React.ReactNo
 export function WaitlistForm({
   variant = "hero",
   buttonLabel,
+  buttonBg,
+  buttonShadow,
 }: {
   variant?: "hero" | "footer" | "banner" | "cta" | "button";
   buttonLabel?: string;
+  buttonBg?: string;
+  buttonShadow?: string;
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -54,6 +58,10 @@ export function WaitlistForm({
   const buttonPadding = isHero ? "18px 36px" : isPillShell ? (isCta ? "12px 24px" : "10px 18px") : "14px 28px";
   const buttonRadius = isHero ? "12px" : isPillShell ? "9999px" : "10px";
   const fontSize = isHero ? "17px" : isPillShell ? (isCta ? "15px" : "13px") : "15px";
+  const resolvedButtonBg = buttonBg ?? (isHero ? colors.accentGreen : isPillShell ? colors.brandPrimary : colors.white);
+  const resolvedButtonShadow =
+    buttonShadow ??
+    (isHero ? "0 4px 14px rgba(52,184,124,0.25)" : isPillShell ? "0 10px 18px rgba(79,158,214,0.28)" : "none");
 
   const resetModalFields = () => {
     setFirstName("");
@@ -231,16 +239,22 @@ export function WaitlistForm({
           gap: isHero ? "12px" : isPillShell ? "10px" : "8px",
           flexDirection: "row",
           flexWrap: isPillShell ? "nowrap" : "wrap",
-          maxWidth: isHero ? "100%" : isPillShell ? (isCta ? "min(100%, 640px)" : "560px") : "480px",
+          maxWidth: isHero ? "100%" : isPillShell ? (isCta ? "min(100%, 680px)" : "560px") : "480px",
           alignItems: "stretch",
-          background: isPillShell ? "#F3F5F7" : "transparent",
-          border: isPillShell ? "1px solid #E6E9EF" : "none",
+          background: isPillShell ? (isCta ? colors.white : "#F3F5F7") : "transparent",
+          border: isPillShell ? (isCta ? `1px solid ${colors.border}` : "1px solid #E6E9EF") : "none",
           borderRadius: isPillShell ? "9999px" : undefined,
-          padding: isPillShell ? "6px" : undefined,
-          boxShadow: isPillShell ? (isCta ? "0 10px 36px rgba(26,35,50,0.1)" : "0 12px 28px rgba(26,35,50,0.08)") : "none",
+          padding: isPillShell ? (isCta ? "8px" : "6px") : undefined,
+          boxShadow: isPillShell ? (isCta ? "0 12px 28px rgba(26,35,50,0.10)" : "0 12px 28px rgba(26,35,50,0.08)") : "none",
         }}
       >
-        <div style={{ position: "relative", flex: isPillShell ? "1 1 auto" : "1 1 280px", minWidth: isPillShell ? 0 : "200px" }}>
+        <div
+          style={{
+            position: "relative",
+            flex: isPillShell ? "1 1 auto" : "1 1 280px",
+            minWidth: isPillShell ? 0 : "200px",
+          }}
+        >
           <input
             type="email"
             name="email"
@@ -289,16 +303,17 @@ export function WaitlistForm({
           onClick={shouldRequireInlineEmail ? undefined : openModalFromInline}
           style={{
             padding: buttonPadding,
-            borderRadius: buttonRadius,
+            borderRadius: isPillShell ? "9999px" : buttonRadius,
             border: "none",
-            background: isHero ? colors.accentGreen : isPillShell ? colors.brandPrimary : colors.white,
+            background: resolvedButtonBg,
             color: isHero || isPillShell ? colors.white : colors.textDark,
             fontWeight: 700,
             fontSize,
             fontFamily: "'Source Sans 3', sans-serif",
             cursor: "pointer",
             whiteSpace: "nowrap",
-            boxShadow: isHero ? "0 4px 14px rgba(52,184,124,0.25)" : isPillShell ? "0 10px 18px rgba(79,158,214,0.28)" : "none",
+            boxShadow: resolvedButtonShadow,
+            width: undefined,
           }}
         >
           Join the Waitlist

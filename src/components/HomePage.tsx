@@ -23,12 +23,12 @@ const IMAGES = {
   hero: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=900&q=85",
   // Feature cards — curated Unsplash (documents, calendar, desk work, phone, team, onboarding)
   features: [
-    "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=88&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=88&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1554224154-22dec7ec8818?w=800&q=88&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=88&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=88&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=88&auto=format&fit=crop",
+    "/Images/secure-image.png",
+    "/Images/smart-expiry.png",
+    "/Images/ocr-date.png",
+    "/Images/push-email.png",
+    "/Images/purpose-built.png",
+    "/Images/guided-onboarding.png",
   ],
 } as const;
 
@@ -39,6 +39,39 @@ const PAGE_INNER: CSSProperties = {
   width: "100%",
   padding: `0 ${layout.pagePaddingX}`,
 };
+
+const FEATURE_ITEMS = [
+  {
+    title: "Secure Document Vault",
+    desc: "All your immigration documents in one encrypted vault, hosted on Microsoft Azure. Access them anytime, from any device.",
+    image: IMAGES.features[0],
+  },
+  {
+    title: "Smart Expiry Tracking",
+    desc: "Every document type monitored automatically. See exactly what's expiring and when — at a glance, on your dashboard.",
+    image: IMAGES.features[1],
+  },
+  {
+    title: "OCR Date Extraction",
+    desc: "Take a photo of any document and our AI reads the expiry dates for you. You review and confirm before anything is saved.",
+    image: IMAGES.features[2],
+  },
+  {
+    title: "Push + Email Reminders",
+    desc: "Get notified at 180 days and 90 days before every deadline. Enough lead time to renew, file, or consult your attorney.",
+    image: IMAGES.features[3],
+  },
+  {
+    title: "Purpose-Built for H-1B",
+    desc: "Not a generic file manager. ImmiHub understands Passport, I-94, I-797, Visa Stamp, and EAD — and what each deadline means for you.",
+    image: IMAGES.features[4],
+  },
+  {
+    title: "Guided Onboarding",
+    desc: "Our Immi Bot walks you through setup with a simple conversation. No confusing forms, no guesswork — just answer a few questions and you're ready.",
+    image: IMAGES.features[5],
+  },
+] as const;
 
 const DATA_SECURED_TRUST_ITEMS = [
   { icon: <AzureMarkIcon />, text: "Hosted on Microsoft Azure" },
@@ -188,39 +221,6 @@ export function HomePage() {
         </div>
       </section>
 
-      <div className="home-social-section" style={{ padding: 0 }}>
-        <div style={PAGE_INNER}>
-      <div
-  className="home-social-shell"
-  style={{
-    position: "relative",
-    borderRadius: "28px",
-    overflow: "hidden",
-  }}
->
-  <div
-    className="home-social-inner"
-    style={{ padding: "44px 0 52px" }}
-  >
-    <div style={{ overflow: "hidden", borderRadius: "16px", height: "50%" }}>
-  <Image
-    src="/Images/social-media-image.png"
-    alt="ImmiHub product preview"
-    width={1600}
-    height={980}
-    style={{
-      width: "100%",
-      height: "auto",
-      display: "block",
-      filter: "drop-shadow(0 0 50px #1353801F)",
-    }}
-    priority
-  />
-</div>
-  </div>
-</div>
-        </div>
-      </div>
 
       {/* ===== THE PROBLEM — centered phone with 4 surrounding cards ===== */}
       <section className="home-section-stack" style={{ padding: "120px 0 140px", background: colors.bgWhite, overflow: "hidden" }}>
@@ -528,14 +528,20 @@ export function HomePage() {
             }}
           >
             <AnimatedSection>
-              <div style={{ display: "flex", justifyContent: "center", minWidth: 0 }}>
-                <div style={{ position: "relative", width: "min(100%, 540px)", maxWidth: "100%" }}>
+              <div style={{ display: "flex", justifyContent: "center", minWidth: 0, overflow: "visible" }}>
+                <div style={{ position: "relative", width: "100%", maxWidth: "540px" }}>
                   <Image
                     src="/Images/how-it-works-mobile-icons.png"
                     alt="ImmiHub on mobile: H-1B document vault with Passport, I-94, I-797, Visa Stamp, and more"
                     width={1500}
                     height={1020}
-                    style={{ width: "100%", height: "auto", display: "block" }}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      display: "block",
+                      transform: "scale(1.54)",
+                      transformOrigin: "center center",
+                    }}
                     priority
                   />
                 </div>
@@ -572,7 +578,7 @@ export function HomePage() {
                     key={step.n}
                     className="how-it-step-card"
                     style={{
-                      marginLeft: i === 0 ? 0 : i === 1 ? 22 : 44,
+                      marginLeft: i === 0 ? "-160px" : i === 1 ? "-80px" : 0,
                       background: colors.white,
                       borderRadius: "16px",
                       padding: "22px 24px",
@@ -665,14 +671,7 @@ export function HomePage() {
               gap: "28px",
             }}
           >
-            {[
-              { title: "Secure Document Vault", desc: "All your immigration documents in one encrypted vault, hosted on Microsoft Azure. Access them anytime, from any device." },
-              { title: "Smart Expiry Tracking", desc: "Every document type monitored automatically. See exactly what's expiring and when — at a glance, on your dashboard." },
-              { title: "OCR Date Extraction", desc: "Take a photo of any document and our AI reads the expiry dates for you. You review and confirm before anything is saved." },
-              { title: "Push + Email Reminders", desc: "Get notified at 180 days and 90 days before every deadline. Enough lead time to renew, file, or consult your attorney." },
-              { title: "Purpose-Built for H-1B", desc: "Not a generic file manager. ImmiHub understands Passport, I-94, I-797, Visa Stamp, and EAD — and what each deadline means for you." },
-              { title: "Guided Onboarding", desc: "Our Immi Bot walks you through setup with a simple conversation. No confusing forms, no guesswork — just answer a few questions and you're ready." },
-            ].map((item, i) => (
+            {FEATURE_ITEMS.map((item, i) => (
               <AnimatedSection key={i}>
                 <div
                   className="feature-card-row"
@@ -706,11 +705,15 @@ export function HomePage() {
                     }}
                   >
                     <Image
-                      src={IMAGES.features[i]}
+                      src={item.image}
                       alt={item.title}
                       fill
                       sizes="(max-width: 900px) calc(100vw - 80px), 200px"
-                      style={{ objectFit: "cover" }}
+                      style={{
+                        objectFit: "cover",
+                        transform: "scale(1.12)",
+                        transformOrigin: "center",
+                      }}
                     />
                   </div>
                   <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "left" }}>
@@ -914,7 +917,7 @@ export function HomePage() {
                   >
                     {item.side === "left" ? (
                       <>
-                        <div style={{ justifySelf: "end", paddingRight: 20 }}>{cardInner}</div>
+                        <div className="roadmap-card-wrap roadmap-card-wrap-left" style={{ justifySelf: "end", paddingRight: 20 }}>{cardInner}</div>
                         <div className="roadmap-node-col" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{node}</div>
                         <div />
                       </>
@@ -922,7 +925,7 @@ export function HomePage() {
                       <>
                         <div />
                         <div className="roadmap-node-col" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{node}</div>
-                        <div style={{ justifySelf: "start", paddingLeft: 20 }}>{cardInner}</div>
+                        <div className="roadmap-card-wrap roadmap-card-wrap-right" style={{ justifySelf: "start", paddingLeft: 20 }}>{cardInner}</div>
                       </>
                     )}
                   </div>
@@ -1068,7 +1071,7 @@ export function HomePage() {
               }}>
                 Data Secured
               </p>
-              <h2 style={{
+              <h2 className="data-secured-title" style={{
                 fontFamily: "'Satoshi', sans-serif",
                 fontSize: "clamp(28px, 3.8vw, 42px)",
                 fontWeight: 800,
@@ -1082,7 +1085,7 @@ export function HomePage() {
                   Serious Protection
                 </span>
               </h2>
-              <p style={{
+              <p className="data-secured-copy" style={{
                 fontFamily: "'Source Sans 3', sans-serif",
                 fontSize: "16px",
                 color: colors.textBody,
@@ -1113,7 +1116,7 @@ export function HomePage() {
         <div style={PAGE_INNER}>
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
           <AnimatedSection>
-            <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(30px, 4vw, 44px)", fontWeight: 800, marginBottom: "20px", lineHeight: 1.2 }}>
+            <h2 className="home-cta-title" style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(30px, 4vw, 44px)", fontWeight: 800, marginBottom: "20px", lineHeight: 1.2 }}>
               <span style={{ display: "block", color: colors.textDark }}>
                 Stop Worrying About Deadlines.
               </span>
@@ -1121,19 +1124,7 @@ export function HomePage() {
                 Start Living Your Life.
               </span>
             </h2>
-            <p style={{
-              fontFamily: "'Source Sans 3', sans-serif",
-              fontSize: "17px",
-              color: colors.textBody,
-              marginBottom: "36px",
-              lineHeight: 1.75,
-              maxWidth: "560px",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}>
-              Join thousands of H-1B holders who want a better way. Free forever for individuals — no credit card, no catch.
-            </p>
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "28px" }}>
               <WaitlistForm variant="cta" />
             </div>
           </AnimatedSection>

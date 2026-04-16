@@ -1135,7 +1135,11 @@ export default function ResourcesPage() {
                 ImmiHub monitors your H-1B documents, sends reminders before deadlines, and keeps everything
                 organized in one place — so you're never caught off guard.
               </p>
-              <WaitlistForm variant="hero" />
+              <WaitlistForm
+                variant="hero"
+                buttonBg="#4f9ed6"
+                buttonShadow="0 10px 18px rgba(79,158,214,0.28)"
+              />
             </div>
 
             {/* Guide navigation */}
