@@ -539,7 +539,7 @@ export function HomePage() {
                       width: "100%",
                       height: "auto",
                       display: "block",
-                      transform: "scale(1.54)",
+                      transform: "scale(1.90)",
                       transformOrigin: "center center",
                     }}
                     priority
