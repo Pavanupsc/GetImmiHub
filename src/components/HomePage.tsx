@@ -43,7 +43,7 @@ const PAGE_INNER: CSSProperties = {
 const FEATURE_ITEMS = [
   {
     title: "Secure Document Vault",
-    desc: "All your immigration documents in one encrypted vault, hosted on Microsoft Azure. Access them anytime, from any device.",
+    desc: "All your immigration documents in one encrypted vault, hosted on Amazon AWS. Access them anytime, from any device.",
     image: IMAGES.features[0],
   },
   {
@@ -74,7 +74,7 @@ const FEATURE_ITEMS = [
 ] as const;
 
 const DATA_SECURED_TRUST_ITEMS = [
-  { icon: <AzureMarkIcon />, text: "Hosted on Microsoft Azure" },
+  { icon: <AzureMarkIcon />, text: "Hosted on Amazon AWS" },
   { icon: <LockIcon />, text: "Encrypted at rest and in transit" },
   { icon: <FingerprintProhibitedIcon />, text: "No biometric data collected" },
   { icon: <DatabaseIcon />, text: "Data stored in the United States" },
@@ -137,7 +137,7 @@ export function HomePage() {
       <section className="home-hero" style={{
         minHeight: "100vh", display: "flex", alignItems: "center",
         background: colors.bgWhite,
-        padding: "140px 0 160px", position: "relative", overflow: "hidden",
+        padding: "88px 0 88px", position: "relative", overflow: "hidden",
       }}>
         <div style={{ ...PAGE_INNER, position: "relative" }}>
           <HeroFade>
@@ -223,7 +223,7 @@ export function HomePage() {
 
 
       {/* ===== THE PROBLEM — centered phone with 4 surrounding cards ===== */}
-      <section className="home-section-stack" style={{ padding: "120px 0 140px", background: colors.bgWhite, overflow: "hidden" }}>
+      <section className="home-section-stack" style={{ padding: "56px 0 72px", background: colors.bgWhite, overflow: "hidden" }}>
         <div style={PAGE_INNER}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <AnimatedSection>
@@ -478,7 +478,7 @@ export function HomePage() {
       </section>
 
       {/* How It Works — mobile asset + staggered step cards */}
-      <section className="home-section-stack" style={{ padding: "100px 0 120px", background: colors.bgWhite }}>
+      <section className="home-section-stack" style={{ padding: "52px 0 68px", background: colors.bgWhite }}>
         <div style={PAGE_INNER}>
         <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
           <AnimatedSection>
@@ -624,7 +624,7 @@ export function HomePage() {
       </section>
 
       {/* Features — centered header, 2×3 grid; horizontal cards (visual left, copy right) */}
-      <section id="features" className="home-section-stack features-section" style={{ padding: "120px 0 140px", background: colors.white, overflowX: "hidden" }}>
+      <section id="features" className="home-section-stack features-section" style={{ padding: "56px 0 72px", background: colors.white, overflowX: "hidden" }}>
         <div style={PAGE_INNER}>
         <div style={{ maxWidth: "1120px", margin: "0 auto", width: "100%", minWidth: 0 }}>
           <AnimatedSection>
@@ -746,7 +746,7 @@ export function HomePage() {
       </section>
 
       {/* Roadmap — vertical timeline, alternating cards */}
-      <section className="roadmap-section home-section-stack" style={{ padding: "120px 0 140px", background: colors.white }}>
+      <section className="roadmap-section home-section-stack" style={{ padding: "56px 0 72px", background: colors.white }}>
         <div style={PAGE_INNER}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <AnimatedSection>
@@ -938,7 +938,7 @@ export function HomePage() {
       </section>
 
       {/* What people say — three testimonial cards */}
-      <section className="home-section-stack" style={{ padding: "100px 0 120px", background: colors.white }}>
+      <section className="home-section-stack" style={{ padding: "52px 0 68px", background: colors.white }}>
         <div style={PAGE_INNER}>
         <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
           <AnimatedSection>
@@ -980,16 +980,19 @@ export function HomePage() {
                 name: "Priya S",
                 role: "Software Engineer",
                 quote: "My I-797 renewal date was sitting in a year-old email I never thought to check. I found out two weeks before it expired. Something like ImmiHub would have caught that months in advance.",
+                avatar: "/Images/testimonials/priya.png",
               },
               {
                 name: "Rahul M",
                 role: "Data Analyst",
                 quote: "Every time I travel, I&apos;m scrambling to find my passport, visa stamp, and I-94 across three different apps and folders. Having everything in one secure place — that&apos;s all I&apos;ve ever wanted.",
+                avatar: "/Images/testimonials/rahul.png",
               },
               {
                 name: "Amit K",
                 role: "Product Manager",
                 quote: "My wife&apos;s EAD renewal crept up on us and she couldn&apos;t work for three months while we waited for a new card. A simple reminder at 180 days would have changed everything.",
+                avatar: "/Images/testimonials/amit.png",
               },
             ].map((item, i) => (
               <AnimatedSection key={item.name} delay={i * 0.06}>
@@ -1011,8 +1014,18 @@ export function HomePage() {
                         background: colors.bgAlt,
                         flexShrink: 0,
                         border: `1px solid ${colors.border}`,
+                        overflow: "hidden",
+                        position: "relative",
                       }}
-                    />
+                    >
+                      <Image
+                        src={item.avatar}
+                        alt={`${item.name} avatar`}
+                        fill
+                        sizes="48px"
+                        style={{ objectFit: "cover" }}
+                      />
+                    </div>
                     <div style={{ minWidth: 0 }}>
                       <p style={{
                         fontFamily: "'Satoshi', sans-serif",
@@ -1055,7 +1068,7 @@ export function HomePage() {
       </section>
 
       {/* Data secured — centered headline + 3×2 trust grid (icons in brand blue) */}
-      <section className="data-secured-section" style={{ padding: "100px 0 120px", background: colors.white }}>
+      <section className="data-secured-section" style={{ padding: "52px 0 68px", background: colors.white }}>
         <div style={PAGE_INNER}>
         <div style={{ maxWidth: "960px", margin: "0 auto", width: "100%", minWidth: 0 }}>
           <AnimatedSection>
@@ -1112,7 +1125,7 @@ export function HomePage() {
       </section>
 
       {/* CTA — light section: split headline + pill waitlist (matches marketing mock) */}
-      <section className="home-cta-band" style={{ padding: "clamp(80px, 11vw, 140px) 0", background: colors.white, textAlign: "center" }}>
+      <section className="home-cta-band" style={{ padding: "clamp(44px, 6vw, 72px) 0", background: colors.white, textAlign: "center" }}>
         <div style={PAGE_INNER}>
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
           <AnimatedSection>
