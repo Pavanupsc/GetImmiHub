@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { track } from "@vercel/analytics";
 import { colors } from "@/lib/design-tokens";
 import { ChevronIcon, CheckCircleIcon, CloseIcon, MailIcon } from "./icons";
@@ -43,10 +44,17 @@ export function WaitlistForm({
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [visaType, setVisaType] = useState<(typeof VISA_TYPES)[number] | "">("");
+  const [otherVisaType, setOtherVisaType] = useState("");
   const [interests, setInterests] = useState<Record<string, boolean>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [fadingOut, setFadingOut] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const isHero = variant === "hero";
   const isBanner = variant === "banner";
@@ -66,6 +74,7 @@ export function WaitlistForm({
   const resetModalFields = () => {
     setFirstName("");
     setVisaType("");
+    setOtherVisaType("");
     setInterests({});
   };
 
@@ -73,6 +82,7 @@ export function WaitlistForm({
     setEmail("");
     setFirstName("");
     setVisaType("");
+    setOtherVisaType("");
     setInterests({});
   };
 
@@ -116,6 +126,7 @@ export function WaitlistForm({
           email: email.trim(),
           firstName: firstName.trim(),
           visaType,
+          otherVisaType: visaType === "Other" ? otherVisaType.trim() : "",
           interests: selectedInterests,
         }),
       });
@@ -134,12 +145,20 @@ export function WaitlistForm({
       track("waitlist_signup", {
         variant,
         visa_type: visaType,
+        other_visa_type: visaType === "Other" ? otherVisaType.trim() : undefined,
         interests: selectedInterests.join(", ") || undefined,
         interest_count: selectedInterests.length,
       });
       setSubmitted(true);
+      setFadingOut(false);
       resetAll();
       setModalOpen(false);
+      setTimeout(() => {
+        setFadingOut(true);
+      }, 4500);
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 5000);
     } catch {
       setSubmitError("Network error. Please try again.");
     } finally {
@@ -149,12 +168,12 @@ export function WaitlistForm({
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    padding: "14px 16px",
-    borderRadius: "10px",
+    padding: "10px 14px",
+    borderRadius: "8px",
     border: `2px solid ${colors.border}`,
     background: colors.white,
     color: colors.textDark,
-    fontSize: "16px",
+    fontSize: "15px",
     fontFamily: "'Source Sans 3', sans-serif",
     outline: "none",
     boxSizing: "border-box",
@@ -165,19 +184,23 @@ export function WaitlistForm({
     fontSize: "13px",
     fontWeight: 600,
     color: colors.textBody,
-    marginBottom: "6px",
+    marginBottom: "4px",
     fontFamily: "'Source Sans 3', sans-serif",
   };
 
   if (submitted) {
     return (
       <div style={{
-        display: "flex", alignItems: "center", gap: "8px",
-        padding: "18px 24px", borderRadius: "14px",
+        display: "flex", alignItems: "center", gap: "6px",
+        padding: buttonPadding, borderRadius: buttonRadius, fontSize: fontSize,
         background: colors.greenLight, color: colors.green,
-        fontFamily: "'Source Sans 3', sans-serif", fontWeight: 600,
+        fontFamily: "'Source Sans 3', sans-serif", fontWeight: 700,
+        opacity: fadingOut ? 0 : 1,
+        transform: fadingOut ? "scale(0.96) translateY(-4px)" : "scale(1) translateY(0)",
+        transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+        whiteSpace: "nowrap",
       }}>
-        <CheckCircleIcon /> You&apos;re on the list! We&apos;ll notify you when ImmiHub launches.
+        <CheckCircleIcon /> {isPillShell ? "Waitlist Joined!" : "You're on the list! We'll notify you."}
       </div>
     );
   }
@@ -230,112 +253,114 @@ export function WaitlistForm({
           {buttonLabel || "Join the Waitlist"}
         </button>
       ) : (
-      <form
-        className={isCta ? "waitlist-form-cta" : undefined}
-        noValidate={!shouldRequireInlineEmail}
-        onSubmit={openModalFromInline}
-        style={{
-          display: "flex",
-          gap: isHero ? "12px" : isPillShell ? "10px" : "8px",
-          flexDirection: "row",
-          flexWrap: isPillShell ? "nowrap" : "wrap",
-          maxWidth: isHero ? "100%" : isPillShell ? (isCta ? "min(100%, 680px)" : "560px") : "480px",
-          alignItems: "stretch",
-          background: isPillShell ? (isCta ? colors.white : "#F3F5F7") : "transparent",
-          border: isPillShell ? (isCta ? `1px solid ${colors.border}` : "1px solid #E6E9EF") : "none",
-          borderRadius: isPillShell ? "9999px" : undefined,
-          padding: isPillShell ? (isCta ? "8px" : "6px") : undefined,
-          boxShadow: isPillShell ? (isCta ? "0 12px 28px rgba(26,35,50,0.10)" : "0 12px 28px rgba(26,35,50,0.08)") : "none",
-        }}
-      >
-        <div
+        <form
+          className={isCta ? "waitlist-form-cta" : undefined}
+          noValidate={!shouldRequireInlineEmail}
+          onSubmit={openModalFromInline}
           style={{
-            position: "relative",
-            flex: isPillShell ? "1 1 auto" : "1 1 280px",
-            minWidth: isPillShell ? 0 : "200px",
+            display: "flex",
+            gap: isHero ? "12px" : isPillShell ? "10px" : "8px",
+            flexDirection: "row",
+            flexWrap: isPillShell ? "nowrap" : "wrap",
+            maxWidth: isHero ? "100%" : isPillShell ? (isCta ? "min(100%, 680px)" : "560px") : "480px",
+            alignItems: "stretch",
+            background: isPillShell ? (isCta ? colors.white : "#F3F5F7") : "transparent",
+            border: isPillShell ? (isCta ? `1px solid ${colors.border}` : "1px solid #E6E9EF") : "none",
+            borderRadius: isPillShell ? "9999px" : undefined,
+            padding: isPillShell ? (isCta ? "8px" : "6px") : undefined,
+            boxShadow: isPillShell ? (isCta ? "0 12px 28px rgba(26,35,50,0.10)" : "0 12px 28px rgba(26,35,50,0.08)") : "none",
           }}
         >
-          <input
-            type="email"
-            name="email"
-            autoComplete="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required={shouldRequireInlineEmail}
+          <div
             style={{
-              width: "100%",
-              padding: inputPadding,
-              borderRadius: inputRadius,
-              border: isPillShell ? "none" : `2px solid ${isHero ? colors.border : "rgba(255,255,255,0.3)"}`,
-              background: isPillShell ? "transparent" : isHero ? colors.white : "rgba(255,255,255,0.1)",
-              color: isHero || isPillShell ? colors.textDark : colors.white,
+              position: "relative",
+              flex: isPillShell ? "1 1 auto" : "1 1 280px",
+              minWidth: isPillShell ? 0 : "200px",
+            }}
+          >
+            <input
+              type="email"
+              name="email"
+              autoComplete="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required={shouldRequireInlineEmail}
+              style={{
+                width: "100%",
+                padding: inputPadding,
+                borderRadius: inputRadius,
+                border: isPillShell ? "none" : `2px solid ${isHero ? colors.border : "rgba(255,255,255,0.3)"}`,
+                background: isPillShell ? "transparent" : isHero ? colors.white : "rgba(255,255,255,0.1)",
+                color: isHero || isPillShell ? colors.textDark : colors.white,
+                fontSize,
+                fontFamily: "'Source Sans 3', sans-serif",
+                outline: "none",
+                transition: "border-color 0.2s",
+                boxSizing: "border-box",
+              }}
+              onFocus={(e) => {
+                if (isPillShell) return;
+                (e.target as HTMLElement).style.borderColor = colors.brandPrimary;
+              }}
+              onBlur={(e) => {
+                if (isPillShell) return;
+                (e.target as HTMLElement).style.borderColor = isHero ? colors.border : "rgba(255,255,255,0.3)";
+              }}
+            />
+            {(isHero || isFooter || isCta) && (
+              <div style={{
+                position: "absolute",
+                left: isHero ? "18px" : "14px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                color: isHero || isCta ? colors.textMuted : "rgba(255,255,255,0.5)",
+                pointerEvents: "none",
+              }}>
+                <MailIcon />
+              </div>
+            )}
+          </div>
+          <button
+            type={shouldRequireInlineEmail ? "submit" : "button"}
+            onClick={shouldRequireInlineEmail ? undefined : openModalFromInline}
+            style={{
+              padding: buttonPadding,
+              borderRadius: isPillShell ? "9999px" : buttonRadius,
+              border: "none",
+              background: resolvedButtonBg,
+              color: isHero || isPillShell ? colors.white : colors.textDark,
+              fontWeight: 700,
               fontSize,
               fontFamily: "'Source Sans 3', sans-serif",
-              outline: "none",
-              transition: "border-color 0.2s",
-              boxSizing: "border-box",
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+              boxShadow: resolvedButtonShadow,
+              width: undefined,
             }}
-            onFocus={(e) => {
-              if (isPillShell) return;
-              (e.target as HTMLElement).style.borderColor = colors.brandPrimary;
-            }}
-            onBlur={(e) => {
-              if (isPillShell) return;
-              (e.target as HTMLElement).style.borderColor = isHero ? colors.border : "rgba(255,255,255,0.3)";
-            }}
-          />
-          {(isHero || isFooter || isCta) && (
-            <div style={{
-              position: "absolute",
-              left: isHero ? "18px" : "14px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              color: isHero || isCta ? colors.textMuted : "rgba(255,255,255,0.5)",
-              pointerEvents: "none",
-            }}>
-              <MailIcon />
-            </div>
-          )}
-        </div>
-        <button
-          type={shouldRequireInlineEmail ? "submit" : "button"}
-          onClick={shouldRequireInlineEmail ? undefined : openModalFromInline}
-          style={{
-            padding: buttonPadding,
-            borderRadius: isPillShell ? "9999px" : buttonRadius,
-            border: "none",
-            background: resolvedButtonBg,
-            color: isHero || isPillShell ? colors.white : colors.textDark,
-            fontWeight: 700,
-            fontSize,
-            fontFamily: "'Source Sans 3', sans-serif",
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-            boxShadow: resolvedButtonShadow,
-            width: undefined,
-          }}
-        >
-          Join the Waitlist
-        </button>
-      </form>
+          >
+            Join the Waitlist
+          </button>
+        </form>
       )}
 
-      {modalOpen && (
+      {modalOpen && mounted && typeof document !== "undefined" && createPortal(
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="waitlist-modal-title"
           style={{
             position: "fixed",
-            inset: 0,
-            zIndex: 10000,
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 99999,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "24px 16px",
-            background: "rgba(26, 35, 50, 0.55)",
-            backdropFilter: "blur(4px)",
+            background: "rgba(26, 35, 50, 0.3)",
+            backdropFilter: "blur(2px)",
           }}
           onClick={(e) => {
             if (e.target === e.currentTarget) closeModal();
@@ -344,11 +369,11 @@ export function WaitlistForm({
           <div
             style={{
               position: "relative",
-              width: "100%",
+              width: "calc(100% - 32px)",
               maxWidth: "480px",
-              maxHeight: "min(90vh, 720px)",
+              maxHeight: "90vh",
               overflowY: "auto",
-              padding: "28px 24px 24px",
+              padding: "20px 24px 16px",
               borderRadius: "16px",
               background: colors.white,
               boxShadow: "0 24px 48px rgba(26, 35, 50, 0.18)",
@@ -378,8 +403,8 @@ export function WaitlistForm({
             <h2
               id="waitlist-modal-title"
               style={{
-                margin: "0 40px 8px 0",
-                fontSize: "22px",
+                margin: "0 40px 4px 0",
+                fontSize: "20px",
                 fontWeight: 700,
                 color: colors.textDark,
                 fontFamily: "'Source Sans 3', sans-serif",
@@ -388,8 +413,8 @@ export function WaitlistForm({
               Join the waitlist
             </h2>
             <p style={{
-              margin: "0 0 20px",
-              fontSize: "15px",
+              margin: "0 0 12px",
+              fontSize: "14px",
               color: colors.textBody,
               lineHeight: 1.5,
               fontFamily: "'Source Sans 3', sans-serif",
@@ -398,7 +423,7 @@ export function WaitlistForm({
             </p>
 
             <form onSubmit={handleModalSubmit}>
-              <div style={{ marginBottom: "16px" }}>
+              <div style={{ marginBottom: "12px" }}>
                 <label htmlFor="waitlist-email" style={labelStyle}>
                   Email address <span style={{ color: colors.danger }}>*</span>
                 </label>
@@ -417,26 +442,26 @@ export function WaitlistForm({
                 />
               </div>
 
-              <div style={{ marginBottom: "16px" }}>
+              <div style={{ marginBottom: "12px" }}>
                 <label htmlFor="waitlist-first" style={labelStyle}>
-                  First name <span style={{ color: colors.danger }}>*</span>
+                  Full name <span style={{ color: colors.danger }}>*</span>
                 </label>
                 <input
                   id="waitlist-first"
                   name="firstName"
                   type="text"
-                  autoComplete="given-name"
+                  autoComplete="name"
                   required
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="First name"
+                  placeholder="First name and Last name"
                   style={inputStyle}
                   onFocus={(e) => { e.target.style.borderColor = colors.brandPrimary; }}
                   onBlur={(e) => { e.target.style.borderColor = colors.border; }}
                 />
               </div>
 
-              <div style={{ marginBottom: "16px" }}>
+              <div style={{ marginBottom: "12px" }}>
                 <label htmlFor="waitlist-visa" style={labelStyle}>
                   Visa type <span style={{ color: colors.danger }}>*</span>
                 </label>
@@ -463,25 +488,41 @@ export function WaitlistForm({
                     </option>
                   ))}
                 </select>
+                {visaType === "Other" && (
+                  <div style={{ marginTop: "12px" }}>
+                    <input
+                      id="waitlist-other-visa"
+                      name="otherVisaType"
+                      type="text"
+                      required
+                      value={otherVisaType}
+                      onChange={(e) => setOtherVisaType(e.target.value)}
+                      placeholder="Enter the Current Visa Type"
+                      style={inputStyle}
+                      onFocus={(e) => { e.target.style.borderColor = colors.brandPrimary; }}
+                      onBlur={(e) => { e.target.style.borderColor = colors.border; }}
+                    />
+                  </div>
+                )}
               </div>
 
-              <fieldset style={{ margin: "0 0 20px", padding: 0, border: "none" }}>
-                <legend style={{ ...labelStyle, marginBottom: "10px" }}>
+              <fieldset style={{ margin: "0 0 16px", padding: 0, border: "none" }}>
+                <legend style={{ ...labelStyle, marginBottom: "6px" }}>
                   What interests you most? <span style={{ fontWeight: 400, color: colors.textMuted }}>(optional)</span>
                 </legend>
-                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                   {INTEREST_OPTIONS.map((opt) => (
                     <label
                       key={opt}
                       style={{
                         display: "flex",
                         alignItems: "flex-start",
-                        gap: "10px",
+                        gap: "8px",
                         cursor: "pointer",
-                        fontSize: "15px",
+                        fontSize: "14px",
                         color: colors.textDark,
                         fontFamily: "'Source Sans 3', sans-serif",
-                        lineHeight: 1.4,
+                        lineHeight: 1.3,
                       }}
                     >
                       <input
@@ -490,7 +531,7 @@ export function WaitlistForm({
                         value={opt}
                         checked={!!interests[opt]}
                         onChange={() => toggleInterest(opt)}
-                        style={{ marginTop: "3px", width: "18px", height: "18px", accentColor: colors.brandPrimary, cursor: "pointer" }}
+                        style={{ marginTop: "1px", width: "16px", height: "16px", accentColor: colors.brandPrimary, cursor: "pointer" }}
                       />
                       {opt}
                     </label>
@@ -522,13 +563,13 @@ export function WaitlistForm({
                   onClick={closeModal}
                   disabled={submitting}
                   style={{
-                    padding: "14px 22px",
-                    borderRadius: "10px",
+                    padding: "10px 18px",
+                    borderRadius: "8px",
                     border: `2px solid ${colors.border}`,
                     background: colors.bgAlt,
                     color: colors.textDark,
                     fontWeight: 600,
-                    fontSize: "15px",
+                    fontSize: "14px",
                     fontFamily: "'Source Sans 3', sans-serif",
                     cursor: submitting ? "not-allowed" : "pointer",
                     opacity: submitting ? 0.7 : 1,
@@ -540,13 +581,13 @@ export function WaitlistForm({
                   type="submit"
                   disabled={submitting}
                   style={{
-                    padding: "14px 24px",
-                    borderRadius: "10px",
+                    padding: "10px 20px",
+                    borderRadius: "8px",
                     border: "none",
                     background: colors.accentGreen,
                     color: colors.white,
                     fontWeight: 700,
-                    fontSize: "15px",
+                    fontSize: "14px",
                     fontFamily: "'Source Sans 3', sans-serif",
                     cursor: submitting ? "not-allowed" : "pointer",
                     boxShadow: "0 4px 14px rgba(52,184,124,0.25)",
@@ -558,7 +599,8 @@ export function WaitlistForm({
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

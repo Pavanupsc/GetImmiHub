@@ -29,7 +29,7 @@ const PREFERRED_KEYS = [
   "date_created",
 ];
 
-const HIDE_COLUMN_KEYS = new Set(["pinned", "_waitlist_pinned"]);
+const HIDE_COLUMN_KEYS = new Set(["pinned", "_waitlist_pinned", "otherVisaType", "ip"]);
 
 function collectColumnKeys(rows: Record<string, unknown>[]): string[] {
   const seen = new Set<string>();
@@ -134,11 +134,15 @@ export default async function AdminWaitlistPage({
       totalForPagination = filteredPages;
       rows = filtered.slice((safePage - 1) * perPage, safePage * perPage);
     } else if (pinnedForFetch === undefined) {
-      const merged = await fetchWaitlistMergedPinnedFirstPage({ page, per_page: perPage });
-      rows = merged.rows;
-      wpTotal = merged.meta.total;
-      wpTotalPages = merged.meta.totalPages ? parseInt(merged.meta.totalPages, 10) : 1;
-      safePage = merged.safePage;
+      const { payload, meta } = await fetchWaitlistEntriesFromWp({
+        page,
+        per_page: perPage,
+        pinned: "all",
+      });
+      rows = normalizeWaitlistRows(payload);
+      wpTotal = meta.total;
+      wpTotalPages = meta.totalPages ? parseInt(meta.totalPages, 10) : 0;
+      safePage = page;
       totalForPagination = wpTotalPages;
     } else {
       const { payload, meta } = await fetchWaitlistEntriesFromWp({

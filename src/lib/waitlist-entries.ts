@@ -14,7 +14,7 @@ export type WaitlistFetchMeta = {
  * Fetches waitlist rows from WordPress REST (GET /entries).
  * Response shape depends on the plugin; we normalize in the table.
  */
-export type WaitlistPinnedFilter = "0" | "1";
+export type WaitlistPinnedFilter = "0" | "1" | "all";
 
 export async function fetchWaitlistEntriesFromWp(opts?: {
   page?: number;
@@ -32,7 +32,7 @@ export async function fetchWaitlistEntriesFromWp(opts?: {
   } else {
     url.searchParams.set("per_page", "100");
   }
-  if (opts?.pinned === "0" || opts?.pinned === "1") {
+  if (opts?.pinned === "0" || opts?.pinned === "1" || opts?.pinned === "all") {
     url.searchParams.set("pinned", opts.pinned);
   }
 
@@ -140,15 +140,8 @@ export async function fetchAllWaitlistRows(opts?: {
     return fetchAllWaitlistRowsForPinMode(opts.pinned, maxPages, perPage);
   }
 
-  const pinnedOnly = await fetchAllWaitlistRowsForPinMode("1", maxPages, perPage);
-  const unpinnedOnly = await fetchAllWaitlistRowsForPinMode("0", maxPages, perPage);
-  const t1 = parseInt(pinnedOnly.reportedTotal ?? "0", 10) || pinnedOnly.rows.length;
-  const t2 = parseInt(unpinnedOnly.reportedTotal ?? "0", 10) || unpinnedOnly.rows.length;
-
-  return {
-    rows: [...pinnedOnly.rows, ...unpinnedOnly.rows],
-    reportedTotal: String(t1 + t2),
-  };
+  // native all
+  return fetchAllWaitlistRowsForPinMode("all", maxPages, perPage);
 }
 
 /**

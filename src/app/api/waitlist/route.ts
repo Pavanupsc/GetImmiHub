@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
-  const { email, firstName, visaType, interests } = body as Record<string, unknown>;
+  const { email, firstName, visaType, otherVisaType, interests } = body as Record<string, unknown>;
 
   if (typeof email !== "string" || !email.trim() || !isValidEmail(email.trim())) {
     return NextResponse.json({ error: "Valid email is required" }, { status: 400 });
@@ -49,6 +49,7 @@ export async function POST(request: Request) {
     email: email.trim(),
     firstName: firstName.trim(),
     visaType: visaType.trim(),
+    otherVisaType: typeof otherVisaType === "string" ? otherVisaType.trim() : "",
     interests: interestList,
   };
 

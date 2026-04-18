@@ -159,20 +159,26 @@ export function WaitlistAdminTable({
                       <span style={{ color: colors.textMuted, fontSize: "12px" }}>—</span>
                     )}
                   </td>
-                  {columns.map((col) => (
-                    <td
-                      key={col}
-                      style={{
-                        padding: "10px 14px",
-                        color: colors.textBody,
-                        verticalAlign: "top",
-                        maxWidth: "320px",
-                        wordBreak: "break-word",
-                      }}
-                    >
-                      {formatWaitlistCell(row[col])}
-                    </td>
-                  ))}
+                  {columns.map((col) => {
+                    let cellVal = row[col];
+                    if ((col === "visaType" || col === "visa_type") && row.visaType === "Other" && row.otherVisaType) {
+                      cellVal = `Other (${row.otherVisaType})`;
+                    }
+                    return (
+                      <td
+                        key={col}
+                        style={{
+                          padding: "10px 14px",
+                          color: colors.textBody,
+                          verticalAlign: "top",
+                          maxWidth: "320px",
+                          wordBreak: "break-word",
+                        }}
+                      >
+                        {formatWaitlistCell(cellVal)}
+                      </td>
+                    );
+                  })}
                 </tr>
               );
             })}
