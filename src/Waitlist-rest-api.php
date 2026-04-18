@@ -61,13 +61,14 @@ add_action( 'add_meta_boxes', function () {
 function waitlist_meta_box_callback( $post ) {
 
 	$fields = [
-		'_waitlist_email'     => 'Email Address',
-		'_waitlist_firstname' => 'First Name',
-		'_waitlist_visa_type' => 'Visa Type',
-		'_waitlist_interests' => 'Interests',
-		'_waitlist_pinned'    => 'Pinned',
-		'_waitlist_ip'        => 'Submitted from IP',
-		'_waitlist_date'      => 'Submitted At',
+		'_waitlist_email'           => 'Email Address',
+		'_waitlist_firstname'       => 'First Name',
+		'_waitlist_visa_type'       => 'Visa Type',
+		'_waitlist_other_visa_type' => 'Other Visa Type',
+		'_waitlist_interests'       => 'Interests',
+		'_waitlist_pinned'          => 'Pinned',
+		'_waitlist_ip'              => 'Submitted from IP',
+		'_waitlist_date'            => 'Submitted At',
 	];
 
 	echo '<table style="width:100%;border-collapse:collapse;">';
@@ -203,10 +204,11 @@ function waitlist_create_entry( WP_REST_Request $request ) {
 
 	$body = $request->get_json_params();
 
-	$email      = isset( $body['email'] ) ? sanitize_email( $body['email'] ) : '';
-	$first_name = isset( $body['firstName'] ) ? sanitize_text_field( $body['firstName'] ) : '';
-	$visa_type  = isset( $body['visaType'] ) ? sanitize_text_field( $body['visaType'] ) : '';
-	$interests  = isset( $body['interests'] ) && is_array( $body['interests'] )
+	$email           = isset( $body['email'] ) ? sanitize_email( $body['email'] ) : '';
+	$first_name      = isset( $body['firstName'] ) ? sanitize_text_field( $body['firstName'] ) : '';
+	$visa_type       = isset( $body['visaType'] ) ? sanitize_text_field( $body['visaType'] ) : '';
+	$other_visa_type = isset( $body['otherVisaType'] ) ? sanitize_text_field( $body['otherVisaType'] ) : '';
+	$interests       = isset( $body['interests'] ) && is_array( $body['interests'] )
 		? array_map( 'sanitize_text_field', $body['interests'] )
 		: [];
 
@@ -260,12 +262,13 @@ function waitlist_create_entry( WP_REST_Request $request ) {
 	update_post_meta( $post_id, '_waitlist_email', $email );
 	update_post_meta( $post_id, '_waitlist_firstname', $first_name );
 	update_post_meta( $post_id, '_waitlist_visa_type', $visa_type );
+	update_post_meta( $post_id, '_waitlist_other_visa_type', $other_visa_type );
 	update_post_meta( $post_id, '_waitlist_interests', $interests );
 	update_post_meta( $post_id, '_waitlist_pinned', '0' );
 	update_post_meta( $post_id, '_waitlist_ip', waitlist_get_ip() );
 	update_post_meta( $post_id, '_waitlist_date', current_time( 'mysql' ) );
 
-	waitlist_send_admin_email( $email, $first_name, $visa_type, $interests );
+	waitlist_send_admin_email( $email, $first_name, $visa_type, $other_visa_type, $interests );
 
 	return new WP_REST_Response( [
 		'success' => true,
@@ -300,8 +303,8 @@ function waitlist_get_entries( WP_REST_Request $request ) {
 		$query_args['meta_query'] = [
 			[
 				'key'     => '_waitlist_pinned',
-				'value'   => '1',
-				'compare' => '=',
+				'value'   => [ '1', 1, 'true', true ],
+				'compare' => 'IN',
 			],
 		];
 		$query_args['orderby'] = 'date';
@@ -312,8 +315,8 @@ function waitlist_get_entries( WP_REST_Request $request ) {
 			'relation' => 'OR',
 			[
 				'key'     => '_waitlist_pinned',
-				'value'   => '0',
-				'compare' => '=',
+				'value'   => [ '0', 0, 'false', false, '' ],
+				'compare' => 'IN',
 			],
 			[
 				'key'     => '_waitlist_pinned',
@@ -437,6 +440,11 @@ function waitlist_update_entry( WP_REST_Request $request ) {
 		}
 	}
 
+	if ( isset( $body['otherVisaType'] ) ) {
+		$other_visa = sanitize_text_field( $body['otherVisaType'] );
+		update_post_meta( $id, '_waitlist_other_visa_type', $other_visa );
+	}
+
 	if ( isset( $body['interests'] ) ) {
 		if ( ! is_array( $body['interests'] ) ) {
 			$errors[] = 'Interests must be an array.';
@@ -535,14 +543,15 @@ function waitlist_format_entry( $post_id ) {
 	$pin_raw = get_post_meta( $post_id, '_waitlist_pinned', true );
 
 	return [
-		'id'        => (int) $post_id,
-		'email'     => get_post_meta( $post_id, '_waitlist_email', true ),
-		'firstName' => get_post_meta( $post_id, '_waitlist_firstname', true ),
-		'visaType'  => get_post_meta( $post_id, '_waitlist_visa_type', true ),
-		'interests' => $interests,
-		'pinned'    => ( $pin_raw === '1' || $pin_raw === 1 || $pin_raw === true ),
-		'ip'        => get_post_meta( $post_id, '_waitlist_ip', true ),
-		'createdAt' => get_post_meta( $post_id, '_waitlist_date', true ),
+		'id'            => (int) $post_id,
+		'email'         => get_post_meta( $post_id, '_waitlist_email', true ),
+		'firstName'     => get_post_meta( $post_id, '_waitlist_firstname', true ),
+		'visaType'      => get_post_meta( $post_id, '_waitlist_visa_type', true ),
+		'otherVisaType' => get_post_meta( $post_id, '_waitlist_other_visa_type', true ),
+		'interests'     => $interests,
+		'pinned'        => ( $pin_raw === '1' || $pin_raw === 1 || $pin_raw === true ),
+		'ip'            => get_post_meta( $post_id, '_waitlist_ip', true ),
+		'createdAt'     => get_post_meta( $post_id, '_waitlist_date', true ),
 	];
 }
 
@@ -570,16 +579,16 @@ function waitlist_get_ip() {
 /* ============================================================
    13. HELPER – Admin notification email
    ============================================================ */
-function waitlist_send_admin_email( $email, $first_name, $visa_type, array $interests ) {
+function waitlist_send_admin_email( $email, $first_name, $visa_type, $other_visa_type, array $interests ) {
 
 	$to      = get_option( 'admin_email' );
 	$subject = '[Waitlist] New submission from ' . $first_name;
 	$body    = "A new waitlist submission has been received.\n\n"
-		. "Email      : {$email}\n"
-		. "First Name : {$first_name}\n"
-		. "Visa Type  : {$visa_type}\n"
-		. "Interests  : " . ( $interests ? implode( ', ', $interests ) : 'None selected' ) . "\n"
-		. "Time       : " . current_time( 'Y-m-d H:i:s' ) . "\n\n"
+		. "Email           : {$email}\n"
+		. "First Name      : {$first_name}\n"
+		. "Visa Type       : {$visa_type}" . ( $visa_type === 'Other' && $other_visa_type ? " ({$other_visa_type})" : "" ) . "\n"
+		. "Interests       : " . ( $interests ? implode( ', ', $interests ) : 'None selected' ) . "\n"
+		. "Time            : " . current_time( 'Y-m-d H:i:s' ) . "\n\n"
 		. "View all entries: " . admin_url( 'edit.php?post_type=waitlist_entry' );
 
 	wp_mail( $to, $subject, $body );

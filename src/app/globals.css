@@ -181,6 +181,50 @@ body {
   }
 }
 
+/* How it works — phone graphic: desktop zoom vs mobile fit */
+.how-it-works-visual-outer {
+  overflow: visible;
+}
+
+.how-it-works-phone-img {
+  transform: scale(1.9);
+  transform-origin: center center;
+}
+
+@media (max-width: 900px) {
+  .how-it-works-section {
+    overflow-x: hidden;
+  }
+
+  .how-it-works-visual-outer {
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 clamp(4px, 2vw, 12px);
+    box-sizing: border-box;
+  }
+
+  .how-it-works-visual-inner {
+    max-width: min(100%, 420px) !important;
+    margin: 0 auto;
+  }
+
+  .how-it-works-phone-img {
+    transform: scale(1.14);
+    transform-origin: center top;
+    width: 100% !important;
+    max-width: 100%;
+    height: auto !important;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .how-it-works-visual-inner {
+    max-width: 100% !important;
+  }
+}
+
 /* ImmiHub site: nav/footer responsive */
 @media (max-width: 900px) {
   .testimonials-grid {
@@ -189,7 +233,7 @@ body {
   }
   .how-it-works-row {
     grid-template-columns: 1fr !important;
-    gap: 40px !important;
+    gap: 28px !important;
   }
   .how-it-works-row > div > div {
     justify-content: center !important;

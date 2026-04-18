@@ -478,7 +478,7 @@ export function HomePage() {
       </section>
 
       {/* How It Works — mobile asset + staggered step cards */}
-      <section className="home-section-stack" style={{ padding: "52px 0 68px", background: colors.bgWhite }}>
+      <section className="home-section-stack how-it-works-section" style={{ padding: "52px 0 68px", background: colors.bgWhite }}>
         <div style={PAGE_INNER}>
         <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
           <AnimatedSection>
@@ -528,9 +528,10 @@ export function HomePage() {
             }}
           >
             <AnimatedSection>
-              <div style={{ display: "flex", justifyContent: "center", minWidth: 0, overflow: "visible" }}>
-                <div style={{ position: "relative", width: "100%", maxWidth: "540px" }}>
+              <div className="how-it-works-visual-outer" style={{ display: "flex", justifyContent: "center", minWidth: 0 }}>
+                <div className="how-it-works-visual-inner" style={{ position: "relative", width: "100%", maxWidth: "540px" }}>
                   <Image
+                    className="how-it-works-phone-img"
                     src="/Images/how-it-works-mobile-icons.png"
                     alt="ImmiHub on mobile: H-1B document vault with Passport, I-94, I-797, Visa Stamp, and more"
                     width={1500}
@@ -539,8 +540,6 @@ export function HomePage() {
                       width: "100%",
                       height: "auto",
                       display: "block",
-                      transform: "scale(1.90)",
-                      transformOrigin: "center center",
                     }}
                     priority
                   />
