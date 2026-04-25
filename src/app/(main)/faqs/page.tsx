@@ -19,7 +19,7 @@ const categories: Category[] = [
     items: [
       {
         q: "What is ImmiHub?",
-        a: "ImmiHub is a secure mobile app built for H-1B visa holders in the United States. It lets you upload and store your immigration documents, automatically extracts expiry dates using OCR, and sends you reminders before critical deadlines — so you're never caught off guard by an expiring I-797, visa stamp, or spouse EAD.",
+        a: "ImmiHub is a secure mobile app built for H-1B visa holders in the United States. It lets you upload and store your immigration documents, automatically extracts expiry dates using OCR, and sends you reminders before critical deadlines - so you're never caught off guard by an expiring I-797, visa stamp, or spouse EAD.",
       },
       {
         q: "Who is ImmiHub for?",
@@ -54,7 +54,7 @@ const categories: Category[] = [
       },
       {
         q: "Is my data encrypted?",
-        a: "Yes. All documents and personal data are encrypted both at rest and in transit. We use AES-256 encryption at rest and TLS 1.2+ in transit — the same standards used by major financial institutions.",
+        a: "Yes. All documents and personal data are encrypted both at rest and in transit. We use AES-256 encryption at rest and TLS 1.2+ in transit - the same standards used by major financial institutions.",
       },
       {
         q: "Can ImmiHub employees see my documents?",
@@ -70,7 +70,7 @@ const categories: Category[] = [
       },
       {
         q: "Can I delete my account and all my data?",
-        a: "Yes, at any time. You can request full account deletion and all associated data — including uploaded documents — will be permanently removed from our systems. Email support@getimmihub.com to submit a deletion request. We process all deletion requests within 7 business days.",
+        a: "Yes, at any time. You can request full account deletion and all associated data - including uploaded documents - will be permanently removed from our systems. Email support@getimmihub.com to submit a deletion request. We process all deletion requests within 7 business days.",
       },
       {
         q: "Does ImmiHub sell my data?",
@@ -85,11 +85,11 @@ const categories: Category[] = [
     items: [
       {
         q: "How does OCR date extraction work?",
-        a: "When you upload a photo or scan of your document, ImmiHub's OCR (powered by Azure Cognitive Services) automatically reads the text and identifies expiry-relevant dates. You always see the extracted dates and confirm them before anything is saved — ImmiHub never creates a reminder without your explicit confirmation. If the OCR gets something wrong, you can correct it manually at the confirmation step.",
+        a: "When you upload a photo or scan of your document, ImmiHub's OCR (powered by Azure Cognitive Services) automatically reads the text and identifies expiry-relevant dates. You always see the extracted dates and confirm them before anything is saved - ImmiHub never creates a reminder without your explicit confirmation. If the OCR gets something wrong, you can correct it manually at the confirmation step.",
       },
       {
         q: "What reminders will I receive?",
-        a: "For each tracked document, ImmiHub sends two reminders: one at 180 days (6 months) before expiry and one at 90 days (3 months) before expiry. Reminders are delivered via push notification and email. This gives you enough lead time to start renewal processes — especially important for documents like the I-797 extension, which can take months to prepare.",
+        a: "For each tracked document, ImmiHub sends two reminders: one at 180 days (6 months) before expiry and one at 90 days (3 months) before expiry. Reminders are delivered via push notification and email. This gives you enough lead time to start renewal processes - especially important for documents like the I-797 extension, which can take months to prepare.",
       },
       {
         q: "Can I use ImmiHub for my spouse's documents?",
@@ -97,7 +97,7 @@ const categories: Category[] = [
       },
       {
         q: "What if my document is already expired?",
-        a: "You can still upload expired documents. ImmiHub will store them in your vault and flag them as expired, but no future reminders will be scheduled since the date has already passed. Keeping expired documents in your vault is still useful — older I-797 notices, for example, can matter for calculating H-1B cap-exempt years.",
+        a: "You can still upload expired documents. ImmiHub will store them in your vault and flag them as expired, but no future reminders will be scheduled since the date has already passed. Keeping expired documents in your vault is still useful - older I-797 notices, for example, can matter for calculating H-1B cap-exempt years.",
       },
       {
         q: "Can I upload documents that don't have expiry dates?",
@@ -105,7 +105,7 @@ const categories: Category[] = [
       },
       {
         q: "What happens if the OCR reads the wrong date?",
-        a: "The OCR confirmation step exists specifically for this reason. After OCR processes your document, you'll see the extracted dates highlighted and can verify or correct them before saving. ImmiHub never creates reminders without your explicit confirmation — accuracy depends on your review, not ours.",
+        a: "The OCR confirmation step exists specifically for this reason. After OCR processes your document, you'll see the extracted dates highlighted and can verify or correct them before saving. ImmiHub never creates reminders without your explicit confirmation - accuracy depends on your review, not ours.",
       },
     ],
   },
@@ -206,7 +206,7 @@ export default function FaqsPage() {
               fontFamily: "'Source Sans 3', sans-serif", fontSize: "17px",
               color: colors.gray500, lineHeight: 1.7,
             }}>
-              Everything you need to know about ImmiHub — how it works,
+              Everything you need to know about ImmiHub - how it works,
               how your data is protected, and what features are available.
             </p>
           </AnimatedSection>

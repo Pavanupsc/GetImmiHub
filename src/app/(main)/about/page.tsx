@@ -169,7 +169,7 @@ export default function AboutPage() {
     {
       phase: "Now",
       title: "Secure Vault + Smart Reminders",
-      desc: "A secure, encrypted document vault with automated OCR extraction and intelligent expiry reminders — purpose-built for H-1B visa holders.",
+      desc: "A secure, encrypted document vault with automated OCR extraction and intelligent expiry reminders - purpose-built for H-1B visa holders.",
     },
     {
       phase: "Next",
@@ -179,7 +179,7 @@ export default function AboutPage() {
     {
       phase: "Then",
       title: "Multi-Visa Compliance Engine",
-      desc: "Expanding coverage to F-1/OPT, Green Card, O-1, L-1, and other visa categories — creating a unified compliance platform for every immigration pathway.",
+      desc: "Expanding coverage to F-1/OPT, Green Card, O-1, L-1, and other visa categories - creating a unified compliance platform for every immigration pathway.",
     },
     {
       phase: "Beyond",
@@ -192,12 +192,12 @@ export default function AboutPage() {
     {
       icon: "🛡️",
       title: "Free for Every Immigrant",
-      desc: "Immigration tools should never be a luxury. Individual immigrants will always have free access to ImmiHub's core features — because protecting your status shouldn't depend on your ability to pay.",
+      desc: "Immigration tools should never be a luxury. Individual immigrants will always have free access to ImmiHub's core features - because protecting your status shouldn't depend on your ability to pay.",
     },
     {
       icon: "🔒",
       title: "Privacy Without Compromise",
-      desc: "Your documents are encrypted end-to-end, stored on U.S.-based Microsoft Azure infrastructure, and never shared with third parties without your explicit consent. Your data belongs to you — period.",
+      desc: "Your documents are encrypted end-to-end, stored on U.S.-based Microsoft Azure infrastructure, and never shared with third parties without your explicit consent. Your data belongs to you - period.",
     },
     {
       icon: "💙",
@@ -277,7 +277,7 @@ export default function AboutPage() {
               maxWidth: "660px",
               marginBottom: "48px",
             }}>
-              More than 780,000 H-1B visa holders in the United States manage their most critical immigration deadlines with spreadsheets, calendar reminders, and scattered files across email threads, phones, and filing cabinets. There is no centralized, purpose-built tool designed to protect them. A single missed date — a lapsed EAD, an overlooked I-94 expiry, a late H-1B extension — can mean job loss, status violation, and the unraveling of years of work, sacrifice, and contribution to this country.
+              More than 780,000 H-1B visa holders in the United States manage their most critical immigration deadlines with spreadsheets, calendar reminders, and scattered files across email threads, phones, and filing cabinets. There is no centralized, purpose-built tool designed to protect them. A single missed date - a lapsed EAD, an overlooked I-94 expiry, a late H-1B extension - can mean job loss, status violation, and the unraveling of years of work, sacrifice, and contribution to this country.
             </p>
             <p style={{
               fontFamily: "'Source Sans 3', sans-serif",
@@ -286,7 +286,7 @@ export default function AboutPage() {
               lineHeight: 1.85,
               maxWidth: "660px",
             }}>
-              ImmiHub exists to solve this. We are building the infrastructure that the U.S. immigration system should have provided long ago — a secure, intelligent platform that ensures no skilled worker falls through the cracks of a complex bureaucratic process.
+              ImmiHub exists to solve this. We are building the infrastructure that the U.S. immigration system should have provided long ago - a secure, intelligent platform that ensures no skilled worker falls through the cracks of a complex bureaucratic process.
             </p>
           </AnimatedSection>
         </div>
@@ -373,7 +373,7 @@ export default function AboutPage() {
                 marginBottom: "16px",
                 maxWidth: "620px",
               }}>
-                ImmiHub is a secure, cloud-based document vault that stores your critical immigration documents — Passports, I-797 Approval Notices, I-94 Travel Records, Visa Stamps, and EAD cards — in one encrypted, accessible location.
+                ImmiHub is a secure, cloud-based document vault that stores your critical immigration documents - Passports, I-797 Approval Notices, I-94 Travel Records, Visa Stamps, and EAD cards - in one encrypted, accessible location.
               </p>
               <p style={{
                 fontFamily: "'Source Sans 3', sans-serif",
@@ -382,7 +382,7 @@ export default function AboutPage() {
                 lineHeight: 1.85,
                 maxWidth: "620px",
               }}>
-                Using intelligent OCR technology, ImmiHub automatically extracts key dates from uploaded documents and creates a personalized compliance timeline with proactive reminders — weeks and months before critical deadlines. Upload a photo of your document. We handle the rest. It's like having a personal immigration assistant that never forgets a date and never takes a day off.
+                Using intelligent OCR technology, ImmiHub automatically extracts key dates from uploaded documents and creates a personalized compliance timeline with proactive reminders - weeks and months before critical deadlines. Upload a photo of your document. We handle the rest. It's like having a personal immigration assistant that never forgets a date and never takes a day off.
               </p>
             </div>
           </AnimatedSection>
@@ -423,7 +423,7 @@ export default function AboutPage() {
               marginBottom: "48px",
               maxWidth: "600px",
             }}>
-              ImmiHub's roadmap is designed to systematically close every gap in the immigrant experience — starting with the most urgent need and scaling to serve millions.
+              ImmiHub's roadmap is designed to systematically close every gap in the immigrant experience - starting with the most urgent need and scaling to serve millions.
             </p>
           </AnimatedSection>
 
@@ -524,7 +524,7 @@ export default function AboutPage() {
               color: colors.gray500,
               lineHeight: 1.85,
             }}>
-              Skilled immigrants power America's most critical industries — from technology and healthcare to research and engineering. When these workers lose status due to preventable administrative failures, the entire nation loses. ImmiHub's mission is to ensure that the United States retains the talent it has already invested in — by giving every immigrant the tools to stay compliant, informed, and protected. This is not just an immigration problem. It is an American competitiveness problem, and ImmiHub is purpose-built to solve it.
+              Skilled immigrants power America's most critical industries - from technology and healthcare to research and engineering. When these workers lose status due to preventable administrative failures, the entire nation loses. ImmiHub's mission is to ensure that the United States retains the talent it has already invested in - by giving every immigrant the tools to stay compliant, informed, and protected. This is not just an immigration problem. It is an American competitiveness problem, and ImmiHub is purpose-built to solve it.
             </p>
           </AnimatedSection>
         </div>

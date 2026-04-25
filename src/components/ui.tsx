@@ -633,13 +633,13 @@ export function WaitlistForm({
                     padding: "10px 20px",
                     borderRadius: "8px",
                     border: "none",
-                    background: colors.brandPrimary,
+                    background: "#0066CC",
                     color: colors.white,
                     fontWeight: 700,
                     fontSize: "14px",
                     fontFamily: "'Source Sans 3', sans-serif",
                     cursor: submitting ? "not-allowed" : "pointer",
-                    boxShadow: "0 4px 14px rgba(79,158,214,0.35)",
+                    boxShadow: "0 4px 14px rgba(0,102,204,0.35)",
                     opacity: submitting ? 0.85 : 1,
                   }}
                 >

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { layout } from "@/lib/design-tokens";
+import { layout, colors } from "@/lib/design-tokens";
 
 const productLinks = [
   { label: "How it works", href: "/#how-it-works" },
@@ -58,7 +58,7 @@ export function Footer() {
           </div>
 
           <div className="site-footer-col">
-            <h4 className="site-footer-heading">Product</h4>
+            <h4 className="site-footer-heading" style={{ color: colors.brandPrimary }}>Product</h4>
             <nav aria-label="Footer product" className="site-footer-links">
               {productLinks.map((l) => (
                 <Link key={l.href} href={l.href} className="site-footer-link">
@@ -68,8 +68,8 @@ export function Footer() {
             </nav>
           </div>
 
-          <div className="site-footer-col">
-            <h4 className="site-footer-heading">Audiences</h4>
+          <div className="site-footer-col" style={{ display: "none" }}>
+            <h4 className="site-footer-heading" style={{ color: colors.brandPrimary }}>Audiences</h4>
             <nav aria-label="Footer audiences" className="site-footer-links">
               {audiencesLinks.map((l) => (
                 <Link key={l.href} href={l.href} className="site-footer-link">
@@ -80,7 +80,7 @@ export function Footer() {
           </div>
 
           <div className="site-footer-col">
-            <h4 className="site-footer-heading">Company</h4>
+            <h4 className="site-footer-heading" style={{ color: colors.brandPrimary }}>Company</h4>
             <nav aria-label="Footer company" className="site-footer-links">
               {companyLinks.map((l) => (
                 <Link key={l.href} href={l.href} className="site-footer-link">
@@ -91,7 +91,7 @@ export function Footer() {
           </div>
 
           <div className="site-footer-col">
-            <h4 className="site-footer-heading">Legal</h4>
+            <h4 className="site-footer-heading" style={{ color: colors.brandPrimary }}>Legal</h4>
             <nav aria-label="Footer legal" className="site-footer-links">
               {legalLinks.map((l) => (
                 <Link key={l.href} href={l.href} className="site-footer-link">
@@ -99,8 +99,8 @@ export function Footer() {
                 </Link>
               ))}
             </nav>
-            <a href="mailto:support@getimmihub.com" className="site-footer-link site-footer-email">
-              support@getimmihub.com
+            <a href="mailto:support@immihub.ai" className="site-footer-link site-footer-email" style={{ display: "block", marginTop: "12px" }}>
+              support@immihub.ai
             </a>
           </div>
         </div>

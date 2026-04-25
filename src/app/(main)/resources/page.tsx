@@ -69,7 +69,7 @@ const guides: Guide[] = [
           <>
             <p>
               Maintaining H-1B status in the United States is not a passive activity. Your lawful presence here
-              depends on a stack of overlapping documents — each with its own expiration date, renewal process,
+              depends on a stack of overlapping documents - each with its own expiration date, renewal process,
               and consequences if mismanaged. Unlike citizens or green card holders, H-1B workers can fall out
               of status through seemingly minor administrative oversights.
             </p>
@@ -90,42 +90,42 @@ const guides: Guide[] = [
               name="1. Passport"
               tag="Tracked by ImmiHub"
               tagColor="green"
-              why="Your passport is the foundation of every other immigration document. Without it, you cannot travel internationally, re-enter the United States, or apply for most immigration benefits. Many countries — including the US — require your passport to be valid for at least six months beyond your intended stay. This means a passport expiring in four months can strand you internationally even if it technically hasn't expired yet."
-              action="Renew through your home country's consulate or embassy in the US. Processing times vary widely — India's passport renewal, for example, can take 2–4 months. Don't wait until the last minute."
+              why="Your passport is the foundation of every other immigration document. Without it, you cannot travel internationally, re-enter the United States, or apply for most immigration benefits. Many countries - including the US - require your passport to be valid for at least six months beyond your intended stay. This means a passport expiring in four months can strand you internationally even if it technically hasn't expired yet."
+              action="Renew through your home country's consulate or embassy in the US. Processing times vary widely - India's passport renewal, for example, can take 2–4 months. Don't wait until the last minute."
             />
             <DocumentCard
               name="2. Form I-94 (Arrival/Departure Record)"
               tag="Tracked by ImmiHub"
               tagColor="green"
-              why="Your I-94 is the single most legally important date on your entire immigration record. It's not your visa stamp. It's not your I-797 approval. Your I-94 end date is the date you are legally authorized to remain in the United States. If you overstay your I-94 — even by one day — you begin accruing unlawful presence, which can trigger bars to re-entry of 3 or 10 years. The I-94 is generated automatically when you enter the US and is accessible at cbp.dhs.gov."
-              action="Check your I-94 every time you re-enter the US. Errors happen, and it's your responsibility — not CBP's — to catch them."
+              why="Your I-94 is the single most legally important date on your entire immigration record. It's not your visa stamp. It's not your I-797 approval. Your I-94 end date is the date you are legally authorized to remain in the United States. If you overstay your I-94 - even by one day - you begin accruing unlawful presence, which can trigger bars to re-entry of 3 or 10 years. The I-94 is generated automatically when you enter the US and is accessible at cbp.dhs.gov."
+              action="Check your I-94 every time you re-enter the US. Errors happen, and it's your responsibility - not CBP's - to catch them."
             />
             <DocumentCard
               name="3. Form I-797 (Notice of Action / Approval Notice)"
               tag="Tracked by ImmiHub"
               tagColor="green"
-              why="The I-797 is your H-1B petition approval, issued by USCIS to your employer. It contains your petition validity dates, your job classification, and your authorized employer. Your I-797 approval period defines how long your H-1B petition is valid, which in turn drives your I-94 end date. Extensions, employer transfers (portability), and amendments all generate new I-797 notices — each one superseding the last."
+              why="The I-797 is your H-1B petition approval, issued by USCIS to your employer. It contains your petition validity dates, your job classification, and your authorized employer. Your I-797 approval period defines how long your H-1B petition is valid, which in turn drives your I-94 end date. Extensions, employer transfers (portability), and amendments all generate new I-797 notices - each one superseding the last."
               action="Keep every I-797 you've ever received, not just the most recent one. Older notices can matter for calculating H-1B cap-exempt years and six-year limits."
             />
             <DocumentCard
               name="4. H-1B Visa Stamp"
               tag="Tracked by ImmiHub"
               tagColor="green"
-              why="Contrary to common confusion, your visa stamp does not control how long you can stay in the US. It controls whether you can enter or re-enter. An expired visa stamp means you cannot board a flight to the US after international travel — but if you never leave the country, an expired stamp is largely irrelevant to your day-to-day status. Visas are issued by the State Department at US consulates abroad, entirely separately from your USCIS-approved petition."
-              action="If your visa stamp expires and you plan to travel internationally, factor in visa appointment wait times — some consulates in certain countries have backlogs of 6–18 months."
+              why="Contrary to common confusion, your visa stamp does not control how long you can stay in the US. It controls whether you can enter or re-enter. An expired visa stamp means you cannot board a flight to the US after international travel - but if you never leave the country, an expired stamp is largely irrelevant to your day-to-day status. Visas are issued by the State Department at US consulates abroad, entirely separately from your USCIS-approved petition."
+              action="If your visa stamp expires and you plan to travel internationally, factor in visa appointment wait times - some consulates in certain countries have backlogs of 6–18 months."
             />
             <DocumentCard
               name="5. Spouse / Dependent EAD (Form I-766)"
               tag="Tracked by ImmiHub"
               tagColor="green"
-              why="If your spouse has H-4 EAD (Employment Authorization Document), it expires independently of your H-1B. If their EAD lapses, they must stop working — immediately, with no grace period. USCIS processing times for EAD renewal currently average 3–6 months, meaning the application should be filed well in advance. There are automatic extension provisions in some cases (if filed timely), but these rules have changed in recent years and need to be verified."
+              why="If your spouse has H-4 EAD (Employment Authorization Document), it expires independently of your H-1B. If their EAD lapses, they must stop working - immediately, with no grace period. USCIS processing times for EAD renewal currently average 3–6 months, meaning the application should be filed well in advance. There are automatic extension provisions in some cases (if filed timely), but these rules have changed in recent years and need to be verified."
               action="Set a renewal reminder 6 months before the EAD expiration date. File Form I-765 with the proper I-539A if applicable."
             />
             <DocumentCard
               name="6. Employment Letter"
               tag="Storage Only"
               tagColor="gray"
-              why="An up-to-date employment letter from your employer — confirming your title, salary, employment dates, and work location — is not an immigration document per se, but it's required in almost every practical context: H-1B renewals, green card applications, apartment rentals, mortgage applications, and bank account openings. Many H-1B holders are caught off guard when they need one urgently and HR takes weeks to produce it."
+              why="An up-to-date employment letter from your employer - confirming your title, salary, employment dates, and work location - is not an immigration document per se, but it's required in almost every practical context: H-1B renewals, green card applications, apartment rentals, mortgage applications, and bank account openings. Many H-1B holders are caught off guard when they need one urgently and HR takes weeks to produce it."
               action="Request a current employment letter from HR once a year and store it alongside your immigration documents. It should be on company letterhead and signed."
             />
             <DocumentCard
@@ -148,14 +148,14 @@ const guides: Guide[] = [
             </p>
             <ol style={{ paddingLeft: "20px", lineHeight: 2, color: colors.gray600, fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px" }}>
               <li>Find your most recent I-797 and note the "Notice of Action" dates (validity period).</li>
-              <li>Log into cbp.dhs.gov and check your current I-94 record — confirm the end date matches your I-797.</li>
+              <li>Log into cbp.dhs.gov and check your current I-94 record - confirm the end date matches your I-797.</li>
               <li>Note your visa stamp expiration in your passport (look for the "Until" field next to the H-1B annotation).</li>
-              <li>Note your passport expiration date and subtract 6 months — that's your effective travel window.</li>
+              <li>Note your passport expiration date and subtract 6 months - that's your effective travel window.</li>
               <li>If your spouse has H-4 EAD, find the I-766 card and note the "Card Expires" date.</li>
             </ol>
             <p>
               Once you have these five dates, you have a complete picture of your immigration timeline. ImmiHub
-              tracks all of these for you and sends reminders before each deadline — so this becomes a one-time
+              tracks all of these for you and sends reminders before each deadline - so this becomes a one-time
               setup, not a recurring anxiety.
             </p>
           </>
@@ -166,7 +166,7 @@ const guides: Guide[] = [
   {
     id: "understanding-expiry-dates",
     title: "Understanding Expiry Dates",
-    subtitle: "I-797 vs Visa Stamp vs I-94 vs Passport — what expires when, and which one actually controls your status.",
+    subtitle: "I-797 vs Visa Stamp vs I-94 vs Passport - what expires when, and which one actually controls your status.",
     readTime: "6 min read",
     sections: [
       {
@@ -176,7 +176,7 @@ const guides: Guide[] = [
           <>
             <p>
               H-1B workers are often surprised to learn that they hold multiple documents with multiple
-              expiration dates — and that these dates can, and often do, fall apart from each other. A visa
+              expiration dates - and that these dates can, and often do, fall apart from each other. A visa
               stamp that expired two years ago. An I-797 that runs through next October. An I-94 that ends
               in three weeks. Which one matters?
             </p>
@@ -1133,7 +1133,7 @@ export default function ResourcesPage() {
                 fontSize: "15px", color: colors.gray500, marginBottom: "24px", lineHeight: 1.6,
               }}>
                 ImmiHub monitors your H-1B documents, sends reminders before deadlines, and keeps everything
-                organized in one place — so you're never caught off guard.
+                organized in one place - so you're never caught off guard.
               </p>
               <WaitlistForm
                 variant="hero"

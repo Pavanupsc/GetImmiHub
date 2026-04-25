@@ -49,7 +49,7 @@ const FEATURE_ITEMS = [
   },
   {
     title: "Smart Expiry Tracking",
-    desc: "Every document type monitored automatically. See exactly what's expiring and when — at a glance, on your dashboard.",
+    desc: "Every document type monitored automatically. See exactly what's expiring and when - at a glance, on your dashboard.",
     image: IMAGES.features[1],
   },
   {
@@ -64,12 +64,12 @@ const FEATURE_ITEMS = [
   },
   {
     title: "Purpose-Built for H-1B",
-    desc: "Not a generic file manager. ImmiHub understands Passport, I-94, I-797, Visa Stamp, and EAD — and what each deadline means for you.",
+    desc: "Not a generic file manager. ImmiHub understands Passport, I-94, I-797, Visa Stamp, and EAD - and what each deadline means for you.",
     image: IMAGES.features[4],
   },
   {
     title: "Guided Onboarding",
-    desc: "Our Immi Bot walks you through setup with a simple conversation. No confusing forms, no guesswork — just answer a few questions and you're ready.",
+    desc: "Our Immi Bot walks you through setup with a simple conversation. No confusing forms, no guesswork - just answer a few questions and you're ready.",
     image: IMAGES.features[5],
   },
 ] as const;
@@ -907,10 +907,9 @@ function HowItWorksInteractive() {
                             </div>
                             <div style={{ border: `1px solid ${colors.border}`, borderRadius: 16, overflow: "hidden", marginBottom: 12 }}>
                               {[
-                                { days: "90 days", copy: "Start talking to your employer about the I-797 renewal.", chan: "Email" },
-                                { days: "60 days", copy: "Confirm your attorney has the paperwork in motion.", chan: "Email + Push" },
-                                { days: "30 days", copy: "File the renewal if not already submitted.", chan: "Push" },
-                                { days: "7 days", copy: "Final reminder — last chance to act.", chan: "SMS + Push" },
+                                { days: "180 days", copy: "Start talking to your employer about the I-797 renewal.", chan: "Email" },
+                                { days: "90 days", copy: "Confirm your attorney has the paperwork in motion.", chan: "Email + Push" },
+                                
                               ].map((row, rIdx) => (
                                 <div
                                   key={row.days}
@@ -951,7 +950,7 @@ function HowItWorksInteractive() {
                               }}
                             >
                               <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "16px", fontWeight: 700, color: colors.textDark }}>
-                                Also loop in my spouse
+                                Also loop in my spouse - Comming soon!
                               </span>
                               <button
                                 type="button"
@@ -1257,10 +1256,8 @@ function HowItWorksInteractive() {
                           </div>
                           <div style={{ border: `1px solid ${colors.border}`, borderRadius: 16, overflow: "hidden", marginBottom: 12 }}>
                             {[
-                              { days: "90 days", copy: "Start talking to your employer about the I-797 renewal.", chan: "Email" },
-                              { days: "60 days", copy: "Confirm your attorney has the paperwork in motion.", chan: "Email + Push" },
-                              { days: "30 days", copy: "File the renewal if not already submitted.", chan: "Push" },
-                              { days: "7 days", copy: "Final reminder — last chance to act.", chan: "SMS + Push" },
+                              { days: "180 days", copy: "Start talking to your employer about the I-797 renewal.", chan: "Email" },
+                              { days: "90 days", copy: "Confirm your attorney has the paperwork in motion.", chan: "Email + Push" },
                             ].map((row, rIdx) => (
                               <div
                                 key={row.days}
@@ -1300,7 +1297,7 @@ function HowItWorksInteractive() {
                             }}
                           >
                             <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "16px", fontWeight: 700, color: colors.textDark }}>
-                              Also loop in my spouse
+                              Also loop in my spouse - Cooming soon!
                             </span>
                             <button
                               type="button"
@@ -2231,7 +2228,7 @@ export function HomePage() {
                       lineHeight: 1.7,
                       margin: 0,
                     }}>
-                      You&apos;re at the boarding gate, bags checked, ready to go — and the agent tells you your passport expired last month. Trip cancelled, money gone, and a stressful renewal ahead.
+                      You&apos;re at the boarding gate, bags checked, ready to go - and the agent tells you your passport expired last month. Trip cancelled, money gone, and a stressful renewal ahead.
                     </p>
                     <div className="card-arrow card-arrow-left" style={{
                       position: "absolute",
@@ -2502,7 +2499,7 @@ export function HomePage() {
                   maxWidth: "560px",
                   margin: "0 auto",
                 }}>
-                  The document vault is just the beginning. Here&apos;s where ImmiHub is headed — built around what H-1B holders actually need.
+                  The document vault is just the beginning. Here&apos;s where ImmiHub is headed - built around what H-1B holders actually need.
                 </p>
               </div>
             </AnimatedSection>
@@ -2539,7 +2536,7 @@ export function HomePage() {
                 {
                   side: "left" as const,
                   title: "Multi-Visa Support",
-                  desc: "F-1, Green Card, O-1, L-1 — every visa type gets its own tailored toolkit and deadline tracking.",
+                  desc: "F-1, Green Card, O-1, L-1 - every visa type gets its own tailored toolkit and deadline tracking.",
                   icon: <DocIcon />,
                 },
                 {
@@ -2827,7 +2824,7 @@ export function HomePage() {
                   maxWidth: "560px",
                   margin: "0 auto",
                 }}>
-                  We know how sensitive immigration documents are. That&apos;s why security isn&apos;t an afterthought — it&apos;s the foundation.
+                  We know how sensitive immigration documents are. That&apos;s why security isn&apos;t an afterthought - it&apos;s the foundation.
                 </p>
               </div>
             </AnimatedSection>
